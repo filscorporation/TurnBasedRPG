@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Assets.Scripts.CharactersManagement;
+using Assets.Scripts.EnemyManagement;
 using Assets.Scripts.InputManagement;
 using Assets.Scripts.MapManagement;
 using UnityEngine;
@@ -14,6 +15,7 @@ namespace Assets.Scripts.PlayerManagement
     {
         public InputManagerBase InputManager;
         public MapManager MapManager;
+        public EnemyController EnemyController;
         protected CharacterActionsController CharacterController;
 
         public Player Player;
@@ -31,6 +33,8 @@ namespace Assets.Scripts.PlayerManagement
                 throw new Exception("InputManager field should not be null");
             if (MapManager == null)
                 throw new Exception("MapManager field should not be null");
+            if (EnemyController == null)
+                throw new Exception("EnemyController field should not be null");
             if (Player == null)
                 throw new Exception("Player field should not be null");
             if (CharacterController == null)
@@ -64,6 +68,8 @@ namespace Assets.Scripts.PlayerManagement
             Debug.Log("Path end reached");
             Player.State = PlayerState.Idle;
             MapManager.ClearPath();
+
+            EnemyController.CheckIfStartBattle(Player);
         }
     }
 }

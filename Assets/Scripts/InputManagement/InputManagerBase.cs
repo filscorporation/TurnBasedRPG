@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace Assets.Scripts.InputManagement
 {
@@ -29,9 +31,13 @@ namespace Assets.Scripts.InputManagement
             var wp = Camera.main.ScreenToWorldPoint(inputPoint);
             var position = new Vector2(wp.x, wp.y);
 
-            Collider2D hit = Physics2D.OverlapPoint(position);
-            if (hit == null)
+            if (EventSystem.current.currentSelectedGameObject != null)
                 return false;
+            Collider2D[] hits = Physics2D.OverlapPointAll(position);
+            if (hits == null || !hits.Any())
+                return false;
+            // TODO: ?
+            Collider2D hit = hits.First();
 
             InputEvent inputEvent = new InputEvent { InputObject = hit.gameObject };
             foreach (IInputSubscriber subscriber in subs)

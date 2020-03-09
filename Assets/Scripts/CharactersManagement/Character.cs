@@ -9,7 +9,18 @@ namespace Assets.Scripts.CharactersManagement
     /// </summary>
     public class Character : MonoBehaviour
     {
-        public Tile OnTile;
+        private Tile onTile;
+        public Tile OnTile
+        {
+            get => onTile;
+            set
+            {
+                if (onTile != null)
+                    onTile.Free = true;
+                value.Free = false;
+                onTile = value;
+            }
+        }
 
         public float MovingSpeed = 0.2F;
 

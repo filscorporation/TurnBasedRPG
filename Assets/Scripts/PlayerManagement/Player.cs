@@ -6,6 +6,7 @@ namespace Assets.Scripts.PlayerManagement
     {
         Idle,
         Moving,
+        InBattle,
     }
 
     /// <summary>
@@ -14,6 +15,8 @@ namespace Assets.Scripts.PlayerManagement
     public class Player : Character
     {
         public PlayerState State = PlayerState.Idle;
+
+        public int ActionPoints = 3;
 
         public void Start()
         {
