@@ -23,7 +23,7 @@ namespace Assets.Scripts.UIManagement
             }
         }
 
-        private Dictionary<string, IUISubscriber> subs = new Dictionary<string, IUISubscriber>();
+        private readonly Dictionary<string, IUISubscriber> subs = new Dictionary<string, IUISubscriber>();
 
         private Dictionary<string, IUIElement> elements;
 

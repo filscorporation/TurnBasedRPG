@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Assets.Scripts.CharactersManagement;
 using Assets.Scripts.EnemyManagement;
 using Assets.Scripts.InputManagement;
@@ -17,6 +18,7 @@ namespace Assets.Scripts.PlayerManagement
         public InputManagerBase InputManager;
         public MapManager MapManager;
         public EnemyController EnemyController;
+        public SkillController SkillController;
         protected CharacterActionsController CharacterController;
 
         public Player Player;
@@ -29,6 +31,8 @@ namespace Assets.Scripts.PlayerManagement
         {
             CharacterController = GetComponent<CharacterActionsController>();
             Validate();
+            SkillController = new SkillController(this, MapManager, Player);
+            SkillController.Initialize();
             InputManager.Subscribe(this);
         }
 
@@ -43,7 +47,7 @@ namespace Assets.Scripts.PlayerManagement
             if (Player == null)
                 throw new Exception("Player field should not be null");
             if (CharacterController == null)
-                throw new Exception("CharacterController should not be null");
+                throw new Exception("CharacterController component should be attached");
         }
 
         /// <summary>
@@ -54,6 +58,8 @@ namespace Assets.Scripts.PlayerManagement
         {
             Player.State = PlayerState.InBattle;
             callWhenPlayersTurnDone = onPlayersTurnDone;
+
+            SkillController.ShowSkills();
 
             // Refresh action points
             Player.ActionPoints = Player.ActionPointsMax;
@@ -67,6 +73,9 @@ namespace Assets.Scripts.PlayerManagement
         {
             if (CharacterController.IsMoving())
                 return;
+
+            SkillController.Clear();
+            SkillController.HideSkills();
 
             Player.State = PlayerState.Waiting;
             callWhenPlayersTurnDone();
@@ -82,18 +91,42 @@ namespace Assets.Scripts.PlayerManagement
             if (tile == null)
                 return;
 
+            Debug.Log($"Handling input to tile {tile.X}:{tile.Y}");
+
             if (Player.State == PlayerState.Waiting)
             {
                 // Ignore input while waiting for the enemy
                 return;
             }
 
+            // Occupied tile processing
             if (!tile.Free)
             {
+                // Try using skill
+                if (SkillController.HasActiveSkill())
+                {
+                    if (!SkillController.UseSkill(tile))
+                        SkillController.Clear();
+                    return;
+                }
+
+                if (tile.Equals(Player.OnTile))
+                {
+                    // Clear path when clicked on player
+                    ClearPlannedPath();
+                }
                 return;
             }
 
-            Debug.Log($"Handling input to tile {tile.X}:{tile.Y}");
+            // Free tile processing
+
+            // Try using skill
+            if (SkillController.HasActiveSkill())
+            {
+                if (!SkillController.UseSkill(tile))
+                    SkillController.Clear();
+                return;
+            }
 
             List<Tile> path;
             // Player click on tile second time in a row - confirmation for action in battle
@@ -101,10 +134,7 @@ namespace Assets.Scripts.PlayerManagement
             {
                 if (Player.ActionPoints == 0)
                 {
-                    MapManager.ClearPath();
-                    savedPath = null;
-                    confirmTileInBattle = null;
-                    return;
+                    ClearPlannedPath();
                 }
                 path = savedPath;
                 confirmTileInBattle = null;
@@ -132,6 +162,17 @@ namespace Assets.Scripts.PlayerManagement
             }
             
             CharacterController.Move(path, PlayerReachedNextTile, PlayerReachedPathEnd);
+        }
+
+        /// <summary>
+        /// Clears planned path for the player
+        /// </summary>
+        public void ClearPlannedPath()
+        {
+            MapManager.ClearPath();
+            SkillController.Clear();
+            savedPath = null;
+            confirmTileInBattle = null;
         }
 
         private void PlayerReachedNextTile(Character player, int tileIndex)

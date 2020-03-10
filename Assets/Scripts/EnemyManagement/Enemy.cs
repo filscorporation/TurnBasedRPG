@@ -22,5 +22,10 @@ namespace Assets.Scripts.EnemyManagement
                        Mathf.Abs(c.OnTile.Y - OnTile.Y))
                    <= LineOfSight;
         }
+
+        protected override void Die(Character killer)
+        {
+            Destroy(gameObject);
+        }
     }
 }

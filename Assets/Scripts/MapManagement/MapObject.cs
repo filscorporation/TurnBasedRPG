@@ -15,8 +15,12 @@ namespace Assets.Scripts.MapManagement
             set
             {
                 if (onTile != null)
+                {
+                    onTile.Occupier = null;
                     onTile.Free = true;
+                }
                 value.Free = false;
+                value.Occupier = this;
                 onTile = value;
             }
         }

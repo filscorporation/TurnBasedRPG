@@ -79,7 +79,9 @@ namespace Assets.Scripts.MapManagement
         /// </summary>
         public void ClearPath(int index)
         {
-            Destroy(selectedTiles[index]);
+            // TODO: solve bug with double click on next to player tile while moving
+            if (selectedTiles.Count >= index)
+                Destroy(selectedTiles[index]);
         }
 
         private void SelectPath(List<Tile> path)

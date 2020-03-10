@@ -17,6 +17,8 @@ namespace Assets.Scripts.MapManagement
         public int HValue { get; set; }
         public int ParentX { get; set; }
         public int ParentZ { get; set; }
+
+        public MapObject Occupier;
         
         /// <summary>
         /// Initialize X Y coordinates based on position
