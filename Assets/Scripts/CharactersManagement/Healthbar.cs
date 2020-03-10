@@ -15,7 +15,7 @@ namespace Assets.Scripts.CharactersManagement
         private Slider slider;
         private Image fill;
         private const string fillImageName = "Fill";
-        private const float healthbarHeigth = 85F;
+        private const float healthbarHeigth = 0.15F;
 
         /// <summary>
         /// Should be called before set methods
@@ -31,7 +31,7 @@ namespace Assets.Scripts.CharactersManagement
         public void LateUpdate()
         {
             transform.position = Camera.main.WorldToScreenPoint(Character.transform.position);
-            transform.position += new Vector3(0, healthbarHeigth);
+            transform.position += new Vector3(0, Screen.height * healthbarHeigth);
         }
 
         public void Hide()
