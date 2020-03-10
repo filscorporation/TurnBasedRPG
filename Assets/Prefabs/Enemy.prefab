@@ -126,8 +126,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00303ab42ecd74d4291b328f8c39c628, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OnTile: {fileID: 0}
-  MovingSpeed: 0.2
+  MovingSpeed: 5
+  HealthMax: 10
+  Health: 10
+  Healthbar: {fileID: 0}
+  LineOfSight: 3
 --- !u!114 &3135466231763972717
 MonoBehaviour:
   m_ObjectHideFlags: 0

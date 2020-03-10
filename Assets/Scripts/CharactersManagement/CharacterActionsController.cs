@@ -67,7 +67,7 @@ namespace Assets.Scripts.CharactersManagement
             Character.transform.position = Vector2.MoveTowards(
                 Character.transform.position,
                 path[currentTargetTileIndex].transform.position,
-                Character.MovingSpeed);
+                Character.MovingSpeed*Time.deltaTime*0.4F);
         }
 
         /// <summary>

@@ -125,4 +125,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7112a679c63adc842af579f41350cd4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OnTile: {fileID: 0}
+  MovingSpeed: 5
+  HealthMax: 10
+  Health: 10
+  Healthbar: {fileID: 0}
+  ActionPoints: 3
+  ActionPointsMax: 3
