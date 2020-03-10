@@ -16,6 +16,8 @@ namespace Assets.Scripts.CharactersManagement
         private int currentTargetTileIndex;
         private int pathOffset = 0;
 
+        public const string HealthbarPrefabPath = "Prefabs/HealthbarPrefab";
+
         private Action<Character, int> onNewPathTileReachedAction;
         private Action<Character> onPathEndReachedAction;
 

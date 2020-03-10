@@ -25,6 +25,8 @@ namespace Assets.Scripts.EnemyManagement
 
         protected override void Die(Character killer)
         {
+            base.Die(killer);
+
             Destroy(gameObject);
         }
     }

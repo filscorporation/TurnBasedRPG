@@ -16,7 +16,19 @@ namespace Assets.Scripts.PlayerManagement
     /// </summary>
     public class Player : Character
     {
-        public PlayerState State = PlayerState.FreeControl;
+        private PlayerState state = PlayerState.FreeControl;
+        public PlayerState State
+        {
+            get => state;
+            set
+            {
+                if (value == PlayerState.InBattle)
+                    Healthbar.Show();
+                if (value == PlayerState.FreeControl)
+                    Healthbar.Hide();
+                state = value;
+            }
+        }
 
         public int ActionPoints = 3;
         public int ActionPointsMax = 3;
@@ -35,6 +47,7 @@ namespace Assets.Scripts.PlayerManagement
 
         protected override void Die(Character killer)
         {
+            base.Die(killer);
             // Your dead(
             Debug.Log("Player dead");
         }

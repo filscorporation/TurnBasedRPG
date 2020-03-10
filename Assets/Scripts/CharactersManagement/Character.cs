@@ -13,6 +13,31 @@ namespace Assets.Scripts.CharactersManagement
 
         public float HealthMax = 10F;
         public float Health = 10F;
+        public Healthbar Healthbar;
+
+        public new void Start()
+        {
+            base.Start();
+
+            InitializeHealthbar();
+        }
+
+        private void InitializeHealthbar()
+        {
+            Canvas canvas = FindObjectOfType<Canvas>();
+            GameObject hbGO = Instantiate(
+                Resources.Load(CharacterActionsController.HealthbarPrefabPath),
+                Vector3.zero,
+                Quaternion.identity,
+                canvas.transform) as GameObject;
+            if (hbGO == null)
+                throw new Exception("Error initializing healthbar");
+            Healthbar = hbGO.GetComponent<Healthbar>();
+            Healthbar.Initialize();
+            Healthbar.Character = this;
+            Healthbar.Set(Health, HealthMax);
+            Healthbar.Hide();
+        }
 
         /// <summary>
         /// Makes character take damage
@@ -22,6 +47,7 @@ namespace Assets.Scripts.CharactersManagement
         {
             Debug.Log($"Character {this} took {damage.Value} damage from {damage.Source}");
             Health = Mathf.Max(0, Health - damage.Value);
+            Healthbar.Set(Health, HealthMax);
 
             if (Health < Mathf.Epsilon)
             {
@@ -29,7 +55,12 @@ namespace Assets.Scripts.CharactersManagement
             }
         }
 
-        protected abstract void Die(Character killer);
+        protected virtual void Die(Character killer)
+        {
+            OnTile.Free = true;
+            OnTile.Occupier = null;
+            Destroy(Healthbar.gameObject);
+        }
 
         public override string ToString()
         {

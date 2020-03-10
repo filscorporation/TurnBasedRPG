@@ -102,6 +102,8 @@ namespace Assets.Scripts.EnemyManagement
             {
                 GameObject eff = Instantiate(WarningEffectPrefab, enemy.transform.position, Quaternion.identity, enemy.transform);
                 Destroy(eff, 3F);
+
+                enemy.Healthbar.Show();
             }
         }
     }
