@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
-namespace Assets.Scripts.UIManagement
+namespace Assets.Scripts.UIManagement.UIElements
 {
     /// <summary>
     /// UI element representing AP bar
@@ -15,7 +16,7 @@ namespace Assets.Scripts.UIManagement
         public Sprite FullAP;
         public Sprite EmptyAP;
 
-        private List<SpriteRenderer> sprites;
+        private List<Image> images;
         
         private int ap = -1;
         private int maxap;
@@ -27,36 +28,37 @@ namespace Assets.Scripts.UIManagement
             if (value == -1)
             {
                 ap = -1;
-                foreach (SpriteRenderer sprite in sprites)
+                foreach (Image image in images)
                 {
-                    Destroy(sprite);
+                    Destroy(image);
                 }
-                sprites.Clear();
+                images.Clear();
                 return;
             }
 
             if (ap == -1)
             {
                 maxap = value;
+                ap = maxap;
 
-                sprites = new List<SpriteRenderer>();
+                images = new List<Image>();
                 for (int i = 0; i < maxap; i++)
                 {
                     Vector2 p = transform.position;
                     p += new Vector2(elementOffset*i, 0);
                     GameObject newAP = Instantiate(ActionPointUIPrefab, p, Quaternion.identity, transform);
-                    sprites.Add(newAP.GetComponent<SpriteRenderer>());
+                    images.Add(newAP.GetComponent<Image>());
                 }
                 return;
             }
 
-            foreach (SpriteRenderer sprite in sprites.GetRange(0, value))
+            foreach (Image image in images.GetRange(0, value))
             {
-                sprite.sprite = FullAP;
+                image.sprite = FullAP;
             }
-            foreach (SpriteRenderer sprite in sprites.GetRange(value, maxap - value))
+            foreach (Image image in images.GetRange(value, maxap - value))
             {
-                sprite.sprite = EmptyAP;
+                image.sprite = EmptyAP;
             }
         }
 

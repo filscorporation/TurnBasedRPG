@@ -4,8 +4,8 @@ namespace Assets.Scripts.PlayerManagement
 {
     public enum PlayerState
     {
-        Idle,
-        Moving,
+        FreeControl,
+        Waiting,
         InBattle,
     }
 
@@ -14,9 +14,10 @@ namespace Assets.Scripts.PlayerManagement
     /// </summary>
     public class Player : Character
     {
-        public PlayerState State = PlayerState.Idle;
+        public PlayerState State = PlayerState.FreeControl;
 
         public int ActionPoints = 3;
+        public int ActionPointsMax = 3;
 
         public void Start()
         {

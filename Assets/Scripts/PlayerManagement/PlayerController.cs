@@ -4,6 +4,7 @@ using Assets.Scripts.CharactersManagement;
 using Assets.Scripts.EnemyManagement;
 using Assets.Scripts.InputManagement;
 using Assets.Scripts.MapManagement;
+using Assets.Scripts.UIManagement;
 using UnityEngine;
 
 namespace Assets.Scripts.PlayerManagement
@@ -19,6 +20,10 @@ namespace Assets.Scripts.PlayerManagement
         protected CharacterActionsController CharacterController;
 
         public Player Player;
+
+        private Tile confirmTileInBattle;
+        private List<Tile> savedPath;
+        private Action callWhenPlayersTurnDone;
 
         public void Start()
         {
@@ -42,6 +47,29 @@ namespace Assets.Scripts.PlayerManagement
         }
 
         /// <summary>
+        /// Passes control to player
+        /// </summary>
+        /// <param name="onPlayersTurnDone">After players turn done - pass control to battle manager</param>
+        public void PlayersTurn(Action onPlayersTurnDone)
+        {
+            Player.State = PlayerState.InBattle;
+            callWhenPlayersTurnDone = onPlayersTurnDone;
+
+            // Refresh action points
+            Player.ActionPoints = Player.ActionPointsMax;
+            UIManager.Instance.SetVariable(nameof(Player.ActionPoints), Player.ActionPoints);
+        }
+
+        /// <summary>
+        /// Command to finish players turn
+        /// </summary>
+        public void PlayersTurnEnd()
+        {
+            Player.State = PlayerState.Waiting;
+            callWhenPlayersTurnDone();
+        }
+
+        /// <summary>
         /// This will get call when InputManager will get input
         /// </summary>
         /// <param name="input">Input information</param>
@@ -51,25 +79,99 @@ namespace Assets.Scripts.PlayerManagement
             if (tile == null)
                 return;
 
+            if (Player.State == PlayerState.Waiting)
+            {
+                // Ignore input while waiting for the enemy
+                return;
+            }
+
+            if (!tile.Free)
+            {
+                return;
+            }
+
             Debug.Log($"Handling input to tile {tile.X}:{tile.Y}");
 
+            List<Tile> path;
             // Processing clicked tile
-            List<Tile> path = MapManager.BuildPath(Player.OnTile, tile);
-            if (path == null || path.Count == 0)
-                // No path
-                throw new Exception("No path");
+            if (confirmTileInBattle != null && confirmTileInBattle.Equals(tile))
+            {
+                if (Player.ActionPoints == 0)
+                {
+                    MapManager.ClearPath();
+                    savedPath = null;
+                    confirmTileInBattle = null;
+                    return;
+                }
+                path = savedPath;
+                confirmTileInBattle = null;
+            }
+            else
+            {
+                if (CharacterController.IsMoving())
+                {
+                    if (Player.State == PlayerState.InBattle)
+                        // You cant change path when in turn based move
+                        return;
+                }
 
-            Player.State = PlayerState.Moving;
-            CharacterController.Move(path, (c, i) => MapManager.ClearPath(i), PlayerReachedPathEnd);
+                path = MapManager.BuildPath(Player.OnTile, tile);
+                if (path == null || path.Count == 0)
+                    // No path
+                    throw new Exception("No path");
+                
+                if (Player.State == PlayerState.InBattle)
+                {
+                    savedPath = path;
+                    confirmTileInBattle = tile;
+                    return;
+                }
+            }
+            
+            CharacterController.Move(path, PlayerReachedNextTile, PlayerReachedPathEnd);
+        }
+
+        private void PlayerReachedNextTile(Character player, int tileIndex)
+        {
+            MapManager.ClearPath(tileIndex);
+
+            if (Player.State == PlayerState.InBattle)
+            {
+                // If not fist tile of the path - take action point
+                if (tileIndex != 0)
+                {
+                    Player.ActionPoints--;
+                    UIManager.Instance.SetVariable(nameof(Player.ActionPoints), Player.ActionPoints);
+                }
+
+                if (Player.ActionPoints == 0)
+                {
+                    CharacterController.Cancel();
+                    MapManager.ClearPath();
+                    savedPath = null;
+                    confirmTileInBattle = null;
+                    // Player used all AP, now waiting for EndTurnButton to be pressed
+                    return;
+                }
+            }
+
+            if (Player.State == PlayerState.FreeControl && EnemyController.CheckIfStartBattle(Player))
+            {
+                // Battle began
+                CharacterController.Cancel();
+                MapManager.ClearPath();
+            }
         }
 
         private void PlayerReachedPathEnd(Character player)
         {
             Debug.Log("Path end reached");
-            Player.State = PlayerState.Idle;
             MapManager.ClearPath();
 
-            EnemyController.CheckIfStartBattle(Player);
+            if (Player.State == PlayerState.FreeControl && EnemyController.CheckIfStartBattle(Player))
+            {
+                // Battle began
+            }
         }
     }
 }

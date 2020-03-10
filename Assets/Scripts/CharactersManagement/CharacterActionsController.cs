@@ -38,7 +38,14 @@ namespace Assets.Scripts.CharactersManagement
             {
                 // Reached target tile
                 if (currentTargetTileIndex - pathOffset >= 0)
+                {
                     onNewPathTileReachedAction?.Invoke(Character, currentTargetTileIndex - pathOffset);
+                    if (path == null || !path.Any())
+                    {
+                        // Path was canceled after next tile reached
+                        return;
+                    }
+                }
                 if (currentTargetTileIndex + 1 == path.Count)
                 {
                     // Reached end of the path
@@ -84,6 +91,25 @@ namespace Assets.Scripts.CharactersManagement
             }
 
             path = newPath;
+        }
+
+        /// <summary>
+        /// Cancels current character movement
+        /// </summary>
+        public void Cancel()
+        {
+            currentTargetTileIndex = 0;
+            pathOffset = 0;
+            path.Clear();
+        }
+
+        /// <summary>
+        /// Is character moving
+        /// </summary>
+        /// <returns></returns>
+        public bool IsMoving()
+        {
+            return path != null && path.Any();
         }
     }
 }

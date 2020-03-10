@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using Assets.Scripts.BattleManagement;
 using Assets.Scripts.MapManagement;
 using Assets.Scripts.PlayerManagement;
@@ -19,6 +21,8 @@ namespace Assets.Scripts.EnemyManagement
         public List<Enemy> Enemies;
 
         public GameObject WarningEffectPrefab;
+
+        private Action callWhenEnemyTurnDone;
 
         public void Start()
         {
@@ -40,16 +44,36 @@ namespace Assets.Scripts.EnemyManagement
         }
 
         /// <summary>
+        /// Passes control to enemy
+        /// </summary>
+        /// <param name="onEnemyTurnDone">After enemy turn done - pass control to battle manager</param>
+        public void EnemyTurn(Action onEnemyTurnDone)
+        {
+            callWhenEnemyTurnDone = onEnemyTurnDone;
+            Invoke(nameof(TestSleep), 2F);
+        }
+
+        private void TestSleep()
+        {
+            callWhenEnemyTurnDone();
+        }
+
+        /// <summary>
         /// Check if player in any enemies line of sight to start battle
         /// </summary>
         /// <param name="player"></param>
-        public void CheckIfStartBattle(Player player)
+        public bool CheckIfStartBattle(Player player)
         {
             foreach (Enemy enemy in Enemies)
             {
                 if (enemy.InSight(player))
+                {
                     BattleManager.StartBattleFromEnemyAttack(enemy);
+                    return true;
+                }
             }
+
+            return false;
         }
 
         /// <summary>
