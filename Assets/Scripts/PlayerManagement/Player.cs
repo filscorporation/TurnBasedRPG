@@ -18,10 +18,5 @@ namespace Assets.Scripts.PlayerManagement
 
         public int ActionPoints = 3;
         public int ActionPointsMax = 3;
-
-        public void Start()
-        {
-            DetectOnTile();
-        }
     }
 }

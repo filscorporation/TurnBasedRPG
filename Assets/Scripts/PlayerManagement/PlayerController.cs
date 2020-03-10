@@ -65,6 +65,9 @@ namespace Assets.Scripts.PlayerManagement
         /// </summary>
         public void PlayersTurnEnd()
         {
+            if (CharacterController.IsMoving())
+                return;
+
             Player.State = PlayerState.Waiting;
             callWhenPlayersTurnDone();
         }
@@ -93,7 +96,7 @@ namespace Assets.Scripts.PlayerManagement
             Debug.Log($"Handling input to tile {tile.X}:{tile.Y}");
 
             List<Tile> path;
-            // Processing clicked tile
+            // Player click on tile second time in a row - confirmation for action in battle
             if (confirmTileInBattle != null && confirmTileInBattle.Equals(tile))
             {
                 if (Player.ActionPoints == 0)

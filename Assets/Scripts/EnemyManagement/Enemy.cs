@@ -10,11 +10,6 @@ namespace Assets.Scripts.EnemyManagement
     {
         public int LineOfSight = 3;
 
-        public void Start()
-        {
-            DetectOnTile();
-        }
-
         /// <summary>
         /// Checks if other character in sight of this
         /// </summary>

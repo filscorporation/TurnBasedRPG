@@ -24,8 +24,6 @@ namespace Assets.Scripts.MapManagement
             List<T> openList = new List<T>();
             List<T> closeList = new List<T>();
 
-            //%Debug.Log("Try find from " + inElement.X + "/" + inElement.Y + " to " + outElement.X + "/" + outElement.Y);
-
             openList.Add(inElement);//Добавляем в открытый список стартовую клетку
             inElement.List = 1;
             grid[inElement.X, inElement.Y].List = 1;
@@ -87,7 +85,7 @@ namespace Assets.Scripts.MapManagement
                                             grid[target.X + i, target.Y + j].ParentZ = target.Y;
                                             //Пересчитываем значения
                                             int zero = i * j;
-                                            FindValue(grid[target.X + i, target.Y + j], target, outElement);
+                                            FindValue(grid[target.X + i, target.Y + j], target, outElement, zero);
                                         }
                                     }
                                     else
