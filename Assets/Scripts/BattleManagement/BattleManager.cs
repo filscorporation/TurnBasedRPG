@@ -67,7 +67,7 @@ namespace Assets.Scripts.BattleManagement
             Debug.Log("Enemy turn");
             UIManager.Instance.SetVariable(endTurnButtonName, 2);
             currentBattle.State = BattleState.EnemyTurn;
-            EnemyController.EnemyTurn(EnemyTurnEnd);
+            EnemyController.EnemyTurn(EnemyTurnEnd, currentBattle);
         }
 
         /// <summary>

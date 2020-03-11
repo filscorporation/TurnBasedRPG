@@ -1,4 +1,6 @@
-﻿using Assets.Scripts.CharactersManagement;
+﻿using System;
+using System.Collections.Generic;
+using Assets.Scripts.CharactersManagement;
 using UnityEngine;
 
 namespace Assets.Scripts.PlayerManagement
@@ -16,6 +18,7 @@ namespace Assets.Scripts.PlayerManagement
     /// <summary>
     /// Players skill stats
     /// </summary>
+    [Serializable]
     public class Skill
     {
         public string Name;
@@ -27,6 +30,9 @@ namespace Assets.Scripts.PlayerManagement
         public SkillTargetType TargetType;
 
         public float Damage;
+
+        public float CastingTime = 1F;
+        public float CastingEffectTime = 0.5F;
 
         /// <summary>
         /// Checks if character in range of the skill
@@ -40,6 +46,20 @@ namespace Assets.Scripts.PlayerManagement
                        Mathf.Abs(user.OnTile.X - target.OnTile.X),
                        Mathf.Abs(user.OnTile.Y - target.OnTile.Y))
                    <= Range;
+        }
+
+        /// <summary>
+        /// Uses skill on targets
+        /// </summary>
+        /// <param name="user"></param>
+        /// <param name="targets"></param>
+        public void Use(Character user, List<Character> targets)
+        {
+            foreach (Character target in targets)
+            {
+                // TODO: temp for test
+                target.TakeDamage(new Damage(user, Damage));
+            }
         }
     }
 }

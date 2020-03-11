@@ -12788,6 +12788,11 @@ PrefabInstance:
       propertyPath: MovingSpeed
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 3135466231763972716, guid: 37856e5182ea89548b1303b99df77047,
+        type: 3}
+      propertyPath: Skills.Array.data[0].Cost
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 3135466231763972718, guid: 37856e5182ea89548b1303b99df77047,
         type: 3}
       propertyPath: m_Name
@@ -19664,7 +19669,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   InputManager: {fileID: 966605255}
-  MapManager: {fileID: 577993331}
   EnemyController: {fileID: 1414711987}
   Player: {fileID: 3337483473800260408}
 --- !u!4 &835166946
@@ -23057,7 +23061,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 966605254}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5e7893eb13dbedd4ab30c7417debfb5f, type: 3}
+  m_Script: {fileID: 11500000, guid: f72a0e8263fec7f42b424072d20c7874, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!4 &966605256
@@ -33784,7 +33788,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69cbb46a3dd4ce645b21b641437ce207, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MapManager: {fileID: 577993331}
   BattleManager: {fileID: 353398807}
   Enemies: []
   WarningEffectPrefab: {fileID: 7564705759228552030, guid: 9ba4a7c31277bc34dbdc9b0612a4ac90,
@@ -37474,6 +37477,11 @@ PrefabInstance:
         type: 3}
       propertyPath: MovingSpeed
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3135466231763972716, guid: 37856e5182ea89548b1303b99df77047,
+        type: 3}
+      propertyPath: Skills.Array.data[0].Cost
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3135466231763972718, guid: 37856e5182ea89548b1303b99df77047,
         type: 3}
@@ -51784,6 +51792,11 @@ PrefabInstance:
       propertyPath: MovingSpeed
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 3135466231763972716, guid: 37856e5182ea89548b1303b99df77047,
+        type: 3}
+      propertyPath: Skills.Array.data[0].Cost
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 3135466231763972718, guid: 37856e5182ea89548b1303b99df77047,
         type: 3}
       propertyPath: m_Name
@@ -51920,7 +51933,32 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4705321625307422221, guid: 24e9a90715e8be34e82d4e791006c612,
         type: 3}
+      propertyPath: Skills.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4705321625307422221, guid: 24e9a90715e8be34e82d4e791006c612,
+        type: 3}
       propertyPath: MovingSpeed
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4705321625307422221, guid: 24e9a90715e8be34e82d4e791006c612,
+        type: 3}
+      propertyPath: Skills.Array.data[0].Name
+      value: Attack
+      objectReference: {fileID: 0}
+    - target: {fileID: 4705321625307422221, guid: 24e9a90715e8be34e82d4e791006c612,
+        type: 3}
+      propertyPath: Skills.Array.data[0].Range
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4705321625307422221, guid: 24e9a90715e8be34e82d4e791006c612,
+        type: 3}
+      propertyPath: Skills.Array.data[0].Cost
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4705321625307422221, guid: 24e9a90715e8be34e82d4e791006c612,
+        type: 3}
+      propertyPath: Skills.Array.data[0].Damage
       value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []

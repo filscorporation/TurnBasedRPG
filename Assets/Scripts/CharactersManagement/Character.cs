@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using Assets.Scripts.MapManagement;
+using Assets.Scripts.PlayerManagement;
 using UnityEngine;
 
 namespace Assets.Scripts.CharactersManagement
@@ -11,9 +13,14 @@ namespace Assets.Scripts.CharactersManagement
     {
         public float MovingSpeed = 0.2F;
 
+        public int ActionPoints = 3;
+        public int ActionPointsMax = 3;
+
         public float HealthMax = 10F;
         public float Health = 10F;
         public Healthbar Healthbar;
+
+        public List<Skill> Skills = new List<Skill>();
 
         public new void Start()
         {

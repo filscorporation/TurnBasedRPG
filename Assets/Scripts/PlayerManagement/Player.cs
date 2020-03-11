@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Assets.Scripts.CharactersManagement;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Assets.Scripts.PlayerManagement
 {
@@ -30,26 +31,13 @@ namespace Assets.Scripts.PlayerManagement
             }
         }
 
-        public int ActionPoints = 3;
-        public int ActionPointsMax = 3;
-
-        public List<Skill> Skills = new List<Skill>
-        {
-            new Skill
-            {
-                Name = "Attack",
-                Range = 1,
-                Cost = 2,
-                TargetType = SkillTargetType.Enemy,
-                Damage = 5F,
-            },
-        };
-
         protected override void Die(Character killer)
         {
             base.Die(killer);
             // Your dead(
             Debug.Log("Player dead");
+            // For testing - reload scene
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
     }
 }

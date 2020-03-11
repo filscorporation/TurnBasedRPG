@@ -16,7 +16,6 @@ namespace Assets.Scripts.PlayerManagement
     public class PlayerController : MonoBehaviour, IInputSubscriber
     {
         public InputManagerBase InputManager;
-        public MapManager MapManager;
         public EnemyController EnemyController;
         public SkillController SkillController;
         protected CharacterActionsController CharacterController;
@@ -31,7 +30,7 @@ namespace Assets.Scripts.PlayerManagement
         {
             CharacterController = GetComponent<CharacterActionsController>();
             Validate();
-            SkillController = new SkillController(this, MapManager, Player);
+            SkillController = new SkillController(this, Player);
             SkillController.Initialize();
             InputManager.Subscribe(this);
         }
@@ -40,8 +39,6 @@ namespace Assets.Scripts.PlayerManagement
         {
             if (InputManager == null)
                 throw new Exception("InputManager field should not be null");
-            if (MapManager == null)
-                throw new Exception("MapManager field should not be null");
             if (EnemyController == null)
                 throw new Exception("EnemyController field should not be null");
             if (Player == null)
@@ -100,6 +97,7 @@ namespace Assets.Scripts.PlayerManagement
             }
 
             // Occupied tile processing
+
             if (!tile.Free)
             {
                 // Try using skill
@@ -148,7 +146,7 @@ namespace Assets.Scripts.PlayerManagement
                         return;
                 }
 
-                path = MapManager.BuildPath(Player.OnTile, tile);
+                path = MapManager.Instance.BuildPath(Player.OnTile, tile);
                 if (path == null || path.Count == 0)
                     // No path
                     throw new Exception("No path");
@@ -169,15 +167,15 @@ namespace Assets.Scripts.PlayerManagement
         /// </summary>
         public void ClearPlannedPath()
         {
-            MapManager.ClearPath();
+            MapManager.Instance.ClearPath();
             SkillController.Clear();
             savedPath = null;
             confirmTileInBattle = null;
         }
 
-        private void PlayerReachedNextTile(Character player, int tileIndex)
+        private void PlayerReachedNextTile(int tileIndex)
         {
-            MapManager.ClearPath(tileIndex);
+            MapManager.Instance.ClearPath(tileIndex);
 
             if (Player.State == PlayerState.InBattle)
             {
@@ -191,7 +189,7 @@ namespace Assets.Scripts.PlayerManagement
                 if (Player.ActionPoints == 0)
                 {
                     CharacterController.Cancel();
-                    MapManager.ClearPath();
+                    MapManager.Instance.ClearPath();
                     savedPath = null;
                     confirmTileInBattle = null;
                     // Player used all AP, now waiting for EndTurnButton to be pressed
@@ -203,14 +201,14 @@ namespace Assets.Scripts.PlayerManagement
             {
                 // Battle began
                 CharacterController.Cancel();
-                MapManager.ClearPath();
+                MapManager.Instance.ClearPath();
             }
         }
 
-        private void PlayerReachedPathEnd(Character player)
+        private void PlayerReachedPathEnd()
         {
             Debug.Log("Path end reached");
-            MapManager.ClearPath();
+            MapManager.Instance.ClearPath();
 
             if (Player.State == PlayerState.FreeControl && EnemyController.CheckIfStartBattle(Player))
             {

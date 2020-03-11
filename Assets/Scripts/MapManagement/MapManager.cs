@@ -9,6 +9,17 @@ namespace Assets.Scripts.MapManagement
     /// </summary>
     public class MapManager : MonoBehaviour
     {
+        public static MapManager instance;
+        public static MapManager Instance
+        {
+            get
+            {
+                if (instance == null)
+                    instance = FindObjectOfType<MapManager>();
+                return instance;
+            }
+        }
+
         private PathFinder<Tile> pathFinder;
 
         private Tile[,] field;
@@ -46,7 +57,12 @@ namespace Assets.Scripts.MapManagement
         /// <returns></returns>
         public List<Tile> GetPath(Tile a, Tile b)
         {
-            return pathFinder.FindPath(a, b, field);
+            List<Tile> path = pathFinder.FindPath(a, b, field, true);
+            // If path end tile was not free, we should remove it from final path
+            // This is made for enemies to find path to occupied by player tile
+            if (path != null && path.Any() && !b.Free)
+                path.Remove(b);
+            return path;
         }
 
         /// <summary>

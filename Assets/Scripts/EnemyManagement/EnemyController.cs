@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 using Assets.Scripts.BattleManagement;
-using Assets.Scripts.MapManagement;
 using Assets.Scripts.PlayerManagement;
 using UnityEngine;
 
@@ -15,10 +12,12 @@ namespace Assets.Scripts.EnemyManagement
     /// </summary>
     public class EnemyController : MonoBehaviour
     {
-        public MapManager MapManager;
         public BattleManager BattleManager;
 
         public List<Enemy> Enemies;
+
+        private Queue<Enemy> enemiesInTurn;
+        private Battle currentButtle;
 
         public GameObject WarningEffectPrefab;
 
@@ -32,8 +31,6 @@ namespace Assets.Scripts.EnemyManagement
 
         private void Validate()
         {
-            if (MapManager == null)
-                throw new Exception("MapManager field should not be null");
             if (BattleManager == null)
                 throw new Exception("BattleManager field should not be null");
         }
@@ -47,14 +44,53 @@ namespace Assets.Scripts.EnemyManagement
         /// Passes control to enemy
         /// </summary>
         /// <param name="onEnemyTurnDone">After enemy turn done - pass control to battle manager</param>
-        public void EnemyTurn(Action onEnemyTurnDone)
+        /// <param name="battle"></param>
+        public void EnemyTurn(Action onEnemyTurnDone, Battle battle)
         {
+            Debug.Log("Starting enemy turn");
+
             callWhenEnemyTurnDone = onEnemyTurnDone;
-            Invoke(nameof(TestSleep), 2F);
+
+            // Sort all enemies by priority and put them into queue to act
+            currentButtle = battle;
+            enemiesInTurn = new Queue<Enemy>(currentButtle.Enemies.OrderBy(e => e.Priority(currentButtle)));
+
+            ProcessEnemyFromQueue();
         }
 
-        private void TestSleep()
+        private void ProcessEnemyFromQueue()
         {
+            if (!enemiesInTurn.Any())
+            {
+                // All enemies acted
+                FinishEnemyTurn();
+                return;
+            }
+
+            Enemy enemy = enemiesInTurn.Dequeue();
+            if (enemy == null)
+            {
+                // Enemy probably died
+                return;
+            }
+
+            enemy.Act(currentButtle, EnemyFinishedActing);
+        }
+
+        private void EnemyFinishedActing()
+        {
+            ProcessEnemyFromQueue();
+        }
+
+        private void FinishEnemyTurn()
+        {
+            Debug.Log("Enemy turn finished");
+            // Do all turn end stuff
+            foreach (Enemy enemy in currentButtle.Enemies)
+            {
+                enemy.ActionPoints = enemy.ActionPointsMax;
+            }
+            // Ready to pass the turn to player
             callWhenEnemyTurnDone();
         }
 

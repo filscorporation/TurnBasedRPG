@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Assets.Scripts.CharactersManagement;
 using Assets.Scripts.MapManagement;
@@ -13,17 +14,15 @@ namespace Assets.Scripts.PlayerManagement
     public class SkillController : IUISubscriber
     {
         protected PlayerController PlayerController;
-        protected MapManager MapManager;
         protected Player Player;
 
         private Skill activeSkill;
 
         private const string buttonString = "Button";
 
-        public SkillController(PlayerController playerController, MapManager mapManager, Player player)
+        public SkillController(PlayerController playerController, Player player)
         {
             PlayerController = playerController;
-            MapManager = mapManager;
             Player = player;
         }
 
@@ -90,8 +89,8 @@ namespace Assets.Scripts.PlayerManagement
             Player.ActionPoints -= activeSkill.Cost;
             UIManager.Instance.SetVariable(nameof(Player.ActionPoints), Player.ActionPoints);
 
-            // TODO: temp for test
-            target.TakeDamage(new Damage(Player, activeSkill.Damage));
+            // TODO: many targets
+            activeSkill.Use(Player, new List<Character>{ target });
 
             Clear();
             return true;

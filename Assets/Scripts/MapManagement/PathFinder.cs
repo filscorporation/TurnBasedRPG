@@ -14,8 +14,9 @@ namespace Assets.Scripts.MapManagement
         /// <param name="inElement">Point where path begins</param>
         /// <param name="outElement">Point where path ends</param>
         /// <param name="grid">Two dimentional array of field elements</param>
+        /// <param name="ignoreOutNotFree">If set to false and out element not free - there will be no path</param>
         /// <returns>Shortest path, or empty array if there is no such one</returns>
-        public List<T> FindPath(T inElement, T outElement, T[,] grid)
+        public List<T> FindPath(T inElement, T outElement, T[,] grid, bool ignoreOutNotFree = false)
         {
             T target = inElement;
             int size = grid.GetLength(0);
@@ -70,7 +71,9 @@ namespace Assets.Scripts.MapManagement
                             else
                             {
                                 //Игнорируем занятые клетки или находящиеся в закрытом списке
-                                if (grid[target.X + i, target.Y + j].Free
+                                if ((grid[target.X + i, target.Y + j].Free
+                                     || ignoreOutNotFree //Если это конечная и ignoreOutNotFree то все равно заходим
+                                     && grid[target.X + i, target.Y + j].Equals(outElement))
                                 && grid[target.X + i, target.Y + j].List != 2)//Через переменную
                                 {
                                     //Клетка уже в открытом списке

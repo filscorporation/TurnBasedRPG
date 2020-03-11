@@ -129,5 +129,11 @@ MonoBehaviour:
   HealthMax: 10
   Health: 10
   Healthbar: {fileID: 0}
+  Skills:
+  - Name: Attack
+    Range: 1
+    Cost: 2
+    TargetType: 0
+    Damage: 5
   ActionPoints: 3
   ActionPointsMax: 3
