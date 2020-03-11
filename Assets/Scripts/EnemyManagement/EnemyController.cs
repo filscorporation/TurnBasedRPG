@@ -71,6 +71,7 @@ namespace Assets.Scripts.EnemyManagement
             if (enemy == null)
             {
                 // Enemy probably died
+                ProcessEnemyFromQueue();
                 return;
             }
 
