@@ -23,6 +23,11 @@ namespace Assets.Scripts.EnemyManagement
         protected Skill CurrentSkill;
         protected Battle CurrentBattle;
 
+        /// <summary>
+        /// Called when enemy dies
+        /// </summary>
+        public event EventHandler OnEnemyDied;
+
         public new void Start()
         {
             base.Start();
@@ -48,6 +53,7 @@ namespace Assets.Scripts.EnemyManagement
             base.Die(killer);
 
             Destroy(gameObject);
+            OnEnemyDied?.Invoke(this, null);
         }
 
         /// <summary>

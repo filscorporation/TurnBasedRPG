@@ -51954,12 +51954,12 @@ PrefabInstance:
     - target: {fileID: 4705321625307422221, guid: 24e9a90715e8be34e82d4e791006c612,
         type: 3}
       propertyPath: Skills.Array.data[0].Cost
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4705321625307422221, guid: 24e9a90715e8be34e82d4e791006c612,
         type: 3}
       propertyPath: Skills.Array.data[0].Damage
-      value: 5
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 24e9a90715e8be34e82d4e791006c612, type: 3}

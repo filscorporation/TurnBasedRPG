@@ -30,7 +30,7 @@ namespace Assets.Scripts.UIManagement.UIElements
                 ap = -1;
                 foreach (Image image in images)
                 {
-                    Destroy(image);
+                    Destroy(image.gameObject);
                 }
                 images.Clear();
                 return;

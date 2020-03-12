@@ -6,11 +6,22 @@ using UnityEngine;
 
 namespace Assets.Scripts.CharactersManagement
 {
+    // TODO: support
+    public enum CharacterState
+    {
+        Idle,
+        Moving,
+        Attacking,
+        ReceivingDamage,
+        Dead,
+    }
     /// <summary>
     /// Player or enemy in the game. Controlled by CharacterController
     /// </summary>
     public abstract class Character : MapObject
     {
+        public CharacterState State = CharacterState.Idle;
+
         public float MovingSpeed = 0.2F;
 
         public int ActionPoints = 3;
@@ -64,6 +75,7 @@ namespace Assets.Scripts.CharactersManagement
 
         protected virtual void Die(Character killer)
         {
+            State = CharacterState.Dead;
             OnTile.Free = true;
             OnTile.Occupier = null;
             Destroy(Healthbar.gameObject);

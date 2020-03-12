@@ -45,18 +45,49 @@ namespace Assets.Scripts.BattleManagement
         public void StartBattleFromEnemyAttack(Enemy enemy)
         {
             Player player = PlayerController.Player;
-            UIManager.Instance.SetVariable(nameof(player.ActionPoints), player.ActionPoints);
-
             List<Enemy> enemies = EnemyController.GetEnemiesInSight(enemy);
-            EnemyController.PutEnemiesToBattle(enemies);
-            
+
+            StartBattle(player, enemies);
+        }
+
+        /// <summary>
+        /// Starts battle of player and all enemies in the list
+        /// </summary>
+        /// <param name="player"></param>
+        /// <param name="enemies"></param>
+        public void StartBattle(Player player, List<Enemy> enemies)
+        {
+            // Draw players action points
+            UIManager.Instance.SetVariable(nameof(player.ActionPoints), player.ActionPointsMax);
+            // Draw icon of active battle
             UIManager.Instance.SetVariable(battleIconName, 1);
+
             currentBattle = new Battle(player, enemies);
             currentBattle.State = BattleState.PlayersTurn;
+
+            EnemyController.PutEnemiesToBattle(currentBattle, enemies, EnemyTurnEnd);
 
             PlayerController.PlayersTurn(PlayersTurnEnd);
             Debug.Log("Players turn");
             UIManager.Instance.SetVariable(endTurnButtonName, 1);
+        }
+
+        /// <summary>
+        /// Ends battle and gives player reward
+        /// </summary>
+        /// <param name="battle"></param>
+        private void PlayerWonBattle(Battle battle)
+        {
+            // Put player into free control state
+            battle.Player.PlayerState = PlayerState.FreeControl;
+            // Refresh current battle
+            currentBattle = null;
+            // Hide players action points
+            UIManager.Instance.SetVariable(nameof(battle.Player.ActionPoints), -1);
+            // Hide active battle icon
+            UIManager.Instance.SetVariable(battleIconName, 0);
+            // Hide end turn button
+            UIManager.Instance.SetVariable(endTurnButtonName, 0);
         }
 
         /// <summary>
@@ -67,18 +98,31 @@ namespace Assets.Scripts.BattleManagement
             Debug.Log("Enemy turn");
             UIManager.Instance.SetVariable(endTurnButtonName, 2);
             currentBattle.State = BattleState.EnemyTurn;
-            EnemyController.EnemyTurn(EnemyTurnEnd, currentBattle);
+            EnemyController.EnemyTurn();
         }
 
         /// <summary>
         /// Will be called when enemy finishes its turn
         /// </summary>
-        private void EnemyTurnEnd()
+        private void EnemyTurnEnd(bool allEnemyDied)
         {
             Debug.Log("Players turn");
+
+            if (allEnemyDied)
+            {
+                // All enemies died
+                PlayerWonBattle(currentBattle);
+                return;
+            }
+
             UIManager.Instance.SetVariable(endTurnButtonName, 1);
             currentBattle.State = BattleState.PlayersTurn;
-            PlayerController.PlayersTurn(PlayersTurnEnd);
+            bool result = PlayerController.PlayersTurn(PlayersTurnEnd);
+            if (!result)
+            {
+                // Player left battle 
+                throw new NotImplementedException();
+            }
         }
 
         private void EndTurn()

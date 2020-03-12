@@ -17,17 +17,17 @@ namespace Assets.Scripts.PlayerManagement
     /// </summary>
     public class Player : Character
     {
-        private PlayerState state = PlayerState.FreeControl;
-        public PlayerState State
+        private PlayerState playerState = PlayerState.FreeControl;
+        public PlayerState PlayerState
         {
-            get => state;
+            get => playerState;
             set
             {
                 if (value == PlayerState.InBattle)
                     Healthbar.Show();
                 if (value == PlayerState.FreeControl)
                     Healthbar.Hide();
-                state = value;
+                playerState = value;
             }
         }
 

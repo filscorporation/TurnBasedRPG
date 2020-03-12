@@ -51,9 +51,10 @@ namespace Assets.Scripts.PlayerManagement
         /// Passes control to player
         /// </summary>
         /// <param name="onPlayersTurnDone">After players turn done - pass control to battle manager</param>
-        public void PlayersTurn(Action onPlayersTurnDone)
+        /// <returns>Returns false if player leaves the battle</returns>
+        public bool PlayersTurn(Action onPlayersTurnDone)
         {
-            Player.State = PlayerState.InBattle;
+            Player.PlayerState = PlayerState.InBattle;
             callWhenPlayersTurnDone = onPlayersTurnDone;
 
             SkillController.ShowSkills();
@@ -61,6 +62,8 @@ namespace Assets.Scripts.PlayerManagement
             // Refresh action points
             Player.ActionPoints = Player.ActionPointsMax;
             UIManager.Instance.SetVariable(nameof(Player.ActionPoints), Player.ActionPoints);
+
+            return true;
         }
 
         /// <summary>
@@ -74,7 +77,7 @@ namespace Assets.Scripts.PlayerManagement
             SkillController.Clear();
             SkillController.HideSkills();
 
-            Player.State = PlayerState.Waiting;
+            Player.PlayerState = PlayerState.Waiting;
             callWhenPlayersTurnDone();
         }
 
@@ -90,7 +93,7 @@ namespace Assets.Scripts.PlayerManagement
 
             Debug.Log($"Handling input to tile {tile.X}:{tile.Y}");
 
-            if (Player.State == PlayerState.Waiting)
+            if (Player.PlayerState == PlayerState.Waiting)
             {
                 // Ignore input while waiting for the enemy
                 return;
@@ -141,7 +144,7 @@ namespace Assets.Scripts.PlayerManagement
             {
                 if (CharacterController.IsMoving())
                 {
-                    if (Player.State == PlayerState.InBattle)
+                    if (Player.PlayerState == PlayerState.InBattle)
                         // You cant change path when in turn based move
                         return;
                 }
@@ -151,7 +154,7 @@ namespace Assets.Scripts.PlayerManagement
                     // No path
                     throw new Exception("No path");
                 
-                if (Player.State == PlayerState.InBattle)
+                if (Player.PlayerState == PlayerState.InBattle)
                 {
                     savedPath = path;
                     confirmTileInBattle = tile;
@@ -177,7 +180,7 @@ namespace Assets.Scripts.PlayerManagement
         {
             MapManager.Instance.ClearPath(tileIndex);
 
-            if (Player.State == PlayerState.InBattle)
+            if (Player.PlayerState == PlayerState.InBattle)
             {
                 // If not fist tile of the path - take action point
                 if (tileIndex != 0)
@@ -197,7 +200,7 @@ namespace Assets.Scripts.PlayerManagement
                 }
             }
 
-            if (Player.State == PlayerState.FreeControl && EnemyController.CheckIfStartBattle(Player))
+            if (Player.PlayerState == PlayerState.FreeControl && EnemyController.CheckIfStartBattle(Player))
             {
                 // Battle began
                 CharacterController.Cancel();
@@ -210,7 +213,7 @@ namespace Assets.Scripts.PlayerManagement
             Debug.Log("Path end reached");
             MapManager.Instance.ClearPath();
 
-            if (Player.State == PlayerState.FreeControl && EnemyController.CheckIfStartBattle(Player))
+            if (Player.PlayerState == PlayerState.FreeControl && EnemyController.CheckIfStartBattle(Player))
             {
                 // Battle began
             }

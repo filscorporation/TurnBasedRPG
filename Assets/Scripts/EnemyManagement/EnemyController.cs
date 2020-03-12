@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Assets.Scripts.BattleManagement;
+using Assets.Scripts.CharactersManagement;
 using Assets.Scripts.PlayerManagement;
 using UnityEngine;
 
@@ -17,11 +18,11 @@ namespace Assets.Scripts.EnemyManagement
         public List<Enemy> Enemies;
 
         private Queue<Enemy> enemiesInTurn;
-        private Battle currentButtle;
+        private Battle currentBattle;
 
         public GameObject WarningEffectPrefab;
 
-        private Action callWhenEnemyTurnDone;
+        private Action<bool> callWhenEnemyTurnDone;
 
         public void Start()
         {
@@ -45,15 +46,14 @@ namespace Assets.Scripts.EnemyManagement
         /// </summary>
         /// <param name="onEnemyTurnDone">After enemy turn done - pass control to battle manager</param>
         /// <param name="battle"></param>
-        public void EnemyTurn(Action onEnemyTurnDone, Battle battle)
+        public void EnemyTurn(/*Action<bool> onEnemyTurnDone, Battle battle*/)
         {
             Debug.Log("Starting enemy turn");
 
-            callWhenEnemyTurnDone = onEnemyTurnDone;
+            //callWhenEnemyTurnDone = onEnemyTurnDone;
 
             // Sort all enemies by priority and put them into queue to act
-            currentButtle = battle;
-            enemiesInTurn = new Queue<Enemy>(currentButtle.Enemies.OrderBy(e => e.Priority(currentButtle)));
+            enemiesInTurn = new Queue<Enemy>(currentBattle.Enemies.OrderBy(e => e.Priority(currentBattle)));
 
             ProcessEnemyFromQueue();
         }
@@ -62,8 +62,13 @@ namespace Assets.Scripts.EnemyManagement
         {
             if (!enemiesInTurn.Any())
             {
+                if (currentBattle.Enemies.All(e => e == null))
+                {
+                    // All enemies deid
+                    FinishEnemyTurn(true);
+                }
                 // All enemies acted
-                FinishEnemyTurn();
+                FinishEnemyTurn(false);
                 return;
             }
 
@@ -75,7 +80,7 @@ namespace Assets.Scripts.EnemyManagement
                 return;
             }
 
-            enemy.Act(currentButtle, EnemyFinishedActing);
+            enemy.Act(currentBattle, EnemyFinishedActing);
         }
 
         private void EnemyFinishedActing()
@@ -83,16 +88,20 @@ namespace Assets.Scripts.EnemyManagement
             ProcessEnemyFromQueue();
         }
 
-        private void FinishEnemyTurn()
+        /// <summary>
+        /// Finishes enemy turn and says to battle manager to pass turn to a player
+        /// </summary>
+        /// <param name="allDied">True if all enemies died and no need to continue the battle</param>
+        private void FinishEnemyTurn(bool allDied)
         {
             Debug.Log("Enemy turn finished");
             // Do all turn end stuff
-            foreach (Enemy enemy in currentButtle.Enemies)
+            foreach (Enemy enemy in currentBattle.Enemies)
             {
                 enemy.ActionPoints = enemy.ActionPointsMax;
             }
             // Ready to pass the turn to player
-            callWhenEnemyTurnDone();
+            callWhenEnemyTurnDone(allDied);
         }
 
         /// <summary>
@@ -113,6 +122,11 @@ namespace Assets.Scripts.EnemyManagement
             return false;
         }
 
+        private bool CheckIfEndBattle()
+        {
+            return currentBattle?.Enemies?.All(e => e.State == CharacterState.Dead) ?? true;
+        }
+
         /// <summary>
         /// Gets all enemies in sight of one, including it
         /// </summary>
@@ -120,7 +134,7 @@ namespace Assets.Scripts.EnemyManagement
         /// <returns></returns>
         public List<Enemy> GetEnemiesInSight(Enemy enemy)
         {
-            List<Enemy> result = new List<Enemy> { enemy };
+            List<Enemy> result = new List<Enemy>();
             foreach (Enemy e in Enemies)
             {
                 if (enemy.InSight(e))
@@ -133,14 +147,33 @@ namespace Assets.Scripts.EnemyManagement
         /// Makes all preparation before battle for enemies
         /// </summary>
         /// <param name="enemies"></param>
-        public void PutEnemiesToBattle(List<Enemy> enemies)
+        public void PutEnemiesToBattle(Battle battle, List<Enemy> enemies, Action<bool> onEnemyTurnDone)
         {
+            currentBattle = battle;
+            callWhenEnemyTurnDone = onEnemyTurnDone;
             foreach (Enemy enemy in enemies)
             {
+                // Subscribe to enemy death
+                enemy.OnEnemyDied += HandleEnemyDead;
+
                 GameObject eff = Instantiate(WarningEffectPrefab, enemy.transform.position, Quaternion.identity, enemy.transform);
                 Destroy(eff, 3F);
 
                 enemy.Healthbar.Show();
+            }
+        }
+
+        private void HandleEnemyDead(object sender, EventArgs args)
+        {
+            if (sender is Enemy enemy)
+            {
+                Enemies.Remove(enemy);
+            }
+
+            if (CheckIfEndBattle())
+            {
+                // All enemies died
+                callWhenEnemyTurnDone(true);
             }
         }
     }
