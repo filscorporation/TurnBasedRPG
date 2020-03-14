@@ -39,6 +39,14 @@ namespace Assets.Scripts.EnemyManagement
         private void LoadAllEnemies()
         {
             Enemies = FindObjectsOfType<Enemy>().ToList();
+
+            foreach (Enemy enemy in Enemies)
+            {
+                // Subscribe to enemy death
+                enemy.OnCharacterDied += HandleEnemyDead;
+                // Subscribe to enemy take damage
+                enemy.OnCharacterTakeDamage += HandleEnemyTakeDamage;
+            }
         }
 
         /// <summary>
@@ -108,13 +116,31 @@ namespace Assets.Scripts.EnemyManagement
         /// Check if player in any enemies line of sight to start battle
         /// </summary>
         /// <param name="player"></param>
-        public bool CheckIfStartBattle(Player player)
+        public bool TryStartBattle(Player player)
         {
             foreach (Enemy enemy in Enemies)
             {
                 if (enemy.InSight(player))
                 {
                     BattleManager.StartBattleFromEnemyAttack(enemy);
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Check if player in any enemies line of sight and adds it to current battle
+        /// </summary>
+        /// <param name="player"></param>
+        public bool TryAddEnemyToBattle(Player player)
+        {
+            foreach (Enemy enemy in Enemies)
+            {
+                if (enemy.InSight(player))
+                {
+                    AddEnemyToCurrentBattle(enemy);
                     return true;
                 }
             }
@@ -153,13 +179,32 @@ namespace Assets.Scripts.EnemyManagement
             callWhenEnemyTurnDone = onEnemyTurnDone;
             foreach (Enemy enemy in enemies)
             {
-                // Subscribe to enemy death
-                enemy.OnEnemyDied += HandleEnemyDead;
-
                 GameObject eff = Instantiate(WarningEffectPrefab, enemy.transform.position, Quaternion.identity, enemy.transform);
                 Destroy(eff, 3F);
 
                 enemy.Healthbar.Show();
+            }
+        }
+
+        private void AddEnemyToCurrentBattle(Enemy enemy)
+        {
+            if (currentBattle == null)
+                throw new Exception("Current battle is null, cant add enemy");
+
+            if (currentBattle.Enemies.Contains(enemy))
+                return;
+
+            currentBattle.Enemies.Add(enemy);
+            GameObject eff = Instantiate(WarningEffectPrefab, enemy.transform.position, Quaternion.identity, enemy.transform);
+            Destroy(eff, 3F);
+            enemy.Healthbar.Show();
+        }
+
+        private void HandleEnemyTakeDamage(object sender, EventArgs args)
+        {
+            if (sender is Enemy enemy)
+            {
+                AddEnemyToCurrentBattle(enemy);
             }
         }
 

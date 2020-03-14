@@ -187,6 +187,10 @@ namespace Assets.Scripts.PlayerManagement
                 {
                     Player.ActionPoints--;
                     UIManager.Instance.SetVariable(nameof(Player.ActionPoints), Player.ActionPoints);
+                    if (EnemyController.TryAddEnemyToBattle(Player))
+                    {
+                        // Got in line of sight of new enemy
+                    }
                 }
 
                 if (Player.ActionPoints == 0)
@@ -200,7 +204,7 @@ namespace Assets.Scripts.PlayerManagement
                 }
             }
 
-            if (Player.PlayerState == PlayerState.FreeControl && EnemyController.CheckIfStartBattle(Player))
+            if (Player.PlayerState == PlayerState.FreeControl && EnemyController.TryStartBattle(Player))
             {
                 // Battle began
                 CharacterController.Cancel();
@@ -213,7 +217,7 @@ namespace Assets.Scripts.PlayerManagement
             Debug.Log("Path end reached");
             MapManager.Instance.ClearPath();
 
-            if (Player.PlayerState == PlayerState.FreeControl && EnemyController.CheckIfStartBattle(Player))
+            if (Player.PlayerState == PlayerState.FreeControl && EnemyController.TryStartBattle(Player))
             {
                 // Battle began
             }

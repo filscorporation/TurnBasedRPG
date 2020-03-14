@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Assets.Scripts.Events;
 using Assets.Scripts.MapManagement;
 using Assets.Scripts.PlayerManagement;
 using UnityEngine;
@@ -32,6 +33,16 @@ namespace Assets.Scripts.CharactersManagement
         public Healthbar Healthbar;
 
         public List<Skill> Skills = new List<Skill>();
+
+        /// <summary>
+        /// Called when character takes damage
+        /// </summary>
+        public event EventHandler OnCharacterTakeDamage;
+
+        /// <summary>
+        /// Called when character dies
+        /// </summary>
+        public event EventHandler OnCharacterDied;
 
         public new void Start()
         {
@@ -66,6 +77,7 @@ namespace Assets.Scripts.CharactersManagement
             Debug.Log($"Character {this} took {damage.Value} damage from {damage.Source}");
             Health = Mathf.Max(0, Health - damage.Value);
             Healthbar.Set(Health, HealthMax);
+            OnCharacterTakeDamage?.Invoke(this, new DamageEventData(damage));
 
             if (Health < Mathf.Epsilon)
             {
@@ -79,6 +91,7 @@ namespace Assets.Scripts.CharactersManagement
             OnTile.Free = true;
             OnTile.Occupier = null;
             Destroy(Healthbar.gameObject);
+            OnCharacterDied?.Invoke(this, null);
         }
 
         public override string ToString()

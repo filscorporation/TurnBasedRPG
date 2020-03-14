@@ -25,7 +25,7 @@ namespace Assets.Scripts.MapManagement
         private Tile[,] field;
 
         public GameObject selectedTilePrefab;
-        private List<GameObject> selectedTiles;
+        private List<GameObject> selectedTiles = new List<GameObject>();
 
         public void Start()
         {
