@@ -68,27 +68,31 @@ namespace Assets.Scripts.EnemyManagement
 
         private void ProcessEnemyFromQueue()
         {
-            if (!enemiesInTurn.Any())
+            while (true)
             {
-                if (currentBattle.Enemies.All(e => e == null))
+                if (!enemiesInTurn.Any())
                 {
-                    // All enemies deid
-                    FinishEnemyTurn(true);
+                    if (currentBattle.Enemies.All(e => e == null))
+                    {
+                        // All enemies deid
+                        FinishEnemyTurn(true);
+                        return;
+                    }
+                    // All enemies acted
+                    FinishEnemyTurn(false);
+                    return;
                 }
-                // All enemies acted
-                FinishEnemyTurn(false);
+
+                Enemy enemy = enemiesInTurn.Dequeue();
+                if (enemy == null)
+                {
+                    // Enemy probably died
+                    continue;
+                }
+
+                enemy.Act(currentBattle, EnemyFinishedActing);
                 return;
             }
-
-            Enemy enemy = enemiesInTurn.Dequeue();
-            if (enemy == null)
-            {
-                // Enemy probably died
-                ProcessEnemyFromQueue();
-                return;
-            }
-
-            enemy.Act(currentBattle, EnemyFinishedActing);
         }
 
         private void EnemyFinishedActing()

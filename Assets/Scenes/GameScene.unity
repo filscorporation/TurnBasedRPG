@@ -52094,6 +52094,16 @@ PrefabInstance:
       propertyPath: Health
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 4705321625307422221, guid: 24e9a90715e8be34e82d4e791006c612,
+        type: 3}
+      propertyPath: CharacterController
+      value: 
+      objectReference: {fileID: 313219272}
+    - target: {fileID: 4705321625307422221, guid: 24e9a90715e8be34e82d4e791006c612,
+        type: 3}
+      propertyPath: Skills.Array.data[0].CastingEffectTime
+      value: 0.4
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 24e9a90715e8be34e82d4e791006c612, type: 3}
 --- !u!114 &3337483473800260408 stripped
