@@ -47,7 +47,8 @@ namespace Assets.Scripts.EnemyManagement
         {
             base.Die(killer);
 
-            Destroy(gameObject);
+            Destroy(this);
+            Destroy(gameObject, 2F);
         }
 
         /// <summary>

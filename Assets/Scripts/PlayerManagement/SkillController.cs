@@ -86,6 +86,7 @@ namespace Assets.Scripts.PlayerManagement
             if (Player.ActionPoints < activeSkill.Cost)
                 throw new Exception("Acivated skill with too high cost");
 
+            Player.State = CharacterState.Attacking;
             Player.ActionPoints -= activeSkill.Cost;
             UIManager.Instance.SetVariable(nameof(Player.ActionPoints), Player.ActionPoints);
 

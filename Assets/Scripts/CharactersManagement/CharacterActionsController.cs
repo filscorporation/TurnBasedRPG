@@ -63,12 +63,14 @@ namespace Assets.Scripts.CharactersManagement
                     if (path == null || !path.Any())
                     {
                         // Path was canceled after next tile reached
+                        Character.State = CharacterState.Idle;
                         return;
                     }
                 }
                 if (currentTargetTileIndex + 1 == path.Count)
                 {
                     // Reached end of the path
+                    Character.State = CharacterState.Idle;
                     onPathEndReachedAction?.Invoke();
                     currentTargetTileIndex = 0;
                     pathOffset = 0;
@@ -121,6 +123,7 @@ namespace Assets.Scripts.CharactersManagement
         /// <param name="endAction">Action to be invoked by the end of path</param>
         public void Move(List<Tile> newPath, Action<int> nextAction, Action endAction)
         {
+            Character.State = CharacterState.Moving;
             onNewPathTileReachedAction = nextAction;
             onPathEndReachedAction = endAction;
             if (path != null && path.Any())
@@ -154,7 +157,8 @@ namespace Assets.Scripts.CharactersManagement
             skillCastTimer = 0;
             skillEffectPlayed = false;
 
-            animator?.SetBool(skillAnimatorParam, true);
+            Character.State = CharacterState.Attacking;
+            //animator?.SetBool(skillAnimatorParam, true);
         }
 
         /// <summary>
@@ -162,6 +166,7 @@ namespace Assets.Scripts.CharactersManagement
         /// </summary>
         public void Cancel()
         {
+            Character.State = CharacterState.Idle;
             currentTargetTileIndex = 0;
             pathOffset = 0;
             path.Clear();

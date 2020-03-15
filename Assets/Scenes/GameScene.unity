@@ -7274,6 +7274,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 990968b7eb2ff44468c09b1d0db1b537, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!95 &313219271
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 313219269}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 389a6c5a5cf20eb46bc7bfe2310c85ef, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &322798523
 GameObject:
   m_ObjectHideFlags: 0
@@ -51954,12 +51973,12 @@ PrefabInstance:
     - target: {fileID: 4705321625307422221, guid: 24e9a90715e8be34e82d4e791006c612,
         type: 3}
       propertyPath: Skills.Array.data[0].Cost
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4705321625307422221, guid: 24e9a90715e8be34e82d4e791006c612,
         type: 3}
       propertyPath: Skills.Array.data[0].Damage
-      value: 5
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 24e9a90715e8be34e82d4e791006c612, type: 3}

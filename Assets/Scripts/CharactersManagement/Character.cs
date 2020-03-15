@@ -21,7 +21,49 @@ namespace Assets.Scripts.CharactersManagement
     /// </summary>
     public abstract class Character : MapObject
     {
-        public CharacterState State = CharacterState.Idle;
+        private CharacterState state = CharacterState.Idle;
+        public CharacterState State
+        {
+            get
+            {
+                return state;
+            }
+            set
+            {
+                if (state != value)
+                {
+                    switch(value)
+                    {
+                        case CharacterState.Idle:
+                            if (state == CharacterState.Moving)
+                                animator.SetBool(animatorMovingBool, false);
+                            state = value;
+                            break;
+                        case CharacterState.Moving:
+                            animator.SetBool(animatorMovingBool, true);
+                            state = value;
+                            break;
+                        case CharacterState.Attacking:
+                            animator.SetTrigger(animatorAttackTrigger);
+                            break;
+                        case CharacterState.ReceivingDamage:
+                            animator.SetTrigger(animatorReceiveDamageTrigger);
+                            break;
+                        case CharacterState.Dead:
+                            animator.SetBool(animatorDeadBool, true);
+                            state = value;
+                            break;
+                        default:
+                            throw new IndexOutOfRangeException(value.ToString());
+                    }
+                }
+            }
+        }
+        private Animator animator;
+        private const string animatorMovingBool = "Moving";
+        private const string animatorAttackTrigger = "Attack";
+        private const string animatorReceiveDamageTrigger = "ReceiveDamage";
+        private const string animatorDeadBool = "Dead";
 
         public float MovingSpeed = 0.2F;
 
@@ -49,6 +91,7 @@ namespace Assets.Scripts.CharactersManagement
             base.Start();
 
             InitializeHealthbar();
+            animator = GetComponent<Animator>();
         }
 
         private void InitializeHealthbar()
@@ -75,6 +118,7 @@ namespace Assets.Scripts.CharactersManagement
         public void TakeDamage(Damage damage)
         {
             Debug.Log($"Character {this} took {damage.Value} damage from {damage.Source}");
+            State = CharacterState.ReceivingDamage;
             Health = Mathf.Max(0, Health - damage.Value);
             Healthbar.Set(Health, HealthMax);
             OnCharacterTakeDamage?.Invoke(this, new DamageEventData(damage));
