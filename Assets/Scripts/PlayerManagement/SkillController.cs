@@ -17,6 +17,7 @@ namespace Assets.Scripts.PlayerManagement
         protected Player Player;
 
         private Skill activeSkill;
+        private SkillTarget currentTarget;
 
         private const string buttonString = "Button";
 
@@ -66,35 +67,58 @@ namespace Assets.Scripts.PlayerManagement
         /// <summary>
         /// Use active skill
         /// </summary>
-        public bool UseSkill(Tile tile)
+        public void UseSkill(Tile tile)
         {
             if (activeSkill == null)
-                return false;
-
-            if (!(tile.Occupier is Character target))
-            {
-                // Attacked some tile
-                return false;
-            }
-
-            if (!activeSkill.InRange(Player, target))
-            {
-                // Cant reach target
-                return false;
-            }
+                return;
 
             if (Player.ActionPoints < activeSkill.Cost)
                 throw new Exception("Acivated skill with too high cost");
 
+            SkillTarget target;
+
+            switch (activeSkill.TargetType)
+            {
+                case SkillTargetType.Player:
+                    if (!(tile.Occupier is Player self))
+                        return;
+                    // Used skill on yourself
+                    target = new SkillTarget(self);
+                    break;
+                case SkillTargetType.Enemy:
+                    if (!(tile.Occupier is Character enemy))
+                        return;
+                    if (!activeSkill.InRange(Player, enemy))
+                        // Cant reach target
+                        return;
+                    // Attacked an enemy
+                    target = new SkillTarget(enemy);
+                    break;
+                case SkillTargetType.Tile:
+                    if (!activeSkill.InRange(Player, tile))
+                        // Cant reach target
+                        return;
+                    target = new SkillTarget(tile);
+                    break;
+                default:
+                    throw new IndexOutOfRangeException(activeSkill.TargetType.ToString());
+            }
+
+            currentTarget = target;
             Player.State = CharacterState.Attacking;
             Player.ActionPoints -= activeSkill.Cost;
             UIManager.Instance.SetVariable(nameof(Player.ActionPoints), Player.ActionPoints);
+            Player.CharacterController.UseSkill(activeSkill, target, FinishUsingSkill, UseSkillEffect);
+        }
 
-            // TODO: many targets
-            activeSkill.Use(Player, new List<Character>{ target });
-
+        private void FinishUsingSkill()
+        {
             Clear();
-            return true;
+        }
+
+        private void UseSkillEffect()
+        {
+            activeSkill.Use(Player, currentTarget);
         }
 
         /// <summary>

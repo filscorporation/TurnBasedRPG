@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Assets.Scripts.CharactersManagement;
+using Assets.Scripts.MapManagement;
 using UnityEngine;
 
 namespace Assets.Scripts.PlayerManagement
@@ -51,11 +52,25 @@ namespace Assets.Scripts.PlayerManagement
         }
 
         /// <summary>
+        /// Checks if tile in range of the skill
+        /// </summary>
+        /// <param name="user"></param>
+        /// <param name="tile"></param>
+        /// <returns></returns>
+        public bool InRange(Character user, Tile tile)
+        {
+            return Mathf.Max(
+                       Mathf.Abs(user.OnTile.X - tile.X),
+                       Mathf.Abs(user.OnTile.Y - tile.Y))
+                   <= Range;
+        }
+
+        /// <summary>
         /// Uses skill on targets
         /// </summary>
         /// <param name="user"></param>
         /// <param name="targets"></param>
-        public void Use(Character user, List<Character> targets)
+        public virtual void Use(Character user, SkillTarget target)
         {
             if (OnHitEffect != null)
             {
@@ -66,12 +81,16 @@ namespace Assets.Scripts.PlayerManagement
                     3F);
             }
 
-            foreach (Character target in targets)
+            if (target.TileTarget != null)
             {
-                // TODO: temp for test
-                target.TakeDamage(new Damage(user, Damage));
+                // Skill used on the groud, probably AOE or some summoning
+                // Will be used in skill overloads
+                return;
+            }
 
-                
+            foreach (Character character in target.CharacterTargets)
+            {
+                character.TakeDamage(new Damage(user, Damage));
             }
         }
     }

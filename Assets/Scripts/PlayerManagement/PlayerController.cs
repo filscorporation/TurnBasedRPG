@@ -28,7 +28,7 @@ namespace Assets.Scripts.PlayerManagement
 
         public void Start()
         {
-            CharacterController = GetComponent<CharacterActionsController>();
+            CharacterController = Player.CharacterController;
             Validate();
             SkillController = new SkillController(this, Player);
             SkillController.Initialize();
@@ -82,7 +82,7 @@ namespace Assets.Scripts.PlayerManagement
         }
 
         /// <summary>
-        /// This will get call when InputManager will get input
+        /// This will get called when InputManager will get input
         /// </summary>
         /// <param name="input">Input information</param>
         public void Handle(InputEvent input)
@@ -99,18 +99,17 @@ namespace Assets.Scripts.PlayerManagement
                 return;
             }
 
+            // Try using skill
+            if (SkillController.HasActiveSkill())
+            {
+                SkillController.UseSkill(tile);
+                return;
+            }
+
             // Occupied tile processing
 
             if (!tile.Free)
             {
-                // Try using skill
-                if (SkillController.HasActiveSkill())
-                {
-                    if (!SkillController.UseSkill(tile))
-                        SkillController.Clear();
-                    return;
-                }
-
                 if (tile.Equals(Player.OnTile))
                 {
                     // Clear path when clicked on player
@@ -120,14 +119,6 @@ namespace Assets.Scripts.PlayerManagement
             }
 
             // Free tile processing
-
-            // Try using skill
-            if (SkillController.HasActiveSkill())
-            {
-                if (!SkillController.UseSkill(tile))
-                    SkillController.Clear();
-                return;
-            }
 
             List<Tile> path;
             // Player click on tile second time in a row - confirmation for action in battle

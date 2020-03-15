@@ -14,7 +14,6 @@ namespace Assets.Scripts.EnemyManagement
     /// </summary>
     public class Enemy : Character
     {
-        protected CharacterActionsController CharacterController;
 
         public int LineOfSight = 3;
 
@@ -22,13 +21,6 @@ namespace Assets.Scripts.EnemyManagement
 
         protected Skill CurrentSkill;
         protected Battle CurrentBattle;
-
-        public new void Start()
-        {
-            base.Start();
-
-            CharacterController = GetComponent<CharacterActionsController>();
-        }
 
         /// <summary>
         /// Checks if other character in sight of this
@@ -149,7 +141,7 @@ namespace Assets.Scripts.EnemyManagement
         private void UseSkillEffect()
         {
             Debug.Log($"Using skill effect");
-            CurrentSkill.Use(this, new List<Character> { CurrentBattle.Player });
+            CurrentSkill.Use(this, new SkillTarget(CurrentBattle.Player));
         }
 
         /// <summary>

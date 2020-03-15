@@ -21,6 +21,8 @@ namespace Assets.Scripts.CharactersManagement
     /// </summary>
     public abstract class Character : MapObject
     {
+        public CharacterActionsController CharacterController;
+
         private CharacterState state = CharacterState.Idle;
         public CharacterState State
         {
@@ -92,6 +94,7 @@ namespace Assets.Scripts.CharactersManagement
             base.Start();
 
             InitializeHealthbar();
+            CharacterController = GetComponent<CharacterActionsController>();
             animator = GetComponent<Animator>();
         }
 
