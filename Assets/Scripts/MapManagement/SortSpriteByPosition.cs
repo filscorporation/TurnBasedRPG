@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 namespace Assets.Scripts.MapManagement
 {
@@ -7,20 +8,23 @@ namespace Assets.Scripts.MapManagement
     /// </summary>
     public class SortSpriteByPosition : MonoBehaviour
     {
-        private SpriteRenderer spriteRenderer;
+        private List<SpriteRenderer> spriteRenderers;
 
         public void Start()
         {
-            spriteRenderer = GetComponent<SpriteRenderer>();
-            if (spriteRenderer == null)
-                spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+            spriteRenderers = new List<SpriteRenderer>();
+            SpriteRenderer self = GetComponent<SpriteRenderer>();
+            if (self != null)
+                spriteRenderers.Add(self);
+            spriteRenderers.AddRange(GetComponentsInChildren<SpriteRenderer>());
         }
 
-        public void Update()
+        public void LateUpdate()
         {
-            if (spriteRenderer != null)
+            foreach (SpriteRenderer spriteRenderer in spriteRenderers)
             {
-                spriteRenderer.sortingOrder = 50 - Mathf.RoundToInt(transform.position.y);
+                int innerOrder = spriteRenderer.sortingOrder % 10;
+                spriteRenderer.sortingOrder = - Mathf.RoundToInt(transform.position.y*100) + innerOrder;
             }
         }
     }

@@ -34,6 +34,8 @@ namespace Assets.Scripts.PlayerManagement
         public float CastingTime = 1F;
         public float CastingEffectTime = 0.5F;
 
+        public GameObject OnHitEffect;
+
         /// <summary>
         /// Checks if character in range of the skill
         /// </summary>
@@ -55,10 +57,21 @@ namespace Assets.Scripts.PlayerManagement
         /// <param name="targets"></param>
         public void Use(Character user, List<Character> targets)
         {
+            if (OnHitEffect != null)
+            {
+                GameObject.Destroy(GameObject.Instantiate(
+                    OnHitEffect,
+                    user.transform.position,
+                    OnHitEffect.transform.rotation),
+                    3F);
+            }
+
             foreach (Character target in targets)
             {
                 // TODO: temp for test
                 target.TakeDamage(new Damage(user, Damage));
+
+                
             }
         }
     }

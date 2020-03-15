@@ -1,0 +1,286 @@
+fileFormatVersion: 2
+guid: ad05f81ef84ec8f44a27fa133f49a5f5
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -3030794605390870092
+    second: Golem_0
+  - first:
+      213: -4890351225413243827
+    second: Golem_1
+  - first:
+      213: 2258720731076752970
+    second: Golem_2
+  - first:
+      213: -8558182943265400422
+    second: Golem_3
+  - first:
+      213: -8234283073180859218
+    second: Golem_4
+  - first:
+      213: 5364265973111914673
+    second: GolemHead
+  - first:
+      213: -7005076754423207833
+    second: GolemHandL
+  - first:
+      213: 3165055573760091616
+    second: GolemHandR
+  - first:
+      213: 4491718667278462377
+    second: GolemLegL
+  - first:
+      213: 7090992601551308341
+    second: GolemLegR
+  - first:
+      213: 5923383455084623512
+    second: GolemBody
+  externalObjects: {}
+  serializedVersion: 10
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: -1
+    aniso: -1
+    mipBias: -100
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: iPhone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: GolemHead
+      rect:
+        serializedVersion: 2
+        x: 68
+        y: 1470
+        width: 497
+        height: 534
+      alignment: 9
+      pivot: {x: 0.4970823, y: 0.24746121}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1b00d004b73b17a40800000000000000
+      internalID: 5364265973111914673
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GolemHandL
+      rect:
+        serializedVersion: 2
+        x: 693
+        y: 1080
+        width: 354
+        height: 889
+      alignment: 9
+      pivot: {x: 0.80886894, y: 0.9200646}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 768224c6ec7f8ce90800000000000000
+      internalID: -7005076754423207833
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GolemHandR
+      rect:
+        serializedVersion: 2
+        x: 1249
+        y: 1099
+        width: 347
+        height: 862
+      alignment: 9
+      pivot: {x: 0.10999485, y: 0.88513494}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0e5275076498ceb20800000000000000
+      internalID: 3165055573760091616
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GolemLegL
+      rect:
+        serializedVersion: 2
+        x: 114
+        y: 363
+        width: 310
+        height: 545
+      alignment: 9
+      pivot: {x: 0.8252332, y: 0.9140365}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9adaf1a645ac55e30800000000000000
+      internalID: 4491718667278462377
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GolemLegR
+      rect:
+        serializedVersion: 2
+        x: 716
+        y: 371
+        width: 313
+        height: 563
+      alignment: 9
+      pivot: {x: 0.14720646, y: 0.89653534}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 53683609334486260800000000000000
+      internalID: 7090992601551308341
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GolemBody
+      rect:
+        serializedVersion: 2
+        x: 1824
+        y: 310
+        width: 960
+        height: 1097
+      alignment: 9
+      pivot: {x: 0.4701355, y: 0.13120915}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 896beb47ed5143250800000000000000
+      internalID: 5923383455084623512
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

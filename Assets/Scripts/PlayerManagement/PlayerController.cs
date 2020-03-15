@@ -136,6 +136,7 @@ namespace Assets.Scripts.PlayerManagement
                 if (Player.ActionPoints == 0)
                 {
                     ClearPlannedPath();
+                    return;
                 }
                 path = savedPath;
                 confirmTileInBattle = null;

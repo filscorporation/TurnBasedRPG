@@ -15,7 +15,7 @@ namespace Assets.Scripts.CharactersManagement
         private Slider slider;
         private Image fill;
         private const string fillImageName = "Fill";
-        private const float healthbarHeigth = 0.15F;
+        private const float healthbarHeigth = 0.2F;
 
         /// <summary>
         /// Should be called before set methods
