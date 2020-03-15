@@ -21,7 +21,12 @@ namespace Assets.Scripts.UIManagement.UIElements
         private int ap = -1;
         private int maxap;
 
-        private const float elementOffset = 90F;
+        private float elementOffset = 65F;
+
+        public void Start()
+        {
+            elementOffset = elementOffset * Screen.width / 1600;
+        }
 
         public void SetValue(int value)
         {

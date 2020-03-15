@@ -73,6 +73,7 @@ namespace Assets.Scripts.CharactersManagement
         public float HealthMax = 10F;
         public float Health = 10F;
         public Healthbar Healthbar;
+        private const string healthbarSortingGroupName = "HealthbarGroup";
 
         public List<Skill> Skills = new List<Skill>();
 
@@ -96,12 +97,12 @@ namespace Assets.Scripts.CharactersManagement
 
         private void InitializeHealthbar()
         {
-            Canvas canvas = FindObjectOfType<Canvas>();
+            Transform healthbarGroup = FindObjectOfType<Canvas>().transform.Find(healthbarSortingGroupName);
             GameObject hbGO = Instantiate(
                 Resources.Load(CharacterActionsController.HealthbarPrefabPath),
                 Vector3.zero,
                 Quaternion.identity,
-                canvas.transform) as GameObject;
+                healthbarGroup) as GameObject;
             if (hbGO == null)
                 throw new Exception("Error initializing healthbar");
             Healthbar = hbGO.GetComponent<Healthbar>();
