@@ -24,7 +24,7 @@ namespace Assets.Scripts.MapManagement
             foreach (SpriteRenderer spriteRenderer in spriteRenderers)
             {
                 int innerOrder = spriteRenderer.sortingOrder % 10;
-                spriteRenderer.sortingOrder = - Mathf.RoundToInt(transform.position.y*100) + innerOrder;
+                spriteRenderer.sortingOrder = - Mathf.RoundToInt(transform.position.y)*100 + innerOrder;
             }
         }
     }
