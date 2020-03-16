@@ -7,7 +7,6 @@ using UnityEngine;
 
 namespace Assets.Scripts.CharactersManagement
 {
-    // TODO: support
     public enum CharacterState
     {
         Idle,
@@ -24,6 +23,10 @@ namespace Assets.Scripts.CharactersManagement
         public CharacterActionsController CharacterController;
 
         private CharacterState state = CharacterState.Idle;
+
+        /// <summary>
+        /// Animation states
+        /// </summary>
         public CharacterState State
         {
             get

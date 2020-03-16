@@ -33,6 +33,11 @@ namespace Assets.Scripts.CharactersManagement
         private const string skillAnimatorParam = "UsingSkill";
         private bool freeze = false;
 
+        /// <summary>
+        /// Which side character sprite is looking, -1 left, 1 right
+        /// </summary>
+        public int CharacterRotation = 1;
+
         public void Start()
         {
             animator = GetComponent<Animator>();
@@ -84,10 +89,31 @@ namespace Assets.Scripts.CharactersManagement
                 return;
             }
 
+            float oldx = Character.transform.position.x;
+
             Character.transform.position = Vector2.MoveTowards(
                 Character.transform.position,
                 path[currentTargetTileIndex].transform.position,
                 Character.MovingSpeed*Time.deltaTime*0.4F);
+
+            RotateCharacter(oldx, Character.transform.position.x);
+        }
+
+        private void RotateCharacter(float a, float b)
+        {
+            // Rotates character sprite when he switches direction
+            if (a - b >= 0 && CharacterRotation == 1)
+            {
+                CharacterRotation = -1;
+                Vector3 s = Character.transform.localScale;
+                Character.transform.localScale = new Vector3(-s.x, s.y, s.z);
+            }
+            else if (a - b < 0 && CharacterRotation == -1)
+            {
+                CharacterRotation = 1;
+                Vector3 s = Character.transform.localScale;
+                Character.transform.localScale = new Vector3(-s.x, s.y, s.z);
+            }
         }
 
         private void UseCurrentSkill()
@@ -156,6 +182,10 @@ namespace Assets.Scripts.CharactersManagement
             currentSkillTarget = target;
             skillCastTimer = 0;
             skillEffectPlayed = false;
+
+            RotateCharacter(
+                Character.transform.position.x,
+                target.TileTarget?.transform.position.x ?? target.CharacterTargets.First().transform.position.x);
 
             Character.State = CharacterState.Attacking;
             //animator?.SetBool(skillAnimatorParam, true);

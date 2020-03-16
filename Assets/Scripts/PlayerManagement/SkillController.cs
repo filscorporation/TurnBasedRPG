@@ -18,6 +18,7 @@ namespace Assets.Scripts.PlayerManagement
 
         private Skill activeSkill;
         private SkillTarget currentTarget;
+        private bool isUsing = false;
 
         private const string buttonString = "Button";
 
@@ -54,7 +55,7 @@ namespace Assets.Scripts.PlayerManagement
         {
             if (Player.ActionPoints < skill.Cost)
             {
-                // Not enougth skill points
+                // Not enough skill points
                 return false;
             }
 
@@ -69,11 +70,14 @@ namespace Assets.Scripts.PlayerManagement
         /// </summary>
         public void UseSkill(Tile tile)
         {
+            if (isUsing)
+                return;
+
             if (activeSkill == null)
                 return;
 
             if (Player.ActionPoints < activeSkill.Cost)
-                throw new Exception("Acivated skill with too high cost");
+                throw new Exception("Activated skill with too high cost");
 
             SkillTarget target;
 
@@ -105,6 +109,7 @@ namespace Assets.Scripts.PlayerManagement
             }
 
             currentTarget = target;
+            isUsing = true;
             Player.State = CharacterState.Attacking;
             Player.ActionPoints -= activeSkill.Cost;
             UIManager.Instance.SetVariable(nameof(Player.ActionPoints), Player.ActionPoints);
@@ -114,6 +119,7 @@ namespace Assets.Scripts.PlayerManagement
         private void FinishUsingSkill()
         {
             Clear();
+            isUsing = false;
         }
 
         private void UseSkillEffect()

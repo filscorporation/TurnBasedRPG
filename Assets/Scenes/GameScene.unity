@@ -7307,6 +7307,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Character: {fileID: 3337483473800260408}
+  CharacterRotation: 1
 --- !u!1 &322798523
 GameObject:
   m_ObjectHideFlags: 0
@@ -49395,6 +49396,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2149261755928736835, guid: 0521cfa6dcee6bf46a2a0a1cee8ccbef,
+        type: 3}
+      propertyPath: m_SortingOrder
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 2149261756153575524, guid: 0521cfa6dcee6bf46a2a0a1cee8ccbef,
+        type: 3}
+      propertyPath: m_SortingOrder
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 2149261756225878642, guid: 0521cfa6dcee6bf46a2a0a1cee8ccbef,
+        type: 3}
+      propertyPath: m_SortingOrder
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 2149261757111756230, guid: 0521cfa6dcee6bf46a2a0a1cee8ccbef,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -49454,6 +49470,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Golem
+      objectReference: {fileID: 0}
+    - target: {fileID: 2149261757228599961, guid: 0521cfa6dcee6bf46a2a0a1cee8ccbef,
+        type: 3}
+      propertyPath: m_SortingOrder
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 2149261757801734190, guid: 0521cfa6dcee6bf46a2a0a1cee8ccbef,
+        type: 3}
+      propertyPath: m_SortingOrder
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 4520674481462131009, guid: 0521cfa6dcee6bf46a2a0a1cee8ccbef,
+        type: 3}
+      propertyPath: CharacterRotation
+      value: -1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0521cfa6dcee6bf46a2a0a1cee8ccbef, type: 3}

@@ -89,7 +89,7 @@ namespace Assets.Scripts.EnemyManagement
                     if (skill.Cost > ActionPoints)
                     {
                         Debug.Log($"Waiting for action points to restore");
-                        // Target is in range but we dont have enougth AP, we can wait
+                        // Target is in range but we dont have enough AP, we can wait
                         callWhenFinishedActing.Invoke();
                         return;
                     }
