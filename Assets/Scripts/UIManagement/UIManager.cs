@@ -12,7 +12,7 @@ namespace Assets.Scripts.UIManagement
     /// </summary>
     public class UIManager : MonoBehaviour
     {
-        public static UIManager instance;
+        private static UIManager instance;
         public static UIManager Instance
         {
             get

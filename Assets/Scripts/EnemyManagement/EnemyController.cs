@@ -39,6 +39,7 @@ namespace Assets.Scripts.EnemyManagement
         private void LoadAllEnemies()
         {
             Enemies = FindObjectsOfType<Enemy>().ToList();
+            DamageValueEffectController.Instance.AddToShowEffectList(Enemies);
 
             foreach (Enemy enemy in Enemies)
             {

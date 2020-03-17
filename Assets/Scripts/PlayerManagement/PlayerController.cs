@@ -33,6 +33,7 @@ namespace Assets.Scripts.PlayerManagement
             SkillController = new SkillController(this, Player);
             SkillController.Initialize();
             InputManager.Subscribe(this);
+            DamageValueEffectController.Instance.AddToShowEffectList(new[] { Player });
         }
 
         private void Validate()
