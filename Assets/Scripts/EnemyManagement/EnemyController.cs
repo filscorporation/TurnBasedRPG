@@ -136,21 +136,22 @@ namespace Assets.Scripts.EnemyManagement
         }
 
         /// <summary>
-        /// Check if player in any enemies line of sight and adds it to current battle
+        /// Check if player in any enemies line of sight and add it to current battle
         /// </summary>
         /// <param name="player"></param>
         public bool TryAddEnemyToBattle(Player player)
         {
+            bool result = false;
             foreach (Enemy enemy in Enemies)
             {
                 if (enemy.InSight(player))
                 {
-                    AddEnemyToCurrentBattle(enemy);
-                    return true;
+                    if (AddEnemyToCurrentBattle(enemy))
+                        result = true;
                 }
             }
 
-            return false;
+            return result;
         }
 
         private bool CheckIfEndBattle()
@@ -191,18 +192,19 @@ namespace Assets.Scripts.EnemyManagement
             }
         }
 
-        private void AddEnemyToCurrentBattle(Enemy enemy)
+        private bool AddEnemyToCurrentBattle(Enemy enemy)
         {
             if (currentBattle == null)
                 throw new Exception("Current battle is null, cant add enemy");
 
             if (currentBattle.Enemies.Contains(enemy))
-                return;
+                return false;
 
             currentBattle.Enemies.Add(enemy);
             GameObject eff = Instantiate(WarningEffectPrefab, enemy.transform.position, Quaternion.identity, enemy.transform);
             Destroy(eff, 3F);
             enemy.Healthbar.Show();
+            return true;
         }
 
         private void HandleEnemyTakeDamage(object sender, EventArgs args)
