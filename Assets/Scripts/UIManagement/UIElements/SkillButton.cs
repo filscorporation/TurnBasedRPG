@@ -4,16 +4,17 @@ using UnityEngine.UI;
 
 namespace Assets.Scripts.UIManagement.UIElements
 {
-    public class AttackButton : MonoBehaviour, IUIElement
+    public class SkillButton : MonoBehaviour, IUIElement
     {
-        public string Name { get; } = "AttackButton";
+        public string SkillName;
+        public string Name => $"{SkillName}Button";
 
-        private Animator animator;
-        private const string selectedParameterName = "Selected";
+        //private Animator animator;
+        //private const string selectedParameterName = "Selected";
 
         public void Start()
         {
-            animator = GetComponent<Animator>();
+            //animator = GetComponent<Animator>();
         }
 
         public void SetValue(int value)
@@ -21,17 +22,17 @@ namespace Assets.Scripts.UIManagement.UIElements
             if (value == 0)
             {
                 GetComponent<Button>().interactable = false;
-                animator.SetBool(selectedParameterName, false);
+                //animator.SetBool(selectedParameterName, false);
             }
             if (value == 1)
             {
                 GetComponent<Button>().interactable = true;
-                animator.SetBool(selectedParameterName, false);
+                //animator.SetBool(selectedParameterName, false);
             }
             if (value == 2)
             {
                 GetComponent<Button>().interactable = true;
-                animator.SetBool(selectedParameterName, true);
+                //animator.SetBool(selectedParameterName, true);
             }
         }
 

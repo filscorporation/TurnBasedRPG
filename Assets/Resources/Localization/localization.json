@@ -1,12 +1,22 @@
 {
-	"test" :
+	"health" :
 	[
-		"Test",
-		"Тест"
+		"Health",
+		"Здоровье"
 	],
-	"player_dead" :
+	"level" :
 	[
-		"You're dead",
-		"Вы умерли"
+		"Level",
+		"Уровень"
+	],
+	"experience" :
+	[
+		"Experience",
+		"Опыт"
+	],
+	"skillpoints" :
+	[
+		"Skill points",
+		"Очки умений"
 	]
 }

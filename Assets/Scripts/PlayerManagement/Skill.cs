@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Assets.Scripts.CharactersManagement;
 using Assets.Scripts.MapManagement;
+using Assets.Scripts.UIManagement.Tabs;
 using UnityEngine;
 
 namespace Assets.Scripts.PlayerManagement
@@ -20,7 +21,7 @@ namespace Assets.Scripts.PlayerManagement
     /// Players skill stats
     /// </summary>
     [Serializable]
-    public class Skill
+    public class Skill : IInventoryObject
     {
         public string Name;
 
@@ -36,6 +37,13 @@ namespace Assets.Scripts.PlayerManagement
         public float CastingEffectTime = 0.5F;
 
         public GameObject OnHitEffect;
+        // TODO: temp solution to set from inspector, lately will be changed with skill serialization
+        [SerializeField]
+        private Sprite icon;
+        public Sprite Icon => icon;
+        [SerializeField]
+        private string description;
+        public string Description => description;
 
         /// <summary>
         /// Checks if character in range of the skill

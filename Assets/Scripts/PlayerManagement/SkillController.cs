@@ -1,15 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using Assets.Scripts.CharactersManagement;
 using Assets.Scripts.MapManagement;
 using Assets.Scripts.UIManagement;
-using UnityEngine.EventSystems;
 
 namespace Assets.Scripts.PlayerManagement
 {
     /// <summary>
-    /// Controlls all skills interactions
+    /// Controlls players skills usage
     /// </summary>
     public class SkillController : IUISubscriber
     {
@@ -53,6 +51,12 @@ namespace Assets.Scripts.PlayerManagement
 
         private bool TrySetSkillActive(Skill skill)
         {
+            if (Player.PlayerState != PlayerState.InBattle)
+            {
+                // Cant use skills outside of battle
+                return false;
+            }
+
             if (Player.ActionPoints < skill.Cost)
             {
                 // Not enough skill points
@@ -91,6 +95,9 @@ namespace Assets.Scripts.PlayerManagement
                     break;
                 case SkillTargetType.Enemy:
                     if (!(tile.Occupier is Character enemy))
+                        return;
+                    if (enemy == Player)
+                        // Cant attack self with damaging skills
                         return;
                     if (!activeSkill.InRange(Player, enemy))
                         // Cant reach target

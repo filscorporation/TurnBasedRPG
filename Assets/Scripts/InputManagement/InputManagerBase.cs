@@ -28,6 +28,10 @@ namespace Assets.Scripts.InputManagement
         /// <param name="inputPoint"></param>
         protected bool ProcessInput(Vector2 inputPoint)
         {
+            if (EventSystem.current.IsPointerOverGameObject())
+                // Ignore input when on UI
+                return false;
+
             var wp = Camera.main.ScreenToWorldPoint(inputPoint);
             var position = new Vector2(wp.x, wp.y);
 
@@ -36,7 +40,7 @@ namespace Assets.Scripts.InputManagement
             Collider2D[] hits = Physics2D.OverlapPointAll(position);
             if (hits == null || !hits.Any())
                 return false;
-            // TODO: ?
+            // TODO: process multiple hits
             Collider2D hit = hits.First();
 
             InputEvent inputEvent = new InputEvent { InputObject = hit.gameObject };

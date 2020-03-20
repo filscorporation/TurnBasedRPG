@@ -18,6 +18,7 @@ namespace Assets.Scripts.PlayerManagement
         public InputManagerBase InputManager;
         public EnemyController EnemyController;
         public SkillController SkillController;
+        public InventoryController InventoryController;
         protected CharacterActionsController CharacterController;
 
         public Player Player;
@@ -32,6 +33,8 @@ namespace Assets.Scripts.PlayerManagement
             Validate();
             SkillController = new SkillController(this, Player);
             SkillController.Initialize();
+            InventoryController = new InventoryController(Player);
+            InventoryController.Initialize();
             InputManager.Subscribe(this);
             DamageValueEffectController.Instance.AddToShowEffectList(new[] { Player });
         }
@@ -108,19 +111,12 @@ namespace Assets.Scripts.PlayerManagement
             }
 
             // Occupied tile processing
-
             if (!tile.Free)
             {
-                if (tile.Equals(Player.OnTile))
-                {
-                    // Clear path when clicked on player
-                    ClearPlannedPath();
-                }
                 return;
             }
 
             // Free tile processing
-
             List<Tile> path;
             // Player click on tile second time in a row - confirmation for action in battle
             if (confirmTileInBattle != null && confirmTileInBattle.Equals(tile))

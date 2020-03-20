@@ -8,7 +8,7 @@ using Object = UnityEngine.Object;
 namespace Assets.Scripts.UIManagement
 {
     /// <summary>
-    /// Controlls all UI interation
+    /// Controlls all UI interactions
     /// </summary>
     public class UIManager : MonoBehaviour
     {
@@ -67,7 +67,8 @@ namespace Assets.Scripts.UIManagement
         /// <param name="button"></param>
         public void HandleButtonClick(string button)
         {
-            subs[button].Handle(new UIEvent { ButtonName = button });
+            if (subs.TryGetValue(button, out var sub))
+                sub.Handle(new UIEvent { ButtonName = button });
         }
 
         /// <summary>
