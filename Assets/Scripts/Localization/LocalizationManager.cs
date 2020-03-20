@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using Newtonsoft.Json;
 using UnityEngine;
@@ -20,11 +21,14 @@ namespace Assets.Scripts.Localization
 
         private static bool isInitialized = false;
         private static Dictionary<string, List<string>> localization;
-        private static readonly string jsonPath = Path.Combine(Application.dataPath, "Resources", "Localization", "localization.json");
+        private static readonly string jsonPath = Path.Combine("Localization", "localization");
 
         public static void Initialize()
         {
-            string text = File.ReadAllText(jsonPath);
+            TextAsset file = Resources.Load(jsonPath) as TextAsset;
+            if (file == null)
+                throw new Exception("Localization file not found");
+            string text = file.ToString();
             localization = JsonConvert.DeserializeObject<Dictionary<string, List<string>>>(text);
 
             isInitialized = true;
