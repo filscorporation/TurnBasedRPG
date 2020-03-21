@@ -18,7 +18,7 @@ namespace Assets.Scripts.PlayerManagement
         public InputManagerBase InputManager;
         public EnemyController EnemyController;
         public SkillController SkillController;
-        public InventoryController InventoryController;
+        public InventoryUIController InventoryUIController;
         protected CharacterActionsController CharacterController;
 
         public Player Player;
@@ -33,8 +33,8 @@ namespace Assets.Scripts.PlayerManagement
             Validate();
             SkillController = new SkillController(this, Player);
             SkillController.Initialize();
-            InventoryController = new InventoryController(Player);
-            InventoryController.Initialize(SkillController);
+            InventoryUIController = new InventoryUIController(Player);
+            InventoryUIController.Initialize(SkillController);
             InputManager.Subscribe(this);
             DamageValueEffectController.Instance.AddToShowEffectList(new[] { Player });
         }
@@ -61,7 +61,7 @@ namespace Assets.Scripts.PlayerManagement
             Player.PlayerState = PlayerState.InBattle;
             callWhenPlayersTurnDone = onPlayersTurnDone;
 
-            SkillController.ShowSkills();
+            InventoryUIController.ShowSkills();
 
             // Refresh action points
             Player.ActionPoints = Player.ActionPointsMax;
@@ -79,10 +79,21 @@ namespace Assets.Scripts.PlayerManagement
                 return;
 
             SkillController.Clear();
-            SkillController.HideSkills();
+            InventoryUIController.HideSkills();
 
             Player.PlayerState = PlayerState.Waiting;
             callWhenPlayersTurnDone();
+        }
+
+        /// <summary>
+        /// Makes battle end finishing actions
+        /// </summary>
+        public void PlayerEndBattle()
+        {
+            // Put player into free control state
+            Player.PlayerState = PlayerState.FreeControl;
+            // Deactivate all skills on the skillbar
+            InventoryUIController.HideSkills();
         }
 
         /// <summary>

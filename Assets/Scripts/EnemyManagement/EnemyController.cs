@@ -127,8 +127,7 @@ namespace Assets.Scripts.EnemyManagement
             {
                 if (enemy.InSight(player))
                 {
-                    BattleManager.StartBattleFromEnemyAttack(enemy);
-                    return true;
+                    return BattleManager.StartBattleFromEnemyAttack(enemy);
                 }
             }
 
@@ -178,7 +177,9 @@ namespace Assets.Scripts.EnemyManagement
         /// <summary>
         /// Makes all preparation before battle for enemies
         /// </summary>
+        /// <param name="battle"></param>
         /// <param name="enemies"></param>
+        /// <param name="onEnemyTurnDone"></param>
         public void PutEnemiesToBattle(Battle battle, List<Enemy> enemies, Action<bool> onEnemyTurnDone)
         {
             currentBattle = battle;

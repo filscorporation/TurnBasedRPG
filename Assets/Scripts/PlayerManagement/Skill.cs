@@ -101,5 +101,7 @@ namespace Assets.Scripts.PlayerManagement
                 character.TakeDamage(new Damage(user, Damage));
             }
         }
+
+        public override string ToString() => Name;
     }
 }

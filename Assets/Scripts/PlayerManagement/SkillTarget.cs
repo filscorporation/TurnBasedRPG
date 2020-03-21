@@ -27,5 +27,7 @@ namespace Assets.Scripts.PlayerManagement
         {
             CharacterTargets = characters;
         }
+
+        public override string ToString() => TileTarget == null ? $"Targets: {CharacterTargets.Count}" : $"Target: {TileTarget}";
     }
 }

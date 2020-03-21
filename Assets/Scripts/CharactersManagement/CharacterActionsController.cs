@@ -17,7 +17,7 @@ namespace Assets.Scripts.CharactersManagement
         private int currentTargetTileIndex;
         private int pathOffset = 0;
 
-        private Skill currentSkill;
+        private Skill currentSkill = null;
         private SkillTarget currentSkillTarget;
         private float skillCastTimer;
         private bool skillEffectPlayed;

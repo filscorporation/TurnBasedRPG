@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Assets.Scripts.CharactersManagement;
+using Assets.Scripts.ItemManagement;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -16,7 +17,6 @@ namespace Assets.Scripts.PlayerManagement
     /// <summary>
     /// Represents player in the game with his stats and interactions
     /// </summary>
-    [Serializable]
     public class Player : Character
     {
         [NonSerialized]
@@ -45,12 +45,20 @@ namespace Assets.Scripts.PlayerManagement
         /// </summary>
         public List<Skill> SkillBook;
 
+        /// <summary>
+        /// Players collection of items
+        /// </summary>
+        public Inventory Inventory;
+
         public new void Start()
         {
             base.Start();
 
             // TODO: will be changed with skill dictionary implementation
             SkillBook = new List<Skill>(Skills);
+
+            Inventory = new Inventory();
+            Inventory.Initialize();
         }
 
         public void GainExperience(int exp)

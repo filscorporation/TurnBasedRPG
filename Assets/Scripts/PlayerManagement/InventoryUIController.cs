@@ -10,7 +10,7 @@ namespace Assets.Scripts.PlayerManagement
     /// <summary>
     /// Controlls players inventory and skills list interactions
     /// </summary>
-    public class InventoryController : IUISubscriber
+    public class InventoryUIController : IUISubscriber
     {
         private enum TabState
         {
@@ -29,7 +29,7 @@ namespace Assets.Scripts.PlayerManagement
         private const string inventoryTabButtonName = "InventoryTabButton";
         private const string skillsTabButtonName = "SkillsTabButton";
 
-        public InventoryController(Player player)
+        public InventoryUIController(Player player)
         {
             Player = player;
         }
@@ -71,6 +71,22 @@ namespace Assets.Scripts.PlayerManagement
                         throw new ArgumentOutOfRangeException();
                 }
             }
+        }
+
+        /// <summary>
+        /// Activates all skills on skillbar
+        /// </summary>
+        public void ShowSkills()
+        {
+            skillbar.Show();
+        }
+
+        /// <summary>
+        /// Deactivates all skills on skillbar
+        /// </summary>
+        public void HideSkills()
+        {
+            skillbar.Hide();
         }
 
         private void RefreshStats()

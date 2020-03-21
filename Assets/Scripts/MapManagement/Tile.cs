@@ -41,5 +41,7 @@ namespace Assets.Scripts.MapManagement
         {
             return base.GetHashCode();
         }
+
+        public override string ToString() => $"Tile [{X}, {Y}]";
     }
 }

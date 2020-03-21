@@ -33,5 +33,10 @@
 	[
 		"Heavy Sword Attack. 3 Action points. Deals 8 damage to an enemy in 1 range.",
 		"Тяжелый удар мечем. 3 Очка действий. Наносит 8 урона врагу на расстоянии 1."
+	],
+	"logging_item_description" :
+	[
+		"Logging Item. Loggs all incoming events",
+		"Логирующий придмет. Логирует все входящие события"
 	]
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using Assets.Scripts.CharactersManagement;
+using Assets.Scripts.EventManagement;
 using Assets.Scripts.MapManagement;
 using Assets.Scripts.UIManagement;
 
@@ -54,6 +55,12 @@ namespace Assets.Scripts.PlayerManagement
                 // Not enough skill points
                 return false;
             }
+            
+            // Skill activation events
+            CancellationToken token = new CancellationToken();
+            EventManager.Instance.OnSkillActivation(Player, skill, token);
+            if (token.ShouldBeCancelled)
+                return false;
 
             PlayerController.ClearPlannedPath();
 
@@ -107,6 +114,12 @@ namespace Assets.Scripts.PlayerManagement
                     throw new IndexOutOfRangeException(activeSkill.TargetType.ToString());
             }
 
+            // Skill using events
+            CancellationToken token = new CancellationToken();
+            EventManager.Instance.OnSkillUse(Player, activeSkill, target, token);
+            if (token.ShouldBeCancelled)
+                return;
+
             currentTarget = target;
             isUsing = true;
             Player.State = CharacterState.Attacking;
@@ -140,33 +153,7 @@ namespace Assets.Scripts.PlayerManagement
         /// </summary>
         public void Clear()
         {
-            if (activeSkill == null)
-                return;
-
-            UIManager.Instance.SetVariable(activeSkill.Name + buttonString, 1);
             activeSkill = null;
-        }
-
-        /// <summary>
-        /// Hides skills UI
-        /// </summary>
-        public void HideSkills()
-        {
-            foreach (Skill skill in Player.Skills)
-            {
-                UIManager.Instance.SetVariable(skill.Name + buttonString, 0);
-            }
-        }
-
-        /// <summary>
-        /// Shows skills UI
-        /// </summary>
-        public void ShowSkills()
-        {
-            foreach (Skill skill in Player.Skills)
-            {
-                UIManager.Instance.SetVariable(skill.Name + buttonString, 1);
-            }
         }
     }
 }

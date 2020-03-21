@@ -130,7 +130,7 @@ namespace Assets.Scripts.EnemyManagement
             if (ActionPoints == 0)
             {
                 CharacterController.Cancel();
-                Debug.LogWarning("Used all action points");
+                Debug.Log("Used all action points");
                 callWhenFinishedActing.Invoke();
                 return;
             }

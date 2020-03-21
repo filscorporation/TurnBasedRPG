@@ -4,6 +4,7 @@ using System.Linq;
 using Assets.Scripts.PlayerManagement;
 using Assets.Scripts.UIManagement.UIElements;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Assets.Scripts.UIManagement.Tabs
 {
@@ -35,6 +36,7 @@ namespace Assets.Scripts.UIManagement.Tabs
                 go.GetComponent<RectTransform>().localPosition = new Vector2(i * (button.Width + buttonDistance) + xOffset, yOffset);
                 go.GetComponent<RectTransform>().localScale = new Vector2(1, 1);
                 button.Initialize(skill);
+                button.OnClick += HandleSkillButtonClick;
                 buttons.Add(button);
                 contentSize += button.Width;
                 contentSize += buttonDistance;
@@ -44,6 +46,14 @@ namespace Assets.Scripts.UIManagement.Tabs
             contentSize -= buttonDistance;
 
             SetContentSize(contentSize);
+
+            Hide();
+        }
+
+        private void HandleSkillButtonClick(object sender, EventArgs args)
+        {
+            if (sender is SkillButton button)
+                skillController.HandleSkillClick(button.Skill);
         }
 
         private void SetContentSize(float size)
@@ -60,6 +70,28 @@ namespace Assets.Scripts.UIManagement.Tabs
             }
             buttons.Clear();
             SetContentSize(0);
+        }
+
+        /// <summary>
+        /// Activates all skills on skillbar
+        /// </summary>
+        public void Show()
+        {
+            foreach (SkillButton button in buttons)
+            {
+                button.gameObject.GetComponent<Button>().interactable = true;
+            }
+        }
+
+        /// <summary>
+        /// Deactivates all skills on skillbar
+        /// </summary>
+        public void Hide()
+        {
+            foreach (SkillButton button in buttons)
+            {
+                button.gameObject.GetComponent<Button>().interactable = false;
+            }
         }
 
         public void Insert(Skill skill, int index = 0)

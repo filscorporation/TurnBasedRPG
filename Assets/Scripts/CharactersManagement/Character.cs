@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using Assets.Scripts.Events;
+using Assets.Scripts.EventManagement;
+using Assets.Scripts.ItemManagement;
 using Assets.Scripts.MapManagement;
 using Assets.Scripts.PlayerManagement;
 using UnityEngine;
@@ -125,14 +126,37 @@ namespace Assets.Scripts.CharactersManagement
         public void TakeDamage(Damage damage)
         {
             Debug.Log($"Character {this} took {damage.Value} damage from {damage.Source}");
+            // Pre take damage events
+            CancellationToken token = new CancellationToken();
+            EventManager.Instance.OnBeforeCharacterTakesDamage(this, damage, token);
+            if (token.ShouldBeCancelled)
+                return;
+
+            // Logic
             State = CharacterState.ReceivingDamage;
             Health = Mathf.Max(0, Health - damage.Value);
             Healthbar.Set(Health, HealthMax);
+
+            // Post take damage events
             OnCharacterTakeDamage?.Invoke(this, new DamageEventData(damage));
+            EventManager.Instance.OnAfterCharacterTakesDamage(this, damage, token);
+            if (token.ShouldBeCancelled)
+                return;
 
             if (Health < Mathf.Epsilon)
             {
+                // Pre dead events
+                EventManager.Instance.OnBeforeCharacterDead(this, token);
+                if (token.ShouldBeCancelled)
+                    return;
+
+                // Logic
                 Die(damage.Source);
+
+                // Post dead events
+                EventManager.Instance.OnAfterCharacterDead(this, token);
+                if (token.ShouldBeCancelled)
+                    return;
             }
         }
 

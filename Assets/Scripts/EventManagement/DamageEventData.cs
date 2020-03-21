@@ -1,7 +1,7 @@
-﻿using Assets.Scripts.CharactersManagement;
-using System;
+﻿using System;
+using Assets.Scripts.CharactersManagement;
 
-namespace Assets.Scripts.Events
+namespace Assets.Scripts.EventManagement
 {
     /// <summary>
     /// Info about damage character took
