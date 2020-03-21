@@ -37,8 +37,14 @@ namespace Assets.Scripts.UIManagement.Tabs
                 contentSize += line.Height;
                 i++;
             }
+
+            SetContentSize(contentSize);
+        }
+
+        private void SetContentSize(float size)
+        {
             RectTransform rt = ScrollViewContent.gameObject.GetComponent<RectTransform>();
-            rt.sizeDelta = new Vector2(rt.sizeDelta.x, contentSize);
+            rt.sizeDelta = new Vector2(rt.sizeDelta.x, size);
         }
 
         public void Clear()
@@ -48,6 +54,7 @@ namespace Assets.Scripts.UIManagement.Tabs
                 Destroy(skillLine.gameObject);
             }
             lines.Clear();
+            SetContentSize(0);
         }
     }
 }

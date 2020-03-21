@@ -24,6 +24,7 @@ namespace Assets.Scripts.PlayerManagement
         protected Player Player;
 
         private SkillsTab skillsTab;
+        private Skillbar skillbar;
 
         private const string inventoryTabButtonName = "InventoryTabButton";
         private const string skillsTabButtonName = "SkillsTabButton";
@@ -33,12 +34,16 @@ namespace Assets.Scripts.PlayerManagement
             Player = player;
         }
 
-        public void Initialize()
+        public void Initialize(SkillController skillController)
         {
             UIManager.Instance.Subscribe(skillsTabButtonName, this);
             skillsTab = Resources.FindObjectsOfTypeAll<SkillsTab>().FirstOrDefault();
             if (skillsTab == null)
                 throw new Exception("Skills tab object required");
+            skillbar = Resources.FindObjectsOfTypeAll<Skillbar>().FirstOrDefault();
+            if (skillbar == null)
+                throw new Exception("Skillbar object required");
+            skillbar.Initialize(Player.Skills, skillController);
         }
 
         public void Handle(UIEvent uiEvent)
@@ -91,7 +96,7 @@ namespace Assets.Scripts.PlayerManagement
 
         private void FillSkillsTab()
         {
-            skillsTab.Initialize(Player.Skills);
+            skillsTab.Initialize(Player.SkillBook);
             skillsTab.gameObject.SetActive(true);
         }
 

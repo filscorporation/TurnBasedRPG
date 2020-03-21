@@ -34,7 +34,7 @@ namespace Assets.Scripts.PlayerManagement
             SkillController = new SkillController(this, Player);
             SkillController.Initialize();
             InventoryController = new InventoryController(Player);
-            InventoryController.Initialize();
+            InventoryController.Initialize(SkillController);
             InputManager.Subscribe(this);
             DamageValueEffectController.Instance.AddToShowEffectList(new[] { Player });
         }

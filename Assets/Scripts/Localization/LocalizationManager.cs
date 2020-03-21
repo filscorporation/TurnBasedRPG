@@ -17,7 +17,7 @@ namespace Assets.Scripts.Localization
     /// </summary>
     public class LocalizationManager
     {
-        public static Language CurrentLanguage = Language.English;
+        public static Language CurrentLanguage = Language.Russian;
 
         private static bool isInitialized = false;
         private static Dictionary<string, List<string>> localization;

@@ -40,6 +40,19 @@ namespace Assets.Scripts.PlayerManagement
         public int ExperienceForNextLevel = 100;
         private float experienceGrowthFactor = 1.5F;
 
+        /// <summary>
+        /// Players collection of skill that he can add to skillbar
+        /// </summary>
+        public List<Skill> SkillBook;
+
+        public new void Start()
+        {
+            base.Start();
+
+            // TODO: will be changed with skill dictionary implementation
+            SkillBook = new List<Skill>(Skills);
+        }
+
         public void GainExperience(int exp)
         {
             if (Experience + exp >= ExperienceForNextLevel)

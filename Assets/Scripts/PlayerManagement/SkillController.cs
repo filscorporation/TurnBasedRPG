@@ -9,7 +9,7 @@ namespace Assets.Scripts.PlayerManagement
     /// <summary>
     /// Controlls players skills usage
     /// </summary>
-    public class SkillController : IUISubscriber
+    public class SkillController
     {
         protected PlayerController PlayerController;
         protected Player Player;
@@ -28,25 +28,17 @@ namespace Assets.Scripts.PlayerManagement
 
         public void Initialize()
         {
-            foreach (Skill skill in Player.Skills)
-            {
-                UIManager.Instance.Subscribe(skill.Name + buttonString, this);
-            }
+            
         }
 
-        public void Handle(UIEvent uiEvent)
+        /// <summary>
+        /// Handles player click on skill button in skillbar
+        /// </summary>
+        /// <param name="skill"></param>
+        /// <returns>Is skill activated</returns>
+        public bool HandleSkillClick(Skill skill)
         {
-            if (uiEvent.ButtonName.EndsWith(buttonString))
-            {
-                Skill skill = Player.Skills.FirstOrDefault(s => s.Name + buttonString == uiEvent.ButtonName);
-                if (skill == null)
-                    throw new NotSupportedException($"Skill button {uiEvent.ButtonName}");
-                
-                if (TrySetSkillActive(skill))
-                {
-                    UIManager.Instance.SetVariable(uiEvent.ButtonName, 2);
-                }
-            }
+            return TrySetSkillActive(skill);
         }
 
         private bool TrySetSkillActive(Skill skill)

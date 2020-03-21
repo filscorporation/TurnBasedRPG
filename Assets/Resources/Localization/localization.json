@@ -18,5 +18,20 @@
 	[
 		"Skill points",
 		"Очки умений"
+	],
+	"skillstab_description" :
+	[
+		"Drag skills to the skillbar to use them. Drag from it to remove.",
+		"Перетащите умения в панель умений чтобы затем их использовать. Перетащите обратно чтобы убрать из панели."
+	],
+	"sword_attack_skill_description" :
+	[
+		"Sword Attack. 2 Action points. Deals 5 damage to an enemy in 1 range.",
+		"Удар мечем. 2 Очка действий. Наносит 5 урона врагу на расстоянии 1."
+	],
+	"heavy_sword_attack_skill_description" :
+	[
+		"Heavy Sword Attack. 3 Action points. Deals 8 damage to an enemy in 1 range.",
+		"Тяжелый удар мечем. 3 Очка действий. Наносит 8 урона врагу на расстоянии 1."
 	]
 }

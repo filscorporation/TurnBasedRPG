@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Assets.Scripts.Localization;
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace Assets.Scripts.UIManagement.Tabs
@@ -19,7 +20,7 @@ namespace Assets.Scripts.UIManagement.Tabs
         {
             Source = source;
             Icon.sprite = source.Icon;
-            Description.text = source.Description;
+            Description.text = LocalizationManager.GetLocalizedValue(source.Description);
         }
     }
 }
