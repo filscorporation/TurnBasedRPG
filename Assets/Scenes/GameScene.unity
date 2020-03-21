@@ -20358,7 +20358,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02acbf53e0f1a00478e02e8e68a8654c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  InputManager: {fileID: 966605255}
+  InputManager: {fileID: 0}
   EnemyController: {fileID: 1414711987}
   Player: {fileID: 3337483473800260408}
 --- !u!4 &835166946
@@ -23738,7 +23738,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 966605254}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5e7893eb13dbedd4ab30c7417debfb5f, type: 3}
+  m_Script: {fileID: 11500000, guid: ec0cd5d2f8f2a6f478c7f180764a5d2b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!4 &966605256
