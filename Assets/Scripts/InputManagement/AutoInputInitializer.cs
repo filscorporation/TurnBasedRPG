@@ -9,7 +9,7 @@ namespace Assets.Scripts.InputManagement
     /// </summary>
     public class AutoInputInitializer : MonoBehaviour
     {
-        public void Start()
+        public void Awake()
         {
             InputManagerBase im;
             switch (SystemInfo.deviceType)

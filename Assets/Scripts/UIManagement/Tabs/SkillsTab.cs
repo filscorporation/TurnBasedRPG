@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Assets.Scripts.PlayerManagement;
 using UnityEngine;
 using UnityEngine.UI;
@@ -36,8 +37,6 @@ namespace Assets.Scripts.UIManagement.Tabs
                 contentSize += line.Height;
                 i++;
             }
-
-            contentSize += 600F; // TODO: remove, for demonstration purposes
             RectTransform rt = ScrollViewContent.gameObject.GetComponent<RectTransform>();
             rt.sizeDelta = new Vector2(rt.sizeDelta.x, contentSize);
         }

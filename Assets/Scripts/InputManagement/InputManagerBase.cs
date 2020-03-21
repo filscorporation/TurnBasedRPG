@@ -28,7 +28,7 @@ namespace Assets.Scripts.InputManagement
         /// <param name="inputPoint"></param>
         protected bool ProcessInput(Vector2 inputPoint)
         {
-            if (EventSystem.current.IsPointerOverGameObject())
+            if (IsPointerOverUIObject(inputPoint))
                 // Ignore input when on UI
                 return false;
 
@@ -50,6 +50,15 @@ namespace Assets.Scripts.InputManagement
             }
 
             return true;
+        }
+
+        private bool IsPointerOverUIObject(Vector2 inputPoint)
+        {
+            PointerEventData eventDataCurrentPosition = new PointerEventData(EventSystem.current);
+            eventDataCurrentPosition.position = inputPoint;
+            List<RaycastResult> results = new List<RaycastResult>();
+            EventSystem.current.RaycastAll(eventDataCurrentPosition, results);
+            return results.Count > 0;
         }
 
         /// <summary>
