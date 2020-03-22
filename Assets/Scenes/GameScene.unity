@@ -38453,7 +38453,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: skillsbardescription
+  m_Text: skillstab_description
 --- !u!222 &1595514275
 CanvasRenderer:
   m_ObjectHideFlags: 0

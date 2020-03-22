@@ -14,13 +14,21 @@ namespace Assets.Scripts.ItemManagement
     [Serializable]
     public class Inventory : IEventSubscriber
     {
+        /// <summary>
+        /// Items player is carrying. Items are permanent and have some effect that triggers on event
+        /// </summary>
         public List<Item> Items;
+
+        /// <summary>
+        /// Consumables (potions) player is carrying. Can be used in battle to gain some effect
+        /// </summary>
+        public List<Consumable> Consumables;
 
         public void Initialize()
         {
             Items = new List<Item>();
             // TODO: temporary solution. From testing.
-            Items.Add(new LoggingItem());
+            Add(new LoggingItem());
 
             EventManager.Instance.Subscribe(this);
         }
@@ -29,11 +37,21 @@ namespace Assets.Scripts.ItemManagement
         /// Adds new item to the list
         /// </summary>
         /// <param name="item"></param>
-        /// <param name="token"></param>
-        public void Add(Item item, CancellationToken token)
+        public void Add(Item item)
         {
             Items.Add(item);
         }
+
+        /// <summary>
+        /// Adds new consumable to the list
+        /// </summary>
+        /// <param name="consumable"></param>
+        public void Add(Consumable consumable)
+        {
+            Consumables.Add(consumable);
+        }
+
+        #region Events
 
         /// <summary>
         /// Called when battle starts
@@ -169,5 +187,7 @@ namespace Assets.Scripts.ItemManagement
                 item.OnSkillUse(player, skill, target, token);
             }
         }
+
+        #endregion
     }
 }

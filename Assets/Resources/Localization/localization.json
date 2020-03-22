@@ -38,5 +38,10 @@
 	[
 		"Logging Item. Loggs all incoming events",
 		"Логирующий придмет. Логирует все входящие события"
+	],
+	"flame_potion_description" :
+	[
+		"Flame Potion. Deals 5 damage to an enemy in 1 range.",
+		"Огненное зелье. Наносит 5 урона врагу на расстоянии 1."
 	]
 }
