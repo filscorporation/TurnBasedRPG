@@ -28,6 +28,11 @@ namespace Assets.Scripts.ItemManagement
         public List<Consumable> Consumables;
 
         /// <summary>
+        /// Ingame currency. Used in the market to buy items
+        /// </summary>
+        public int Gold = 0;
+
+        /// <summary>
         /// Called when anything in inventory got changed
         /// </summary>
         public event EventHandler OnInventoryUpdated;

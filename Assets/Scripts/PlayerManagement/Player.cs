@@ -71,8 +71,8 @@ namespace Assets.Scripts.PlayerManagement
 
         public IEnumerable<IInventoryObject> InventoryObjects()
         {
-            // TODO: add gold object
-            return Inventory.Items.Concat(Inventory.Consumables.Cast<IInventoryObject>());
+            List<IInventoryObject> objects = new List<IInventoryObject> { new GoldInventoryObject() };
+            return objects.Concat(Inventory.Items.Concat(Inventory.Consumables.Cast<IInventoryObject>()));
         }
 
         public void GainExperience(int exp)
