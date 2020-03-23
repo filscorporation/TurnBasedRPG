@@ -2,7 +2,7 @@
 using Assets.Scripts.CharactersManagement;
 using Assets.Scripts.MapManagement;
 
-namespace Assets.Scripts.PlayerManagement
+namespace Assets.Scripts.SkillManagement
 {
     /// <summary>
     /// Information about targets skill was casted on

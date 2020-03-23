@@ -5,6 +5,7 @@ using Assets.Scripts.CharactersManagement;
 using Assets.Scripts.EnemyManagement;
 using Assets.Scripts.InputManagement;
 using Assets.Scripts.MapManagement;
+using Assets.Scripts.SkillManagement;
 using Assets.Scripts.UIManagement;
 using UnityEngine;
 

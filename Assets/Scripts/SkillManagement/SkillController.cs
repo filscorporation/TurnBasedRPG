@@ -3,9 +3,10 @@ using System.Linq;
 using Assets.Scripts.CharactersManagement;
 using Assets.Scripts.EventManagement;
 using Assets.Scripts.MapManagement;
+using Assets.Scripts.PlayerManagement;
 using Assets.Scripts.UIManagement;
 
-namespace Assets.Scripts.PlayerManagement
+namespace Assets.Scripts.SkillManagement
 {
     /// <summary>
     /// Controlls players skills usage
@@ -29,7 +30,7 @@ namespace Assets.Scripts.PlayerManagement
 
         public void Initialize()
         {
-            
+
         }
 
         /// <summary>
@@ -55,7 +56,7 @@ namespace Assets.Scripts.PlayerManagement
                 // Not enough skill points
                 return false;
             }
-            
+
             // Skill activation events
             CancellationToken token = new CancellationToken();
             EventManager.Instance.OnSkillActivation(Player, skill, token);

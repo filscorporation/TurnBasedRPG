@@ -380,22 +380,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00303ab42ecd74d4291b328f8c39c628, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CharacterController: {fileID: 0}
   MovingSpeed: 2
   ActionPoints: 2
   ActionPointsMax: 2
   HealthMax: 30
   Health: 30
   Healthbar: {fileID: 0}
-  Skills:
-  - Name: Swipe
-    Range: 2
-    Cost: 2
-    TargetType: 0
-    Damage: 7
-    CastingTime: 2
-    CastingEffectTime: 0.85
-    OnHitEffect: {fileID: 147284685099941146, guid: 3fe41b2f945371e42b2937e7acb83bdb,
-      type: 3}
+  SkillsNames:
+  - GolemsSmash
   LineOfSight: 5
 --- !u!114 &4520674481462131009
 MonoBehaviour:
@@ -410,6 +403,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Character: {fileID: 2149261757111756233}
+  CharacterRotation: 1
 --- !u!114 &2231030099485569695
 MonoBehaviour:
   m_ObjectHideFlags: 0

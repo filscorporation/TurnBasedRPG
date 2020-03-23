@@ -3,6 +3,7 @@ using Assets.Scripts.BattleManagement;
 using Assets.Scripts.CharactersManagement;
 using Assets.Scripts.EventManagement;
 using Assets.Scripts.PlayerManagement;
+using Assets.Scripts.SkillManagement;
 using Assets.Scripts.UIManagement.Tabs;
 using UnityEngine;
 

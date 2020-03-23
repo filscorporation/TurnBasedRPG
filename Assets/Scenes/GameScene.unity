@@ -50431,6 +50431,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: Golem
       objectReference: {fileID: 0}
+    - target: {fileID: 2149261757111756233, guid: 0521cfa6dcee6bf46a2a0a1cee8ccbef,
+        type: 3}
+      propertyPath: SkillsNames.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2149261757111756233, guid: 0521cfa6dcee6bf46a2a0a1cee8ccbef,
+        type: 3}
+      propertyPath: SkillsNames.Array.data[0]
+      value: GolemsSmash
+      objectReference: {fileID: 0}
     - target: {fileID: 2149261757228599961, guid: 0521cfa6dcee6bf46a2a0a1cee8ccbef,
         type: 3}
       propertyPath: m_SortingOrder
@@ -53052,6 +53062,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4705321625307422221, guid: 24e9a90715e8be34e82d4e791006c612,
         type: 3}
+      propertyPath: SkillsNames.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4705321625307422221, guid: 24e9a90715e8be34e82d4e791006c612,
+        type: 3}
       propertyPath: MovingSpeed
       value: 5
       objectReference: {fileID: 0}
@@ -53146,6 +53161,16 @@ PrefabInstance:
         type: 3}
       propertyPath: Skills.Array.data[1].description
       value: heavy_sword_attack_skill_description
+      objectReference: {fileID: 0}
+    - target: {fileID: 4705321625307422221, guid: 24e9a90715e8be34e82d4e791006c612,
+        type: 3}
+      propertyPath: SkillsNames.Array.data[0]
+      value: SwordAttack
+      objectReference: {fileID: 0}
+    - target: {fileID: 4705321625307422221, guid: 24e9a90715e8be34e82d4e791006c612,
+        type: 3}
+      propertyPath: SkillsNames.Array.data[1]
+      value: HeavySwordAttack
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 24e9a90715e8be34e82d4e791006c612, type: 3}

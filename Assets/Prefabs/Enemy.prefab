@@ -127,20 +127,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00303ab42ecd74d4291b328f8c39c628, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CharacterController: {fileID: 0}
   MovingSpeed: 5
   ActionPoints: 2
   ActionPointsMax: 2
   HealthMax: 10
   Health: 10
   Healthbar: {fileID: 0}
-  Skills:
-  - Name: Axe Attack
-    Range: 1
-    Cost: 2
-    TargetType: 0
-    Damage: 3
-    CastingTime: 1
-    CastingEffectTime: 0.5
+  SkillsNames:
+  - OrcSwordAttack
   LineOfSight: 3
 --- !u!114 &3135466231763972717
 MonoBehaviour:
@@ -155,6 +150,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Character: {fileID: 3135466231763972716}
+  CharacterRotation: 1
 --- !u!95 &1725993679923492767
 Animator:
   serializedVersion: 3

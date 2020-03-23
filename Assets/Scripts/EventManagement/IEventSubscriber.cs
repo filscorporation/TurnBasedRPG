@@ -1,6 +1,7 @@
 ﻿using Assets.Scripts.BattleManagement;
 using Assets.Scripts.CharactersManagement;
 using Assets.Scripts.PlayerManagement;
+using Assets.Scripts.SkillManagement;
 
 namespace Assets.Scripts.EventManagement
 {

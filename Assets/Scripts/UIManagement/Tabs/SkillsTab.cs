@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Assets.Scripts.PlayerManagement;
+using Assets.Scripts.SkillManagement;
 using UnityEngine;
 using UnityEngine.UI;
 

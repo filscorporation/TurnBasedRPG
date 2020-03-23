@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Assets.Scripts.EventManagement;
 using Assets.Scripts.ItemManagement;
 using Assets.Scripts.MapManagement;
-using Assets.Scripts.PlayerManagement;
+using Assets.Scripts.SkillManagement;
 using UnityEngine;
 
 namespace Assets.Scripts.CharactersManagement
@@ -82,6 +82,8 @@ namespace Assets.Scripts.CharactersManagement
         private const string healthbarSortingGroupName = "HealthbarGroup";
 
         public List<Skill> Skills = new List<Skill>();
+        // Used to initialize skills from inspector
+        public List<string> SkillsNames = new List<string>();
 
         /// <summary>
         /// Called when character takes damage
@@ -97,9 +99,18 @@ namespace Assets.Scripts.CharactersManagement
         {
             base.Start();
 
+            LoadSkills();
             InitializeHealthbar();
             CharacterController = GetComponent<CharacterActionsController>();
             animator = GetComponent<Animator>();
+        }
+
+        private void LoadSkills()
+        {
+            foreach (string skillName in SkillsNames)
+            {
+                Skills.Add(Skill.SkillDictionary[skillName]);
+            }
         }
 
         private void InitializeHealthbar()

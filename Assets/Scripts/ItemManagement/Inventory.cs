@@ -5,6 +5,7 @@ using Assets.Scripts.CharactersManagement;
 using Assets.Scripts.EventManagement;
 using Assets.Scripts.ItemManagement.Items;
 using Assets.Scripts.PlayerManagement;
+using Assets.Scripts.SkillManagement;
 
 namespace Assets.Scripts.ItemManagement
 {

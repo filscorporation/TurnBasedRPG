@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using Assets.Scripts.Localization;
+using Assets.Scripts.SkillManagement;
 using Assets.Scripts.UIManagement;
 using Assets.Scripts.UIManagement.Tabs;
 using UnityEngine;

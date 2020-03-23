@@ -4,7 +4,7 @@ using System.Linq;
 using Assets.Scripts.BattleManagement;
 using Assets.Scripts.CharactersManagement;
 using Assets.Scripts.MapManagement;
-using Assets.Scripts.PlayerManagement;
+using Assets.Scripts.SkillManagement;
 using UnityEngine;
 
 namespace Assets.Scripts.EnemyManagement

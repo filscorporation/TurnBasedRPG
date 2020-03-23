@@ -1,4 +1,7 @@
-﻿using Assets.Scripts.MapManagement;
+﻿using Assets.Scripts.SkillManagement;
+using System;
+using System.Linq;
+using System.Reflection;
 using UnityEngine;
 
 namespace Assets.Scripts
@@ -8,9 +11,19 @@ namespace Assets.Scripts
     /// </summary>
     public class GameManager : MonoBehaviour
     {
-        public void Start()
+        public void Awake()
         {
-            
+            LoadSkills();
+        }
+
+        private void LoadSkills()
+        {
+            foreach (Type type in Assembly.GetAssembly(typeof(Skill)).GetTypes()
+                .Where(myType => myType.IsClass && !myType.IsAbstract && myType.IsSubclassOf(typeof(Skill))))
+            {
+                Skill skill = (Skill)Activator.CreateInstance(type);
+                Skill.SkillDictionary.Add(skill.Name, skill);
+            }
         }
         
         //private void GenerateField(int x, int y)
