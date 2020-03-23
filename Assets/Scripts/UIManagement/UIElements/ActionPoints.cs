@@ -33,11 +33,8 @@ namespace Assets.Scripts.UIManagement.UIElements
             if (value == -1)
             {
                 ap = -1;
-                foreach (Image image in images)
-                {
-                    Destroy(image.gameObject);
-                }
-                images.Clear();
+                Clear();
+
                 return;
             }
 
@@ -45,15 +42,16 @@ namespace Assets.Scripts.UIManagement.UIElements
             {
                 maxap = value;
                 ap = maxap;
+                Build();
+                
+                return;
+            }
 
-                images = new List<Image>();
-                for (int i = 0; i < maxap; i++)
-                {
-                    Vector2 p = transform.position;
-                    p += new Vector2(elementOffset*i, 0);
-                    GameObject newAP = Instantiate(ActionPointUIPrefab, p, Quaternion.identity, transform);
-                    images.Add(newAP.GetComponent<Image>());
-                }
+            if (value > maxap)
+            {
+                maxap = value;
+                Clear();
+                Build();
                 return;
             }
 
@@ -64,6 +62,27 @@ namespace Assets.Scripts.UIManagement.UIElements
             foreach (Image image in images.GetRange(value, maxap - value))
             {
                 image.sprite = EmptyAP;
+            }
+        }
+
+        private void Clear()
+        {
+            foreach (Image image in images)
+            {
+                Destroy(image.gameObject);
+            }
+            images.Clear();
+        }
+
+        private void Build()
+        {
+            images = new List<Image>();
+            for (int i = 0; i < maxap; i++)
+            {
+                Vector2 p = transform.position;
+                p += new Vector2(elementOffset * i, 0);
+                GameObject newAP = Instantiate(ActionPointUIPrefab, p, Quaternion.identity, transform);
+                images.Add(newAP.GetComponent<Image>());
             }
         }
 

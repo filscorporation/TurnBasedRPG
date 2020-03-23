@@ -9,7 +9,7 @@ namespace Assets.Scripts.SkillManagement.Skills
     /// </summary>
     public abstract class RangedSkill : Skill
     {
-        protected int range;
+        protected abstract int range { get; }
 
         public override bool InRange(Character user, Character target)
         {

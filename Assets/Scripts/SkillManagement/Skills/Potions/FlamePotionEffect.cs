@@ -1,17 +1,18 @@
 ﻿using Assets.Scripts.CharactersManagement;
+using Assets.Scripts.ItemManagement;
 using System;
 using System.Linq;
 
-namespace Assets.Scripts.SkillManagement.Skills
+namespace Assets.Scripts.SkillManagement.Skills.Potions
 {
-    public class SwordAttack : RangedSkill
+    public class FlamePotionEffect : RangedSkill
     {
-        public override string Name => nameof(SwordAttack);
-        public override int Cost => 2;
+        public override string Name => nameof(FlamePotionEffect);
+        public override int Cost => 0;
         public override SkillTargetType TargetType => SkillTargetType.Enemy;
 
-        protected override string iconPath => "Icons/SwordAttackIcon";
-        public override string Description => "sword_attack_skill_description";
+        protected override string iconPath => "Icons/FlamePotionIcon";
+        public override string Description => null;
 
         public override float CastingTime => 1F;
         public override float CastingEffectTime => 0.5F;
@@ -21,7 +22,7 @@ namespace Assets.Scripts.SkillManagement.Skills
 
         public override Skill Clone()
         {
-            return new SwordAttack();
+            return new FlamePotionEffect();
         }
 
         public override void Use(Character user, SkillTarget target)

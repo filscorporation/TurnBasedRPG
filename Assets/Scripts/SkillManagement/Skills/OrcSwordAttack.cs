@@ -13,6 +13,10 @@ namespace Assets.Scripts.SkillManagement.Skills
         protected override string iconPath => null;
         public override string Description => null;
 
+        public override float CastingTime => 1F;
+        public override float CastingEffectTime => 0.5F;
+
+        protected override int range => 1;
         private float damage = 3;
 
         public override Skill Clone()

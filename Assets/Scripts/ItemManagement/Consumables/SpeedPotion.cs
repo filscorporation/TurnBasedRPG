@@ -4,20 +4,20 @@ using Assets.Scripts.SkillManagement.Skills.Potions;
 namespace Assets.Scripts.ItemManagement.Consumables
 {
     /// <summary>
-    /// Damage dealing potion
+    /// Potion giving player action points
     /// </summary>
-    public class FlamePotion : Consumable
+    public class SpeedPotion : Consumable
     {
         public override string Name => nameof(FlamePotion);
-        protected override string iconPath => "Icons/FlamePotionIcon";
-        public override string Description => "flame_potion_description";
+        protected override string iconPath => "Icons/SpeedPotionIcon";
+        public override string Description => "speed_potion_description";
 
         private Skill effect;
         public override Skill UsageEffect => effect;
 
-        public FlamePotion() : base()
+        public SpeedPotion() : base()
         {
-            effect = Skill.SkillDictionary[nameof(FlamePotionEffect)];
+            effect = Skill.SkillDictionary[nameof(SpeedPotionEffect)];
             effect.SourceConsumable = this;
         }
     }

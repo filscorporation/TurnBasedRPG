@@ -22,7 +22,7 @@ namespace Assets.Scripts
                 .Where(myType => myType.IsClass && !myType.IsAbstract && myType.IsSubclassOf(typeof(Skill))))
             {
                 Skill skill = (Skill)Activator.CreateInstance(type);
-                Skill.SkillDictionary.Add(skill.Name, skill);
+                Skill.SkillDictionary[skill.Name] = skill;
             }
         }
         

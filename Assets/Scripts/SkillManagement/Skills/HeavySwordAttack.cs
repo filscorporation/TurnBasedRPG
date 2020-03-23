@@ -14,11 +14,15 @@ namespace Assets.Scripts.SkillManagement.Skills
         protected override string iconPath => "Icons/HeavySwordAttackIcon";
         public override string Description => "heavy_sword_attack_skill_description";
 
+        public override float CastingTime => 1F;
+        public override float CastingEffectTime => 0.5F;
+
+        protected override int range => 1;
         private float damage = 10;
 
         public override Skill Clone()
         {
-            return new SwordAttack();
+            return new HeavySwordAttack();
         }
 
         public override void Use(Character user, SkillTarget target)

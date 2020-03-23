@@ -109,7 +109,7 @@ namespace Assets.Scripts.CharactersManagement
         {
             foreach (string skillName in SkillsNames)
             {
-                Skills.Add(Skill.SkillDictionary[skillName]);
+                Skills.Add(Skill.SkillDictionary[skillName].Clone());
             }
         }
 

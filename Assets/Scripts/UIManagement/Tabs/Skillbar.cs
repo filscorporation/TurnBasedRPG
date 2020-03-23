@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using Assets.Scripts.SkillManagement;
-using Assets.Scripts.UIManagement.UIElements;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -22,10 +20,32 @@ namespace Assets.Scripts.UIManagement.Tabs
 
         private List<SkillButton> buttons;
 
-        public void Initialize(List<Skill> skills, SkillController controller)
+        public void Initialize(IEnumerable<Skill> skills, SkillController controller)
         {
             skillController = controller;
-            buttons = new List<SkillButton>();
+
+            Rebuild(skills);
+        }
+
+        /// <summary>
+        /// Populates skillbar with skill buttons
+        /// </summary>
+        /// <param name="skills"></param>
+        public void Rebuild(IEnumerable<Skill> skills)
+        {
+            if (buttons != null)
+            {
+                foreach(SkillButton button in buttons)
+                {
+                    Destroy(button.gameObject);
+                }
+                buttons.Clear();
+            }
+            else
+            {
+                buttons = new List<SkillButton>();
+            }
+
             int i = 0;
             float contentSize = 0;
             foreach (Skill skill in skills)
@@ -46,8 +66,6 @@ namespace Assets.Scripts.UIManagement.Tabs
             contentSize -= buttonDistance;
 
             SetContentSize(contentSize);
-
-            Hide();
         }
 
         private void HandleSkillButtonClick(object sender, EventArgs args)

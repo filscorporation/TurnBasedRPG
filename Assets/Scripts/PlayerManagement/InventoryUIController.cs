@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using Assets.Scripts.EventManagement;
 using Assets.Scripts.Localization;
 using Assets.Scripts.SkillManagement;
 using Assets.Scripts.UIManagement;
@@ -9,7 +10,7 @@ using UnityEngine;
 namespace Assets.Scripts.PlayerManagement
 {
     /// <summary>
-    /// Controlls players inventory and skills list interactions
+    /// Controlls players inventory and skills list UI interactions
     /// </summary>
     public class InventoryUIController : IUISubscriber
     {
@@ -44,7 +45,24 @@ namespace Assets.Scripts.PlayerManagement
             skillbar = Resources.FindObjectsOfTypeAll<Skillbar>().FirstOrDefault();
             if (skillbar == null)
                 throw new Exception("Skillbar object required");
-            skillbar.Initialize(Player.Skills, skillController);
+            skillbar.Initialize(Player.SkillsAndConsumables(), skillController);
+            skillbar.Hide();
+            Player.Inventory.OnInventoryUpdated += HandleInventoryUpdated;
+        }
+
+        private void HandleInventoryUpdated(object sender, EventArgs args)
+        {
+            if (args is InventoryEventData data)
+            {
+                //if (data.Consumable != null)
+                //    skillbar.Remove(data.Consumable.UsageEffect);
+                //if (data.Skill != null)
+                //    skillbar.Remove(data.Skill);
+                //if (data.Item != null) TODO
+                //    inventoryTab.Remove(data.Item);
+
+                skillbar.Rebuild(Player.SkillsAndConsumables());
+            }
         }
 
         public void Handle(UIEvent uiEvent)

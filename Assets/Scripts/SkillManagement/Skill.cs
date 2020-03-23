@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Assets.Scripts.CharactersManagement;
+using Assets.Scripts.ItemManagement;
 using Assets.Scripts.MapManagement;
 using Assets.Scripts.UIManagement.Tabs;
 using UnityEngine;
@@ -29,12 +30,14 @@ namespace Assets.Scripts.SkillManagement
         public abstract int Cost { get; }
         public abstract SkillTargetType TargetType { get; }
 
-        public float CastingTime = 1F;
-        public float CastingEffectTime = 0.5F;
+        public abstract float CastingTime { get; }
+        public abstract float CastingEffectTime { get; }
 
         protected abstract string iconPath { get; }
         public Sprite Icon { get; set; }
         public abstract string Description { get; }
+
+        public Consumable SourceConsumable { get; set; } = null;
 
         public Skill()
         {

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Assets.Scripts.CharactersManagement;
 using Assets.Scripts.ItemManagement;
 using Assets.Scripts.SkillManagement;
@@ -54,12 +55,17 @@ namespace Assets.Scripts.PlayerManagement
         public new void Start()
         {
             base.Start();
-
+            
             // TODO: will be changed with skill dictionary implementation
             SkillBook = new List<Skill>(Skills);
 
             Inventory = new Inventory();
             Inventory.Initialize();
+        }
+
+        public IEnumerable<Skill> SkillsAndConsumables()
+        {
+            return Skills.Concat(Inventory.Consumables.Select(c => c.UsageEffect));
         }
 
         public void GainExperience(int exp)

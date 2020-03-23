@@ -2,6 +2,7 @@
 using System.Linq;
 using Assets.Scripts.CharactersManagement;
 using Assets.Scripts.EventManagement;
+using Assets.Scripts.ItemManagement;
 using Assets.Scripts.MapManagement;
 using Assets.Scripts.PlayerManagement;
 using Assets.Scripts.UIManagement;
@@ -19,8 +20,6 @@ namespace Assets.Scripts.SkillManagement
         private Skill activeSkill;
         private SkillTarget currentTarget;
         private bool isUsing = false;
-
-        private const string buttonString = "Button";
 
         public SkillController(PlayerController playerController, Player player)
         {
@@ -138,6 +137,9 @@ namespace Assets.Scripts.SkillManagement
         private void UseSkillEffect()
         {
             activeSkill.Use(Player, currentTarget);
+            // If skill was effect of consumable item - call inventory to decrease its amount
+            if (activeSkill.SourceConsumable != null)
+                Player.Inventory.Consume(activeSkill.SourceConsumable);
         }
 
         /// <summary>

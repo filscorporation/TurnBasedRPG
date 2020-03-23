@@ -43,5 +43,10 @@
 	[
 		"Flame Potion. Deals 5 damage to an enemy in 1 range.",
 		"Огненное зелье. Наносит 5 урона врагу на расстоянии 1."
+	],
+	"speed_potion_description" :
+	[
+		"Speed Potion. Gives you additional action point for the rest of your turn.",
+		"Зелье скорости. Дает вам дополнительное очко действий до конца хода."
 	]
 }

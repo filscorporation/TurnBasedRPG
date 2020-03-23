@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using Assets.Scripts.BattleManagement;
 using Assets.Scripts.CharactersManagement;
 using Assets.Scripts.EventManagement;
+using Assets.Scripts.ItemManagement.Consumables;
 using Assets.Scripts.ItemManagement.Items;
 using Assets.Scripts.PlayerManagement;
 using Assets.Scripts.SkillManagement;
+using UnityEngine;
 
 namespace Assets.Scripts.ItemManagement
 {
@@ -25,11 +27,21 @@ namespace Assets.Scripts.ItemManagement
         /// </summary>
         public List<Consumable> Consumables;
 
+        /// <summary>
+        /// Called when anything in inventory got changed
+        /// </summary>
+        public event EventHandler OnInventoryUpdated;
+
         public void Initialize()
         {
             Items = new List<Item>();
-            // TODO: temporary solution. From testing.
+            // TODO: temporary solution. For testing.
             Add(new LoggingItem());
+
+            Consumables = new List<Consumable>();
+            // TODO: temporary solution. For testing.
+            Add(new FlamePotion());
+            Add(new SpeedPotion());
 
             EventManager.Instance.Subscribe(this);
         }
@@ -41,6 +53,7 @@ namespace Assets.Scripts.ItemManagement
         public void Add(Item item)
         {
             Items.Add(item);
+            OnInventoryUpdated?.Invoke(this, new InventoryEventData(item, InventoryAction.Added));
         }
 
         /// <summary>
@@ -50,6 +63,15 @@ namespace Assets.Scripts.ItemManagement
         public void Add(Consumable consumable)
         {
             Consumables.Add(consumable);
+            OnInventoryUpdated?.Invoke(this, new InventoryEventData(consumable, InventoryAction.Added));
+        }
+
+        public void Consume(Consumable consumable)
+        {
+            Debug.Log($"Consuming {consumable}");
+            // TODO: quantity --
+            Consumables.Remove(consumable);
+            OnInventoryUpdated?.Invoke(this, new InventoryEventData(consumable, InventoryAction.Removed));
         }
 
         #region Events

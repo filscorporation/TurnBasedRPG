@@ -81,6 +81,7 @@ namespace Assets.Scripts.PlayerManagement
 
             SkillController.Clear();
             InventoryUIController.HideSkills();
+            UIManager.Instance.SetVariable(nameof(Player.ActionPoints), -1);
 
             Player.PlayerState = PlayerState.Waiting;
             callWhenPlayersTurnDone();

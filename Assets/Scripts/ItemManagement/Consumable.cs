@@ -1,12 +1,37 @@
-﻿using Assets.Scripts.UIManagement.Tabs;
+﻿using Assets.Scripts.SkillManagement;
+using Assets.Scripts.UIManagement.Tabs;
 using UnityEngine;
 
 namespace Assets.Scripts.ItemManagement
 {
+    /// <summary>
+    /// Items with its own effect when used
+    /// </summary>
     public abstract class Consumable : IInventoryObject
     {
         public abstract string Name { get; }
-        public abstract Sprite Icon { get; }
+        protected abstract string iconPath { get; }
+        public Sprite Icon { get; set; }
         public abstract string Description { get; }
+        public abstract Skill UsageEffect { get; }
+
+        public Consumable()
+        {
+            LoadResources();
+        }
+
+        /// <summary>
+        /// Loads objects icon and prefabs
+        /// </summary>
+        public virtual void LoadResources()
+        {
+            if (!string.IsNullOrWhiteSpace(iconPath))
+                Icon = Resources.Load<Sprite>(iconPath);
+        }
+
+        public override string ToString()
+        {
+            return Name;
+        }
     }
 }
