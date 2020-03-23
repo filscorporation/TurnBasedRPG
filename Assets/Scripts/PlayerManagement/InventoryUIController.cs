@@ -25,6 +25,7 @@ namespace Assets.Scripts.PlayerManagement
 
         protected Player Player;
 
+        private InventoryTab inventoryTab;
         private SkillsTab skillsTab;
         private Skillbar skillbar;
 
@@ -38,10 +39,17 @@ namespace Assets.Scripts.PlayerManagement
 
         public void Initialize(SkillController skillController)
         {
+            UIManager.Instance.Subscribe(inventoryTabButtonName, this);
             UIManager.Instance.Subscribe(skillsTabButtonName, this);
+
+            inventoryTab = Resources.FindObjectsOfTypeAll<InventoryTab>().FirstOrDefault();
+            if (inventoryTab == null)
+                throw new Exception("Inventory tab object required");
+
             skillsTab = Resources.FindObjectsOfTypeAll<SkillsTab>().FirstOrDefault();
             if (skillsTab == null)
                 throw new Exception("Skills tab object required");
+
             skillbar = Resources.FindObjectsOfTypeAll<Skillbar>().FirstOrDefault();
             if (skillbar == null)
                 throw new Exception("Skillbar object required");
@@ -73,18 +81,39 @@ namespace Assets.Scripts.PlayerManagement
                 {
                     case TabState.Closed:
                         state = TabState.SkillTab;
-                        RefreshStats();
+                        SkillsTabRefreshStats();
                         FillSkillsTab();
                         break;
                     case TabState.InventoryTab:
                         state = TabState.SkillTab;
-                        RefreshStats();
+                        SkillsTabRefreshStats();
                         ClearInventoryTab();
                         FillSkillsTab();
                         break;
                     case TabState.SkillTab:
                         state = TabState.Closed;
                         ClearSkillsTab();
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
+            }
+            else if (uiEvent.ButtonName == inventoryTabButtonName)
+            {
+                switch (state)
+                {
+                    case TabState.Closed:
+                        state = TabState.InventoryTab;
+                        FillInventoryTab();
+                        break;
+                    case TabState.InventoryTab:
+                        state = TabState.Closed;
+                        ClearInventoryTab();
+                        break;
+                    case TabState.SkillTab:
+                        state = TabState.InventoryTab;
+                        ClearSkillsTab();
+                        FillInventoryTab();
                         break;
                     default:
                         throw new ArgumentOutOfRangeException();
@@ -108,7 +137,7 @@ namespace Assets.Scripts.PlayerManagement
             skillbar.Hide();
         }
 
-        private void RefreshStats()
+        private void SkillsTabRefreshStats()
         {
             skillsTab.HealthText.text = LocalizationManager.GetLocalizedValue(nameof(Player.Health).ToLower())
                                         + $" {Player.Health}/{Player.HealthMax}";
@@ -122,11 +151,14 @@ namespace Assets.Scripts.PlayerManagement
 
         private void FillInventoryTab()
         {
+            inventoryTab.Initialize(Player.InventoryObjects());
+            inventoryTab.gameObject.SetActive(true);
         }
 
         private void ClearInventoryTab()
         {
-
+            inventoryTab.Clear();
+            inventoryTab.gameObject.SetActive(false);
         }
 
         private void FillSkillsTab()

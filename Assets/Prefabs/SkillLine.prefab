@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2117861733164076536}
   - component: {fileID: 2117861733164076540}
-  - component: {fileID: 2117861733164076541}
   - component: {fileID: 2117861733164076542}
   - component: {fileID: 2117861733164076543}
   m_Layer: 5
@@ -48,18 +47,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2117861733164076537}
   m_CullTransparentMesh: 0
---- !u!114 &2117861733164076541
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2117861733164076537}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4559c3655c15ccb4f9ff189537c9a07c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &2117861733164076542
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -409,17 +396,6 @@ MonoBehaviour:
   Height: 140
   Icon: {fileID: 2117861734279215453}
   Description: {fileID: 2117861735247161300}
-  Source:
-    Name: 
-    Range: 0
-    Cost: 0
-    TargetType: 0
-    Damage: 0
-    CastingTime: 1
-    CastingEffectTime: 0.5
-    OnHitEffect: {fileID: 0}
-    icon: {fileID: 0}
-    description: 
   UpgreatButton: {fileID: 2117861734494754167}
   AcceptButton: {fileID: 2117861733261229468}
   DeclineButton: {fileID: 2117861734899464345}

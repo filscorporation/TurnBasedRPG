@@ -24,6 +24,11 @@
 		"Drag skills to the skillbar to use them. Drag from it to remove.",
 		"Перетащите умения в панель умений чтобы затем их использовать. Перетащите обратно чтобы убрать из панели."
 	],
+	"inventorytab_description" :
+	[
+		"Drag potions to the skillbar to use them. Drag from it to remove.",
+		"Перетащите зелья в панель умений чтобы затем их использовать. Перетащите обратно чтобы убрать из панели."
+	],
 	"sword_attack_skill_description" :
 	[
 		"Sword Attack. 2 Action points. Deals 5 damage to an enemy in 1 range.",

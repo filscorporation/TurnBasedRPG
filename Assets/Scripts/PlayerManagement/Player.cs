@@ -4,6 +4,7 @@ using System.Linq;
 using Assets.Scripts.CharactersManagement;
 using Assets.Scripts.ItemManagement;
 using Assets.Scripts.SkillManagement;
+using Assets.Scripts.UIManagement.Tabs;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -66,6 +67,12 @@ namespace Assets.Scripts.PlayerManagement
         public IEnumerable<Skill> SkillsAndConsumables()
         {
             return Skills.Concat(Inventory.Consumables.Select(c => c.UsageEffect));
+        }
+
+        public IEnumerable<IInventoryObject> InventoryObjects()
+        {
+            // TODO: add gold object
+            return Inventory.Items.Concat(Inventory.Consumables.Cast<IInventoryObject>());
         }
 
         public void GainExperience(int exp)
