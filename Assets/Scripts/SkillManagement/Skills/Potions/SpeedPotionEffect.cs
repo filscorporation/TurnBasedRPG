@@ -12,6 +12,8 @@ namespace Assets.Scripts.SkillManagement.Skills.Potions
         public override int Cost => 0;
         public override SkillTargetType TargetType => SkillTargetType.Player;
 
+        public override CharacterState CharacterTargetState { get => CharacterState.Consuming; }
+
         protected override string iconPath => "Icons/SpeedPotionIcon";
         public override string Description => null;
 

@@ -187,8 +187,7 @@ namespace Assets.Scripts.CharactersManagement
                 Character.transform.position.x,
                 target.TileTarget?.transform.position.x ?? target.CharacterTargets.First().transform.position.x);
 
-            Character.State = CharacterState.Attacking;
-            //animator?.SetBool(skillAnimatorParam, true);
+            Character.State = skill.CharacterTargetState;
         }
 
         /// <summary>

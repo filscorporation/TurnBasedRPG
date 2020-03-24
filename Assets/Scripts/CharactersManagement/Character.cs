@@ -13,6 +13,7 @@ namespace Assets.Scripts.CharactersManagement
         Idle,
         Moving,
         Attacking,
+        Consuming,
         ReceivingDamage,
         Dead,
     }
@@ -52,6 +53,9 @@ namespace Assets.Scripts.CharactersManagement
                         case CharacterState.Attacking:
                             animator.SetTrigger(animatorAttackTrigger);
                             break;
+                        case CharacterState.Consuming:
+                            animator.SetTrigger(animatorConsumeTrigger);
+                            break;
                         case CharacterState.ReceivingDamage:
                             animator.SetTrigger(animatorReceiveDamageTrigger);
                             break;
@@ -68,6 +72,7 @@ namespace Assets.Scripts.CharactersManagement
         private Animator animator;
         private const string animatorMovingBool = "Moving";
         private const string animatorAttackTrigger = "Attack";
+        private const string animatorConsumeTrigger = "Consume";
         private const string animatorReceiveDamageTrigger = "ReceiveDamage";
         private const string animatorDeadBool = "Dead";
 

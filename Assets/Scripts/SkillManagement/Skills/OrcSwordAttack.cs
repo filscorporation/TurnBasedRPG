@@ -14,7 +14,7 @@ namespace Assets.Scripts.SkillManagement.Skills
         public override string Description => null;
 
         public override float CastingTime => 1F;
-        public override float CastingEffectTime => 0.5F;
+        public override float CastingEffectTime => 0.45F;
 
         protected override int range => 1;
         private float damage = 3;

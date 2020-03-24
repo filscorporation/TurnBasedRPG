@@ -32,6 +32,7 @@ namespace Assets.Scripts.SkillManagement
 
         public abstract float CastingTime { get; }
         public abstract float CastingEffectTime { get; }
+        public virtual CharacterState CharacterTargetState { get => CharacterState.Attacking; }
 
         protected abstract string iconPath { get; }
         public Sprite Icon { get; set; }

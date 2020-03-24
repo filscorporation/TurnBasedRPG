@@ -18,7 +18,7 @@ namespace Assets.Scripts.SkillManagement.Skills
         private float damage = 7;
         
         public override float CastingTime => 2F;
-        public override float CastingEffectTime => 1F;
+        public override float CastingEffectTime => 0.9F;
 
         private string onHitEffectPath = "Prefabs/StoneParticlesEffect";
         public GameObject OnHitEffect;
