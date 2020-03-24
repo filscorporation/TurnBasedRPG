@@ -1,4 +1,6 @@
-﻿using Assets.Scripts.SkillManagement;
+﻿using Assets.Scripts.ItemManagement;
+using Assets.Scripts.SkillManagement;
+using Assets.Scripts.UIManagement.Tabs;
 using System;
 using System.Linq;
 using System.Reflection;
@@ -14,6 +16,8 @@ namespace Assets.Scripts
         public void Awake()
         {
             LoadSkills();
+            LoadItems();
+            LoadConsumables();
         }
 
         private void LoadSkills()
@@ -25,7 +29,27 @@ namespace Assets.Scripts
                 Skill.SkillDictionary[skill.Name] = skill;
             }
         }
-        
+
+        private void LoadItems()
+        {
+            foreach (Type type in Assembly.GetAssembly(typeof(Item)).GetTypes()
+                .Where(myType => myType.IsClass && !myType.IsAbstract && myType.IsSubclassOf(typeof(Item))))
+            {
+                Item item = (Item)Activator.CreateInstance(type);
+                Item.ItemDictionary[item.Name] = item;
+            }
+        }
+
+        private void LoadConsumables()
+        {
+            foreach (Type type in Assembly.GetAssembly(typeof(Consumable)).GetTypes()
+                .Where(myType => myType.IsClass && !myType.IsAbstract && myType.IsSubclassOf(typeof(Consumable))))
+            {
+                Consumable item = (Consumable)Activator.CreateInstance(type);
+                Consumable.ConsumablesDictionary[item.Name] = item;
+            }
+        }
+
         //private void GenerateField(int x, int y)
         //{
         //    for (int i = 0; i < x; i++)

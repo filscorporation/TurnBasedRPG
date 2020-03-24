@@ -41,16 +41,16 @@ namespace Assets.Scripts.ItemManagement
         {
             Items = new List<Item>();
             // TODO: temporary solution. For testing.
-            Add(new LoggingItem());
+            Add(Item.ItemDictionary[nameof(LoggingItem)]);
 
             Consumables = new List<Consumable>();
             // TODO: temporary solution. For testing.
-            Add(new FlamePotion());
-            Add(new SpeedPotion());
+            Add(Consumable.ConsumablesDictionary[nameof(FlamePotion)]);
+            Add(Consumable.ConsumablesDictionary[nameof(SpeedPotion)]);
 
             EventManager.Instance.Subscribe(this);
         }
-
+        
         /// <summary>
         /// Adds new item to the list
         /// </summary>

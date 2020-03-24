@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Assets.Scripts.BattleManagement;
 using Assets.Scripts.CharactersManagement;
 using Assets.Scripts.EventManagement;
@@ -15,6 +16,8 @@ namespace Assets.Scripts.ItemManagement
     [Serializable]
     public abstract class Item : IInventoryObject
     {
+        public static Dictionary<string, Item> ItemDictionary = new Dictionary<string, Item>();
+
         public abstract string Name { get; }
         public abstract Sprite Icon { get; }
         public abstract string Description { get; }

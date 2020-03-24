@@ -8,7 +8,7 @@ namespace Assets.Scripts.ItemManagement.Consumables
     /// </summary>
     public class SpeedPotion : Consumable
     {
-        public override string Name => nameof(FlamePotion);
+        public override string Name => nameof(SpeedPotion);
         protected override string iconPath => "Icons/SpeedPotionIcon";
         public override string Description => "speed_potion_description";
 

@@ -1,5 +1,6 @@
 ﻿using Assets.Scripts.SkillManagement;
 using Assets.Scripts.UIManagement.Tabs;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Assets.Scripts.ItemManagement
@@ -9,6 +10,8 @@ namespace Assets.Scripts.ItemManagement
     /// </summary>
     public abstract class Consumable : IInventoryObject
     {
+        public static Dictionary<string, Consumable> ConsumablesDictionary = new Dictionary<string, Consumable>();
+        
         public abstract string Name { get; }
         protected abstract string iconPath { get; }
         public Sprite Icon { get; set; }
