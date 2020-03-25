@@ -6,7 +6,9 @@ using Assets.Scripts.EventManagement;
 using Assets.Scripts.ItemManagement.Consumables;
 using Assets.Scripts.ItemManagement.Items;
 using Assets.Scripts.PlayerManagement;
+using Assets.Scripts.RewardManagement;
 using Assets.Scripts.SkillManagement;
+using Assets.Scripts.UIManagement.Tabs;
 using UnityEngine;
 
 namespace Assets.Scripts.ItemManagement
@@ -71,6 +73,25 @@ namespace Assets.Scripts.ItemManagement
             OnInventoryUpdated?.Invoke(this, new InventoryEventData(consumable, InventoryAction.Added));
         }
 
+        /// <summary>
+        /// Adds new item or consumable to the list
+        /// </summary>
+        /// <param name="iobj"></param>
+        public void Add(IInventoryObject iobj)
+        {
+            switch (iobj)
+            {
+                case Item item:
+                    Add(item);
+                    break;
+                case Consumable consumable:
+                    Add(consumable);
+                    break;
+                default:
+                    throw new NotSupportedException(iobj.ToString());
+            }
+        }
+
         public void Consume(Consumable consumable)
         {
             Debug.Log($"Consuming {consumable}");
@@ -104,6 +125,20 @@ namespace Assets.Scripts.ItemManagement
             foreach (Item item in Items)
             {
                 item.OnBattleEnd(battle, token);
+            }
+        }
+
+        /// <summary>
+        /// Called when player is getting reward for winning a battle
+        /// </summary>
+        /// <param name="battle"></param>
+        /// <param name="reward"></param>
+        /// <param name="token"></param>
+        public void OnGetReward(Battle battle, Reward reward, CancellationToken token)
+        {
+            foreach (Item item in Items)
+            {
+                item.OnGetReward(battle, reward, token);
             }
         }
 

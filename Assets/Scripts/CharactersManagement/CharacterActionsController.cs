@@ -134,7 +134,6 @@ namespace Assets.Scripts.CharactersManagement
                 // Finished using skill
                 currentSkill = null;
                 currentSkillTarget = null;
-                animator?.SetBool(skillAnimatorParam, false);
 
                 // In this invoke enemy can use next skill
                 onSkillCastEndAction.Invoke();

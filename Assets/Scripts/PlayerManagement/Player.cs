@@ -39,7 +39,12 @@ namespace Assets.Scripts.PlayerManagement
 
         public int Level = 1;
         public int SkillPoints = 0;
-        public int Experience = 0;
+        public int experience = 0;
+        public int Experience
+        {
+            get => experience;
+            set => GainExperience(value);
+        }    
         public int ExperienceForNextLevel = 100;
         private float experienceGrowthFactor = 1.5F;
 
@@ -75,12 +80,12 @@ namespace Assets.Scripts.PlayerManagement
             return objects.Concat(Inventory.Items.Concat(Inventory.Consumables.Cast<IInventoryObject>()));
         }
 
-        public void GainExperience(int exp)
+        protected void GainExperience(int exp)
         {
-            if (Experience + exp >= ExperienceForNextLevel)
+            if (experience + exp >= ExperienceForNextLevel)
             {
-                int overflow = Experience + exp - ExperienceForNextLevel;
-                Experience = 0;
+                int overflow = experience + exp - ExperienceForNextLevel;
+                experience = 0;
                 LevelUp();
                 ExperienceForNextLevel = Mathf.RoundToInt(ExperienceForNextLevel*experienceGrowthFactor/10)*10;
                 GainExperience(overflow);
@@ -88,7 +93,7 @@ namespace Assets.Scripts.PlayerManagement
             else
             {
                 Debug.Log($"Player gains {exp} experience");
-                Experience += exp;
+                experience += exp;
             }
         }
 

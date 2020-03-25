@@ -12,7 +12,7 @@ namespace Assets.Scripts.InputManagement
     {
         private readonly List<IInputSubscriber> subs = new List<IInputSubscriber>();
 
-        protected bool IsNeedToCheckForInput = true;
+        public bool IsNeedToCheckForInput = true;
 
         public void Update()
         {

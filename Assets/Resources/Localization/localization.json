@@ -24,6 +24,21 @@
 		"Drag skills to the skillbar to use them. Drag from it to remove.",
 		"Перетащите умения в панель умений чтобы затем их использовать. Перетащите обратно чтобы убрать из панели."
 	],
+	"n_of_gold" :
+	[
+		"gold.",
+		"золота."
+	],
+	"n_of_experience" :
+	[
+		"experience.",
+		"опыта."
+	],
+	"rewardtab_description" :
+	[
+		"Choose one reward.",
+		"Выберите одну награду."
+	],
 	"inventorytab_description" :
 	[
 		"Drag potions to the skillbar to use them. Drag from it to remove.",
@@ -56,7 +71,7 @@
 	],
 	"speed_potion_description" :
 	[
-		"Speed Potion. Gives you additional action point for the rest of your turn.",
-		"Зелье скорости. Дает вам дополнительное очко действий до конца хода."
+		"Speed Potion. Gives you 2 additional action points for the rest of your turn.",
+		"Зелье скорости. Дает вам 2 дополнительных очка действий до конца хода."
 	]
 }

@@ -12,7 +12,7 @@ namespace Assets.Scripts.SkillManagement.Skills.Potions
         public override int Cost => 0;
         public override SkillTargetType TargetType => SkillTargetType.Player;
 
-        public override CharacterState CharacterTargetState { get => CharacterState.Consuming; }
+        public override CharacterState CharacterTargetState => CharacterState.Consuming;
 
         protected override string iconPath => "Icons/SpeedPotionIcon";
         public override string Description => null;
@@ -31,7 +31,7 @@ namespace Assets.Scripts.SkillManagement.Skills.Potions
         {
             if (target.CharacterTargets.Count != 1 || !(target.CharacterTargets.First() is Player player))
                 throw new NotSupportedException();
-            player.ActionPoints++;
+            player.ActionPoints += 2;
             UIManager.Instance.SetVariable(nameof(player.ActionPoints), player.ActionPoints);
         }
     }

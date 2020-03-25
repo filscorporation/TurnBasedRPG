@@ -2,6 +2,7 @@
 using Assets.Scripts.CharactersManagement;
 using Assets.Scripts.EventManagement;
 using Assets.Scripts.PlayerManagement;
+using Assets.Scripts.RewardManagement;
 using Assets.Scripts.SkillManagement;
 using UnityEngine;
 
@@ -15,6 +16,7 @@ namespace Assets.Scripts.ItemManagement.Items
         public override string Name => nameof(LoggingItem);
         public override Sprite Icon => null;
         public override string Description => "logging_item_description";
+        public override int Level => 2;
 
         public override void OnBattleStart(Battle battle, CancellationToken token)
         {
@@ -29,6 +31,11 @@ namespace Assets.Scripts.ItemManagement.Items
         public override void OnPlayersTurnBegin(Battle battle, CancellationToken token)
         {
             Debug.Log($"In event {nameof(OnPlayersTurnBegin)}, battle {battle}");
+        }
+
+        public override void OnGetReward(Battle battle, Reward reward, CancellationToken token)
+        {
+            Debug.Log($"In event {nameof(OnGetReward)}, battle {battle}, reward {reward}");
         }
 
         public override void OnPlayersTurnEnd(Battle battle, CancellationToken token)

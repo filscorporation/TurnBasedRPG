@@ -17,6 +17,11 @@ namespace Assets.Scripts.EnemyManagement
 
         public int LineOfSight = 3;
 
+        /// <summary>
+        /// Enemy level used to calculate reward and correctly spawn enemies in rooms
+        /// </summary>
+        public int Level = 1;
+
         private Action callWhenFinishedActing;
 
         protected Skill CurrentSkill;

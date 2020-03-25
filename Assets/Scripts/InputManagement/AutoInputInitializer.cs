@@ -9,16 +9,23 @@ namespace Assets.Scripts.InputManagement
     /// </summary>
     public class AutoInputInitializer : MonoBehaviour
     {
+        /// <summary>
+        /// Used input system
+        /// </summary>
+        public static InputManagerBase InputManager;
+
         public void Awake()
         {
-            InputManagerBase im;
+            if (InputManager != null)
+                throw new Exception("Multiple input manager initialization");
+
             switch (SystemInfo.deviceType)
             {
                 case DeviceType.Handheld:
-                    im = gameObject.AddComponent<TouchInputManager>();
+                    InputManager = gameObject.AddComponent<TouchInputManager>();
                     break;
                 case DeviceType.Desktop:
-                    im = gameObject.AddComponent<MouseInputManager>();
+                    InputManager = gameObject.AddComponent<MouseInputManager>();
                     break;
                 case DeviceType.Console:
                 case DeviceType.Unknown:
@@ -28,7 +35,7 @@ namespace Assets.Scripts.InputManagement
             }
 
             // Reference
-            FindObjectOfType<PlayerController>().InputManager = im;
+            FindObjectOfType<PlayerController>().InputManager = InputManager;
         }
     }
 }

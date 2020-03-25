@@ -4,6 +4,7 @@ using Assets.Scripts.BattleManagement;
 using Assets.Scripts.CharactersManagement;
 using Assets.Scripts.EventManagement;
 using Assets.Scripts.PlayerManagement;
+using Assets.Scripts.RewardManagement;
 using Assets.Scripts.SkillManagement;
 using Assets.Scripts.UIManagement.Tabs;
 using UnityEngine;
@@ -21,6 +22,7 @@ namespace Assets.Scripts.ItemManagement
         public abstract string Name { get; }
         public abstract Sprite Icon { get; }
         public abstract string Description { get; }
+        public abstract int Level { get; }
 
         /// <summary>
         /// Called when battle starts
@@ -42,6 +44,14 @@ namespace Assets.Scripts.ItemManagement
         /// <param name="battle"></param>
         /// <param name="token"></param>
         public abstract void OnPlayersTurnBegin(Battle battle, CancellationToken token);
+
+        /// <summary>
+        /// Called when player is getting reward for winning a battle
+        /// </summary>
+        /// <param name="battle"></param>
+        /// <param name="reward"></param>
+        /// <param name="token"></param>
+        public abstract void OnGetReward(Battle battle, Reward reward, CancellationToken token);
 
         /// <summary>
         /// Called when players turn ends

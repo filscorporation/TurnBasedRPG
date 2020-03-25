@@ -2,6 +2,7 @@
 using Assets.Scripts.BattleManagement;
 using Assets.Scripts.CharactersManagement;
 using Assets.Scripts.PlayerManagement;
+using Assets.Scripts.RewardManagement;
 using Assets.Scripts.SkillManagement;
 
 namespace Assets.Scripts.EventManagement
@@ -44,6 +45,20 @@ namespace Assets.Scripts.EventManagement
             foreach (IEventSubscriber sub in subs)
             {
                 sub.OnBattleEnd(battle, token);
+            }
+        }
+
+        /// <summary>
+        /// Called when player gets reward for winning a battle
+        /// </summary>
+        /// <param name="battle"></param>
+        /// <param name="reward"></param>
+        /// <param name="token"></param>
+        public void OnGetReward(Battle battle, Reward reward, CancellationToken token)
+        {
+            foreach (IEventSubscriber sub in subs)
+            {
+                sub.OnGetReward(battle, reward, token);
             }
         }
 

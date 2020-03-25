@@ -1,6 +1,7 @@
 ﻿using Assets.Scripts.BattleManagement;
 using Assets.Scripts.CharactersManagement;
 using Assets.Scripts.PlayerManagement;
+using Assets.Scripts.RewardManagement;
 using Assets.Scripts.SkillManagement;
 
 namespace Assets.Scripts.EventManagement
@@ -23,6 +24,14 @@ namespace Assets.Scripts.EventManagement
         /// <param name="battle"></param>
         /// <param name="token"></param>
         void OnBattleEnd(Battle battle, CancellationToken token);
+
+        /// <summary>
+        /// Called when player is getting reward for winning a battle
+        /// </summary>
+        /// <param name="battle"></param>
+        /// <param name="reward"></param>
+        /// <param name="token"></param>
+        void OnGetReward(Battle battle, Reward reward, CancellationToken token);
 
         /// <summary>
         /// Called when players turn begins

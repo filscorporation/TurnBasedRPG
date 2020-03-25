@@ -4,6 +4,7 @@ using Assets.Scripts.EnemyManagement;
 using Assets.Scripts.EventManagement;
 using Assets.Scripts.MapManagement;
 using Assets.Scripts.PlayerManagement;
+using Assets.Scripts.RewardManagement;
 using Assets.Scripts.UIManagement;
 using UnityEngine;
 
@@ -124,6 +125,8 @@ namespace Assets.Scripts.BattleManagement
             UIManager.Instance.SetVariable(battleIconName, 0);
             // Hide end turn button
             UIManager.Instance.SetVariable(endTurnButtonName, 0);
+
+            RewardManager.GivePlayerReward(battle);
 
             return true;
         }
