@@ -391,6 +391,7 @@ MonoBehaviour:
   SkillsNames:
   - GolemsSmash
   LineOfSight: 5
+  Level: 3
 --- !u!114 &4520674481462131009
 MonoBehaviour:
   m_ObjectHideFlags: 0

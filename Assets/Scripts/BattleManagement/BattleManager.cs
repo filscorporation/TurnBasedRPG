@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Assets.Scripts.CameraManagement;
 using Assets.Scripts.EnemyManagement;
 using Assets.Scripts.EventManagement;
 using Assets.Scripts.MapManagement;
@@ -19,6 +20,7 @@ namespace Assets.Scripts.BattleManagement
         public RewardManager RewardManager;
         public PlayerController PlayerController;
         public EnemyController EnemyController;
+        protected CameraManager CameraManager;
 
         private const string endTurnButtonName = "EndTurnButton";
         private const string battleIconName = "BattleIcon";
@@ -28,6 +30,7 @@ namespace Assets.Scripts.BattleManagement
         public void Start()
         {
             RewardManager = GetComponent<RewardManager>();
+            CameraManager = FindObjectOfType<CameraManager>();
             Validate();
             UIManager.Instance.Subscribe(endTurnButtonName, this);
         }
@@ -42,6 +45,8 @@ namespace Assets.Scripts.BattleManagement
                 throw new Exception("PlayerController field should not be null");
             if (EnemyController == null)
                 throw new Exception("EnemyController field should not be null");
+            if (CameraManager == null)
+                throw new Exception("CameraManager field should not be null");
         }
 
         /// <summary>
@@ -91,6 +96,8 @@ namespace Assets.Scripts.BattleManagement
         /// <returns></returns>
         private bool PlayersTurnStart()
         {
+            // Set camera focus to player
+            CameraManager.Follow(currentBattle.Player.transform);
             // Start players turn events
             CancellationToken token = new CancellationToken();
             EventManager.Instance.OnPlayersTurnBegin(currentBattle, token);

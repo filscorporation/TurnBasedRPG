@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Assets.Scripts.BattleManagement;
+using Assets.Scripts.CameraManagement;
 using Assets.Scripts.CharactersManagement;
 using Assets.Scripts.PlayerManagement;
 using UnityEngine;
@@ -14,6 +15,7 @@ namespace Assets.Scripts.EnemyManagement
     public class EnemyController : MonoBehaviour
     {
         public BattleManager BattleManager;
+        protected CameraManager CameraManager;
 
         public List<Enemy> Enemies;
 
@@ -26,6 +28,8 @@ namespace Assets.Scripts.EnemyManagement
 
         public void Start()
         {
+            CameraManager = FindObjectOfType<CameraManager>();
+
             Validate();
             LoadAllEnemies();
         }
@@ -34,6 +38,8 @@ namespace Assets.Scripts.EnemyManagement
         {
             if (BattleManager == null)
                 throw new Exception("BattleManager field should not be null");
+            if (CameraManager == null)
+                throw new Exception("CameraManager field should not be null");
         }
 
         private void LoadAllEnemies()
@@ -53,13 +59,9 @@ namespace Assets.Scripts.EnemyManagement
         /// <summary>
         /// Passes control to enemy
         /// </summary>
-        /// <param name="onEnemyTurnDone">After enemy turn done - pass control to battle manager</param>
-        /// <param name="battle"></param>
-        public void EnemyTurn(/*Action<bool> onEnemyTurnDone, Battle battle*/)
+        public void EnemyTurn()
         {
             Debug.Log("Starting enemy turn");
-
-            //callWhenEnemyTurnDone = onEnemyTurnDone;
 
             // Sort all enemies by priority and put them into queue to act
             enemiesInTurn = new Queue<Enemy>(currentBattle.Enemies.OrderBy(e => e.Priority(currentBattle)));
@@ -91,6 +93,8 @@ namespace Assets.Scripts.EnemyManagement
                     continue;
                 }
 
+                // Set camera focus on current acting enemy
+                CameraManager.Follow(enemy.transform);
                 enemy.Act(currentBattle, EnemyFinishedActing);
                 return;
             }
@@ -191,6 +195,9 @@ namespace Assets.Scripts.EnemyManagement
 
                 enemy.Healthbar.Show();
             }
+
+            // Set camera focus on first enemy we going to fight
+            CameraManager.Follow(enemies.First().transform);
         }
 
         private bool AddEnemyToCurrentBattle(Enemy enemy)

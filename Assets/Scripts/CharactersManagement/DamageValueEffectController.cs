@@ -42,7 +42,6 @@ namespace Assets.Scripts.CharactersManagement
             if (e is DamageEventData data && sender is Character character)
             {
                 Vector3 p = Camera.main.WorldToScreenPoint(character.transform.position);
-                p = new Vector3(p.x, p.y, -100);
                 GameObject o = Instantiate(EffectPrefab, p, Quaternion.identity, DamageEffectsParent);
                 Text text = o.transform.GetChild(0).gameObject.GetComponent<Text>();
                 text.text = Mathf.RoundToInt(data.Damage.Value).ToString();
