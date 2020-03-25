@@ -15,6 +15,7 @@ namespace Assets.Scripts.BattleManagement
     public class BattleManager : MonoBehaviour, IUISubscriber
     {
         public MapManager MapManager;
+        public RewardManager RewardManager;
         public PlayerController PlayerController;
         public EnemyController EnemyController;
 
@@ -25,6 +26,7 @@ namespace Assets.Scripts.BattleManagement
 
         public void Start()
         {
+            RewardManager = GetComponent<RewardManager>();
             Validate();
             UIManager.Instance.Subscribe(endTurnButtonName, this);
         }
@@ -33,6 +35,8 @@ namespace Assets.Scripts.BattleManagement
         {
             if (MapManager == null)
                 throw new Exception("MapManager field should not be null");
+            if (RewardManager == null)
+                throw new Exception("RewardManager field should not be null");
             if (PlayerController == null)
                 throw new Exception("PlayerController field should not be null");
             if (EnemyController == null)
