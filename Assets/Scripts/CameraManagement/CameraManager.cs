@@ -14,31 +14,19 @@ namespace Assets.Scripts.CameraManagement
     /// </summary>
     public class CameraManager : MonoBehaviour
     {
-        private static CameraManager instance;
-        public static CameraManager Instance
-        {
-            get
-            {
-                if (instance == null)
-                    instance = FindObjectOfType<CameraManager>();
-                return instance;
-            }
-        }
-
         public CameraFollow CameraFollow;
 
-        private Queue<Transform> targets;
+        private Transform mainTarget;
+        private Transform subTarget;
 
         public void Start()
         {
             CameraFollow = Camera.main.gameObject.GetComponent<CameraFollow>();
             if (CameraFollow == null)
                 throw new Exception("CameraFollow component on main camera required");
-
-            CameraFollow.OnNextTarget = NextTarget;
-            CameraFollow.Target = FindObjectOfType<Player>().transform;
-
-            targets = new Queue<Transform>();
+            
+            mainTarget = FindObjectOfType<Player>().transform;
+            CameraFollow.SetTarget(mainTarget);
         }
 
         /// <summary>
@@ -49,16 +37,8 @@ namespace Assets.Scripts.CameraManagement
         {
             Debug.Log("Follow " + target);
 
-            targets.Enqueue(target);
-
-            if (!CameraFollow.HasTarget())
-                NextTarget();
-        }
-
-        private void NextTarget()
-        {
-            if (targets.Any())
-                CameraFollow.SetTarget(targets.Dequeue());
+            subTarget = target;
+            CameraFollow.SetTarget(subTarget);
         }
     }
 }

@@ -19,8 +19,6 @@ namespace Assets.Scripts.CameraManagement
         private bool hasNextTarget = false;
         private Vector2 nextTarget;
 
-        public Action OnNextTarget;
-
         public void LateUpdate()
         {
             if (Target != null && NeedToFollow)
@@ -34,7 +32,6 @@ namespace Assets.Scripts.CameraManagement
                 if (Vector2.Distance(transform.position, nextTarget) < eps)
                 {
                     hasNextTarget = false;
-                    OnNextTarget?.Invoke();
                     return;
                 }
 
@@ -61,11 +58,6 @@ namespace Assets.Scripts.CameraManagement
         {
             this.Target = target;
             CheckIfNeedToFollow();
-        }
-
-        public bool HasTarget()
-        {
-            return hasNextTarget;
         }
     }
 }
