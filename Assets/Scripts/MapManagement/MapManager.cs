@@ -27,6 +27,8 @@ namespace Assets.Scripts.MapManagement
         public GameObject selectedTilePrefab;
         private List<GameObject> selectedTiles = new List<GameObject>();
 
+        public Transform MapObjectsParent;
+
         public void Start()
         {
             pathFinder = new PathFinder<Tile>();
@@ -73,7 +75,11 @@ namespace Assets.Scripts.MapManagement
         /// <returns></returns>
         public List<Tile> BuildPath(Tile a, Tile b)
         {
-            List<Tile> path = pathFinder.FindPath(a, b, field);
+            List<Tile> path = pathFinder.FindPath(a, b, field, true);
+            // If path end tile was not free, we should remove it from final path
+            // Used to move to intaractable objects
+            if (path != null && path.Any() && !b.Free)
+                path.Remove(b);
             SelectPath(path);
             return path;
         }
@@ -112,6 +118,25 @@ namespace Assets.Scripts.MapManagement
                 GameObject sGO = Instantiate(selectedTilePrefab, tile.transform.position, Quaternion.identity);
                 sGO.transform.SetParent(tile.transform);
                 selectedTiles.Add(sGO);
+            }
+        }
+
+        /// <summary>
+        /// Returns all existing neighbours for the tile
+        /// </summary>
+        /// <param name="tile"></param>
+        /// <returns></returns>
+        public IEnumerable<Tile> GetNeighbours(Tile tile)
+        {
+            for (int i = -1; i <= 1; i++)
+            {
+                for (int j = -1; j <= 1; j++)
+                {
+                    if ((i != 0 || j != 0)
+                        && tile.X + i >= 0 && tile.X + i < field.GetLength(0)
+                        && tile.Y + j >= 0 && tile.Y + j < field.GetLength(1))
+                        yield return field[tile.X + i,tile.Y + j];
+                }
             }
         }
     }

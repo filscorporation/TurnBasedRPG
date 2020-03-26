@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using Assets.Scripts.CharactersManagement;
 using Assets.Scripts.EnemyManagement;
 using Assets.Scripts.InputManagement;
+using Assets.Scripts.InteractableObjects;
 using Assets.Scripts.MapManagement;
 using Assets.Scripts.SkillManagement;
 using Assets.Scripts.UIManagement;
@@ -26,6 +26,7 @@ namespace Assets.Scripts.PlayerManagement
 
         private Tile confirmTileInBattle;
         private List<Tile> savedPath;
+        private readonly List<InteractableObject> interactableObjects = new List<InteractableObject>();
         private Action callWhenPlayersTurnDone;
 
         public void Start()
@@ -126,7 +127,14 @@ namespace Assets.Scripts.PlayerManagement
             // Occupied tile processing
             if (!tile.Free)
             {
-                return;
+                if (tile.Occupier is InteractableObject)
+                {
+                    // Moving to interactable object
+                }
+                else
+                {
+                    return;
+                }
             }
 
             // Free tile processing
@@ -163,7 +171,8 @@ namespace Assets.Scripts.PlayerManagement
                     return;
                 }
             }
-            
+
+            ClearInteractions();
             CharacterController.Move(path, PlayerReachedNextTile, PlayerReachedPathEnd);
         }
 
@@ -209,6 +218,7 @@ namespace Assets.Scripts.PlayerManagement
             if (Player.PlayerState == PlayerState.FreeControl && EnemyController.TryStartBattle(Player))
             {
                 // Battle began
+                ClearInteractions();
                 CharacterController.Cancel();
                 MapManager.Instance.ClearPath();
             }
@@ -219,10 +229,38 @@ namespace Assets.Scripts.PlayerManagement
             Debug.Log("Path end reached");
             MapManager.Instance.ClearPath();
 
-            if (Player.PlayerState == PlayerState.FreeControl && EnemyController.TryStartBattle(Player))
+            if (Player.PlayerState == PlayerState.FreeControl)
             {
-                // Battle began
+                if (EnemyController.TryStartBattle(Player))
+                {
+                    // Battle began
+                    return;
+                }
+
+                CheckForInteractions();
             }
+        }
+
+        private void CheckForInteractions()
+        {
+            foreach (Tile tile in MapManager.Instance.GetNeighbours(Player.OnTile))
+            {
+                if (!tile.Free && tile.Occupier is InteractableObject interactable)
+                {
+                    Debug.Log($"Interacting with {interactable.name}");
+                    interactable.ShowInteraction(Player);
+                    interactableObjects.Add(interactable);
+                }
+            }
+        }
+
+        private void ClearInteractions()
+        {
+            foreach (InteractableObject interactableObject in interactableObjects)
+            {
+                interactableObject.Clear();
+            }
+            interactableObjects.Clear();
         }
     }
 }
