@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -27,12 +28,13 @@ namespace Assets.Scripts.MapManagement
         public GameObject selectedTilePrefab;
         private List<GameObject> selectedTiles = new List<GameObject>();
 
+        public Transform TilesParent;
         public Transform MapObjectsParent;
 
         public void Start()
         {
             pathFinder = new PathFinder<Tile>();
-            InitializeField();
+            //InitializeField();
         }
 
         private void InitializeField()
@@ -49,6 +51,14 @@ namespace Assets.Scripts.MapManagement
             }
 
             Debug.Log($"Initialized field {x}:{y}");
+        }
+
+        public void SetField(Tile[,] newField)
+        {
+            if (field != null)
+                throw new NotImplementedException();
+
+            field = newField;
         }
 
         /// <summary>
@@ -126,11 +136,11 @@ namespace Assets.Scripts.MapManagement
         /// </summary>
         /// <param name="tile"></param>
         /// <returns></returns>
-        public IEnumerable<Tile> GetNeighbours(Tile tile)
+        public IEnumerable<Tile> GetNeighbours(Tile tile, int radius = 1)
         {
-            for (int i = -1; i <= 1; i++)
+            for (int i = -radius; i <= radius; i++)
             {
-                for (int j = -1; j <= 1; j++)
+                for (int j = -radius; j <= radius; j++)
                 {
                     if ((i != 0 || j != 0)
                         && tile.X + i >= 0 && tile.X + i < field.GetLength(0)

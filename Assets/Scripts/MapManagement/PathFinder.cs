@@ -31,7 +31,7 @@ namespace Assets.Scripts.MapManagement
 
             while (!target.Equals(outElement) && stopper < size * size
                 //Проверка размера закрытого списка если обработано слишком много клеток
-                && openList.Count > 0 && closeList.Count < size * 5)
+                && openList.Count > 0 && closeList.Count < size * size)
             {
                 //Пока не дойдем до конца или открытый список не опустеет :
                 stopper++;

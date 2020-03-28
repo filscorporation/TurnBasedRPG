@@ -47,7 +47,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactButtonPrefab: {fileID: 7246462594095428726, guid: 00a39a884712b3b4ab09c34cf9da7cb7,
     type: 3}
-  Items: []
+  Items:
+  - FlamePotion
+  - SpeedPotion
   PickIcon: {fileID: 21300000, guid: dc16ff9f8f7f68d40970a026b57e0944, type: 3}
 --- !u!114 &2867036411346537411
 MonoBehaviour:
@@ -61,6 +63,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 990968b7eb2ff44468c09b1d0db1b537, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Static: 1
 --- !u!1 &2867036412573139333
 GameObject:
   m_ObjectHideFlags: 0

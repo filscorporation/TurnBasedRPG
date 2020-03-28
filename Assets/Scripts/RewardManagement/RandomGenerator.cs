@@ -39,6 +39,34 @@ namespace Assets.Scripts.RewardManagement
         }
 
         /// <summary>
+        /// Return random number from min to max exclusevly
+        /// </summary>
+        /// <param name="max"></param>
+        /// <returns></returns>
+        public int RandomInt(int min, int max)
+        {
+            return UnityEngine.Random.Range(min, max);
+        }
+
+        /// <summary>
+        /// Returns random number from 0 to 1
+        /// </summary>
+        /// <returns></returns>
+        public float RandomFloat()
+        {
+            return UnityEngine.Random.Range(0, 1F);
+        }
+
+        /// <summary>
+        /// Returns random number from min to max
+        /// </summary>
+        /// <returns></returns>
+        public float RandomFloat(float min, float max)
+        {
+            return UnityEngine.Random.Range(min, max);
+        }
+
+        /// <summary>
         /// Return random integer number that follows Gaussian distribution
         /// </summary>
         /// <param name="m">Mean</param>

@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Assets.Scripts.EnemyManagement;
 using Assets.Scripts.PlayerManagement;
 using UnityEngine;
 
@@ -26,6 +21,8 @@ namespace Assets.Scripts.CameraManagement
                 throw new Exception("CameraFollow component on main camera required");
             
             mainTarget = FindObjectOfType<Player>().transform;
+            Vector3 p = mainTarget.transform.position;
+            CameraFollow.gameObject.transform.position = new Vector3(p.x, p.y, -10);
             CameraFollow.SetTarget(mainTarget);
         }
 

@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5036975982517722099}
   - component: {fileID: 5036975982517722101}
-  - component: {fileID: 5036975982517722100}
+  - component: {fileID: 4244897380262429533}
   m_Layer: 0
   m_Name: Rock01
   m_TagString: Untagged
@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 457ddee2ebb8b29469c085052d773a93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &5036975982517722100
+--- !u!114 &4244897380262429533
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -57,6 +57,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 990968b7eb2ff44468c09b1d0db1b537, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Static: 1
 --- !u!1 &5036975983629965373
 GameObject:
   m_ObjectHideFlags: 0
@@ -82,8 +83,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5036975983629965373}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.012, y: -0.014, z: 0}
-  m_LocalScale: {x: 0.08, y: 0.08, z: 0.08}
+  m_LocalPosition: {x: 0, y: 1.52, z: 0}
+  m_LocalScale: {x: 0.6, y: 0.6, z: 0.6}
   m_Children: []
   m_Father: {fileID: 5036975982517722099}
   m_RootOrder: 0
@@ -125,7 +126,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -448035267
-  m_SortingLayer: 2
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: c2ea32bb6985adf46ba0743f1091a68f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

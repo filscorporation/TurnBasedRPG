@@ -9,10 +9,10 @@ namespace Assets.Scripts.CameraManagement
     public class CameraFollow : MonoBehaviour
     {
         public bool NeedToFollow = true;
-
+        
         public Transform Target;
-        private const float borderX = 0.2F;
-        private const float borderY = 0.3F;
+        private const float borderX = 0.25F;
+        private const float borderY = 0.35F;
         private const float cameraSpeed = 2F;
         private const float cameraZ = -10F;
         private const float eps = 0.1F;

@@ -17,6 +17,10 @@ namespace Assets.Scripts.EnemyManagement
 
         public int LineOfSight = 3;
 
+        // Group size for room generation, will be replaced with group dictionary
+        public int GroupMinSize = 1;
+        public int GroupMaxSize = 3;
+
         /// <summary>
         /// Enemy level used to calculate reward and correctly spawn enemies in rooms
         /// </summary>

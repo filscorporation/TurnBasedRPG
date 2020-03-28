@@ -8,6 +8,8 @@ namespace Assets.Scripts.MapManagement
     /// </summary>
     public class SortSpriteByPosition : MonoBehaviour
     {
+        public bool Static = false;
+
         private List<(SpriteRenderer, int)> spriteRenderers;
 
         public void Start()
@@ -20,13 +22,21 @@ namespace Assets.Scripts.MapManagement
             {
                 spriteRenderers.Add((spriteRenderer, spriteRenderer.sortingOrder));
             }
+
+            Sort();
         }
 
         public void LateUpdate()
         {
+            if (!Static)
+                Sort();
+        }
+
+        private void Sort()
+        {
             foreach ((SpriteRenderer, int) spriteRenderer in spriteRenderers)
             {
-                spriteRenderer.Item1.sortingOrder = 100000 - Mathf.RoundToInt(transform.position.y)*100 + spriteRenderer.Item2;
+                spriteRenderer.Item1.sortingOrder = 1000000 - Mathf.RoundToInt(transform.position.y) * 100 + spriteRenderer.Item2;
             }
         }
     }
