@@ -1,6 +1,8 @@
 ﻿using Assets.Scripts.GameDataManagement;
+using System.IO;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 namespace Assets.Scripts.UIManagement
 {
@@ -12,6 +14,17 @@ namespace Assets.Scripts.UIManagement
         public const string GameSceneName = "RoomScene";
         public const string MainMenuSceneName = "MainMenu";
         public const string DefaultGameFileName = "GameSave01";
+
+        public Button LoadButton;
+
+        public void Start()
+        {
+            if (!File.Exists(Path.Combine(Application.persistentDataPath, DefaultGameFileName)))
+            {
+                // Disable load button if there is no save yet
+                LoadButton.interactable = false;
+            }
+        }
 
         /// <summary>
         /// Starts new game
