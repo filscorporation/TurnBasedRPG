@@ -27,6 +27,7 @@ namespace Assets.Scripts.SkillManagement
         public static Dictionary<string, Skill> SkillDictionary = new Dictionary<string, Skill>();
 
         public abstract string Name { get; }
+        public int Level;
         public abstract int Cost { get; }
         public abstract SkillTargetType TargetType { get; }
 

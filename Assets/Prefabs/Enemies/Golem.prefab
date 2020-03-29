@@ -390,6 +390,7 @@ MonoBehaviour:
   Healthbar: {fileID: 0}
   SkillsNames:
   - GolemsSmash
+  Name: Golem
   LineOfSight: 4
   GroupMinSize: 1
   GroupMaxSize: 1

@@ -9,6 +9,8 @@ namespace Assets.Scripts.MapManagement
     {
         public int X { get; set; }
         public int Y { get; set; }
+        public TileType Type;
+
         public int Row { get; set; }
         public bool Free { get; set; } = true;
         public int List { get; set; }
@@ -43,5 +45,24 @@ namespace Assets.Scripts.MapManagement
         }
 
         public override string ToString() => $"Tile [{X}, {Y}]";
+    }
+
+    public class TileType
+    {
+        public short Details;
+
+        public short Dirt;
+
+        public short Tree;
+
+        public short OnGroundObject;
+
+        public TileType()
+        {
+            Details = -1;
+            Dirt = -1;
+            Tree = -1;
+            OnGroundObject = -1;
+        }
     }
 }

@@ -23,7 +23,7 @@ namespace Assets.Scripts.MapManagement
 
         private PathFinder<Tile> pathFinder;
 
-        private Tile[,] field;
+        public Tile[,] Field;
 
         public GameObject selectedTilePrefab;
         private List<GameObject> selectedTiles = new List<GameObject>();
@@ -43,11 +43,11 @@ namespace Assets.Scripts.MapManagement
             //TODO: support not square field
             int x = (int) Mathf.Sqrt(tiles.Length);
             int y = x;
-            field = new Tile[x, y];
+            Field = new Tile[x, y];
             foreach (Tile tile in tiles)
             {
                 tile.DetectXY();
-                field[tile.X, tile.Y] = tile;
+                Field[tile.X, tile.Y] = tile;
             }
 
             Debug.Log($"Initialized field {x}:{y}");
@@ -55,10 +55,10 @@ namespace Assets.Scripts.MapManagement
 
         public void SetField(Tile[,] newField)
         {
-            if (field != null)
+            if (Field != null)
                 throw new NotImplementedException();
 
-            field = newField;
+            Field = newField;
         }
 
         /// <summary>
@@ -69,7 +69,7 @@ namespace Assets.Scripts.MapManagement
         /// <returns></returns>
         public List<Tile> GetPath(Tile a, Tile b)
         {
-            List<Tile> path = pathFinder.FindPath(a, b, field, true);
+            List<Tile> path = pathFinder.FindPath(a, b, Field, true);
             // If path end tile was not free, we should remove it from final path
             // This is made for enemies to find path to occupied by player tile
             if (path != null && path.Any() && !b.Free)
@@ -85,7 +85,7 @@ namespace Assets.Scripts.MapManagement
         /// <returns></returns>
         public List<Tile> BuildPath(Tile a, Tile b)
         {
-            List<Tile> path = pathFinder.FindPath(a, b, field, true);
+            List<Tile> path = pathFinder.FindPath(a, b, Field, true);
             // If path end tile was not free, we should remove it from final path
             // Used to move to intaractable objects
             if (path != null && path.Any() && !b.Free)
@@ -143,9 +143,9 @@ namespace Assets.Scripts.MapManagement
                 for (int j = -radius; j <= radius; j++)
                 {
                     if ((i != 0 || j != 0)
-                        && tile.X + i >= 0 && tile.X + i < field.GetLength(0)
-                        && tile.Y + j >= 0 && tile.Y + j < field.GetLength(1))
-                        yield return field[tile.X + i,tile.Y + j];
+                        && tile.X + i >= 0 && tile.X + i < Field.GetLength(0)
+                        && tile.Y + j >= 0 && tile.Y + j < Field.GetLength(1))
+                        yield return Field[tile.X + i,tile.Y + j];
                 }
             }
         }

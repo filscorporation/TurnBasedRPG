@@ -9,7 +9,7 @@ namespace Assets.Scripts.InteractableObjects
     /// </summary>
     public class Chest : InteractableObject
     {
-        private bool isLooted = false;
+        public bool IsLooted = false;
         public List<string> Items;
 
         public Sprite PickIcon;
@@ -17,10 +17,10 @@ namespace Assets.Scripts.InteractableObjects
 
         protected override void Interact()
         {
-            if (isLooted)
+            if (IsLooted)
                 return;
 
-            isLooted = true;
+            IsLooted = true;
             // TODO: temporary, show UI
             foreach (string item in Items)
             {

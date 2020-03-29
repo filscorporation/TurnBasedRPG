@@ -61,13 +61,17 @@ namespace Assets.Scripts.PlayerManagement
 
         public new void Start()
         {
-            base.Start();
+            if (!IsLoaded)
+            {
+                // TODO: will be changed with skill dictionary implementation
+                SkillBook = new List<Skill>(Skills);
             
-            // TODO: will be changed with skill dictionary implementation
-            SkillBook = new List<Skill>(Skills);
+                Inventory = new Inventory();
+                Inventory.Initialize();
+            }
+            Inventory.SubscribeToEvents();
 
-            Inventory = new Inventory();
-            Inventory.Initialize();
+            base.Start();
         }
 
         public IEnumerable<Skill> SkillsAndConsumables()

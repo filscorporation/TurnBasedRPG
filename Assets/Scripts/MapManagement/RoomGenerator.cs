@@ -1,14 +1,17 @@
 ﻿using Assets.Scripts.EnemyManagement;
+using Assets.Scripts.GameDataManagement;
 using Assets.Scripts.InteractableObjects;
+using Assets.Scripts.ItemManagement;
 using Assets.Scripts.PlayerManagement;
 using Assets.Scripts.RewardManagement;
+using Assets.Scripts.SkillManagement;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
 /// <summary>
-/// Generates room: tiles, decorations, enemies, player, objects from parameters
+/// Generates room: tiles, decorations, enemies, player, objects from parameters or loaded data
 /// </summary>
 namespace Assets.Scripts.MapManagement
 {
@@ -79,7 +82,57 @@ namespace Assets.Scripts.MapManagement
             // Spawns player
             SpawnPlayer();
         }
-        
+
+        /// <summary>
+        /// Generates room from loaded data
+        /// </summary>
+        /// <param name="roomParams"></param>
+        public void GenerateRoom(GameData data)
+        {
+            // Generates field
+            int w = data.Room.Field.Width;
+            int h = data.Room.Field.Height;
+            Tile[,] field = new Tile[w, h];
+            for (int i = 0; i < w; i++)
+            {
+                for (int j = 0; j < h; j++)
+                {
+                    field[i, j] = LoadedTile(i, j, w, h, data.Room.Field.Tiles[i, j]);
+                }
+            }
+            // Put field into map manager
+            MapManager.Instance.SetField(field);
+
+            // Spawns enemies
+            GameObject enemyParent = new GameObject(EnemiesParentObjectName);
+            foreach (EnemyData enemyData in data.Room.Enemies)
+            {
+                // TODO: use enemy dictionary
+                GameObject enemyGO = Enemies.First(e => e.GetComponent<Enemy>().Name == enemyData.Name);
+                Enemy enemy = SpawnEnemy(field[enemyData.OnTileX, enemyData.OnTileY], enemyGO, enemyParent.transform);
+                // We are not setting enemy as loaded because it gets it skill from names from prefab
+            }
+
+            // Spawns chests
+            foreach (ChestData chestData in data.Room.Chests)
+            {
+                Chest chest = SpawnChest(field[chestData.OnTileX, chestData.OnTileY]);
+                chest.IsLooted = chestData.IsLooted;
+                chest.Items = chestData.Items.ToList();
+            }
+
+            // Spawns doors
+            foreach (EntranceData entranceData in data.Room.Entrances)
+            {
+                SpawnDoor(field[entranceData.OnTileX, entranceData.OnTileY]);
+            }
+
+            // Spawns player
+            SpawnPlayer(field, data.Player);
+        }
+
+        #region Private
+
         /// <summary>
         /// Generates random tile (grass, dirst, details) based on perlin noise values
         /// </summary>
@@ -98,6 +151,7 @@ namespace Assets.Scripts.MapManagement
             Tile tile = tileGO.GetComponent<Tile>();
             tile.X = tp.x;
             tile.Y = tp.y;
+            tile.Type = new TileType();
 
             // Tile details
             float s = RandomGenerator.Instance.RandomFloat(0.6F, 0.75F);
@@ -105,6 +159,7 @@ namespace Assets.Scripts.MapManagement
             if (nv > s)
             {
                 int dirtIndex = RandomGenerator.Instance.RandomInt(DirtTiles.Count);
+                tile.Type.Dirt = (short)dirtIndex;
                 Sprite dirt = DirtTiles[dirtIndex];
                 tileGO.GetComponent<SpriteRenderer>().sprite = dirt;
             }
@@ -115,6 +170,7 @@ namespace Assets.Scripts.MapManagement
                 if (isDetails)
                 {
                     int detailsIndex = RandomGenerator.Instance.RandomInt(GrassDetailsTiles.Count);
+                    tile.Type.Details = (short)detailsIndex;
                     Sprite details = GrassDetailsTiles[detailsIndex];
                     tileGO.GetComponent<SpriteRenderer>().sprite = details;
                 }
@@ -137,6 +193,7 @@ namespace Assets.Scripts.MapManagement
             if (nvt < st)
             {
                 int treeIndex = RandomGenerator.Instance.RandomInt(Trees.Count);
+                tile.Type.Tree = (short)treeIndex;
                 GameObject tgo = Instantiate(
                          Trees[treeIndex],
                          tileGO.transform.position,
@@ -153,6 +210,7 @@ namespace Assets.Scripts.MapManagement
                 if (isOGDetails)
                 {
                     int detailsIndex = RandomGenerator.Instance.RandomInt(OnGroundDetails.Count);
+                    tile.Type.OnGroundObject = (short)detailsIndex;
                     GameObject ogdgo = Instantiate(
                         OnGroundDetails[detailsIndex],
                         tileGO.transform.position,
@@ -160,6 +218,65 @@ namespace Assets.Scripts.MapManagement
                         tileGO.transform);
                     tile.Free = false;
                 }
+            }
+
+            return tile;
+        }
+
+        private Tile LoadedTile(int x, int y, int width, int height, TileData tileData)
+        {
+            Vector2 pos = new Vector2(x - width / 2, y - height / 2);
+            Transform parent = MapManager.Instance.TilesParent;
+            GameObject tilePrefab = DefaultTile;
+
+            GameObject tileGO = Instantiate(tilePrefab, pos, Quaternion.identity, parent);
+            Tile tile = tileGO.GetComponent<Tile>();
+            tile.X = x;
+            tile.Y = y;
+            tile.Type = new TileType
+            {
+                Details = tileData.Details,
+                Dirt = tileData.Dirt,
+                Tree = tileData.Tree,
+                OnGroundObject = tileData.OnGroundObject,
+            };
+
+            // Grid
+            GameObject grid = new GameObject("Grid");
+            grid.transform.parent = tileGO.transform;
+            grid.transform.localScale = new Vector3(1, 1, 1);
+            grid.transform.localPosition = new Vector3(0, 0, 0);
+            SpriteRenderer sr = grid.AddComponent<SpriteRenderer>();
+            sr.sprite = Grid;
+            sr.sortingLayerName = MapSortingLayer;
+
+            if (tile.Type.Details != -1)
+            {
+                Sprite details = GrassDetailsTiles[tile.Type.Details];
+                tileGO.GetComponent<SpriteRenderer>().sprite = details;
+            }
+            if (tile.Type.Dirt != -1)
+            {
+                Sprite dirt = DirtTiles[tile.Type.Dirt];
+                tileGO.GetComponent<SpriteRenderer>().sprite = dirt;
+            }
+            if (tile.Type.Tree != -1)
+            {
+                GameObject tgo = Instantiate(
+                         Trees[tile.Type.Tree],
+                         tileGO.transform.position,
+                         Quaternion.identity,
+                         tileGO.transform);
+                tile.Free = false;
+            }
+            if (tile.Type.OnGroundObject != -1)
+            {
+                GameObject ogdgo = Instantiate(
+                    OnGroundDetails[tile.Type.OnGroundObject],
+                    tileGO.transform.position,
+                    Quaternion.identity,
+                    tileGO.transform);
+                tile.Free = false;
             }
 
             return tile;
@@ -234,16 +351,20 @@ namespace Assets.Scripts.MapManagement
             }
         }
 
-        private void SpawnEnemy(Tile tile, GameObject enemy, Transform parent)
+        private Enemy SpawnEnemy(Tile tile, GameObject enemy, Transform parent)
         {
             GameObject go = Instantiate(enemy, tile.transform.position, Quaternion.identity, parent);
             go.GetComponent<Enemy>().OnTile = tile;
+
+            return go.GetComponent<Enemy>();
         }
 
-        private void SpawnChest(Tile tile)
+        private Chest SpawnChest(Tile tile)
         {
             GameObject go = Instantiate(Chest, tile.transform.position, Quaternion.identity);
             tile.Free = false;
+
+            return go.GetComponent<Chest>();
         }
 
         private void SpawnDoor(Tile[,] field, Direction direction)
@@ -266,6 +387,11 @@ namespace Assets.Scripts.MapManagement
                 default:
                     throw new ArgumentOutOfRangeException();
             }
+            SpawnDoor(tile);
+        }
+
+        private void SpawnDoor(Tile tile)
+        {
             GameObject go = Instantiate(Door, tile.transform.position, Quaternion.identity);
             go.GetComponent<Entrance>().OnTile = tile;
         }
@@ -285,12 +411,47 @@ namespace Assets.Scripts.MapManagement
             SpawnPlayer(FindObjectOfType<Entrance>().OnTile);
         }
 
-        private void SpawnPlayer(Tile tile)
+        private void SpawnPlayer(Tile[,] field, PlayerData playerData)
+        {
+            Tile tile = field[playerData.OnTileX, playerData.OnTileY];
+            Player player = SpawnPlayer(tile);
+
+            player.MovingSpeed = playerData.MovingSpeed;
+            player.ActionPoints = playerData.ActionPoints;
+            player.ActionPointsMax = playerData.ActionPointsMax;
+            player.Health = playerData.Health;
+            player.HealthMax = playerData.HealthMax;
+            player.Skills = playerData.Skills
+                .Select(s => GetSkillFromString(s)).ToList();
+            player.Level = playerData.Level;
+            player.SkillPoints = playerData.SkillPoints;
+            player.Experience = playerData.Experience;
+            // TODO: skill level
+            player.SkillBook = playerData.SkillBook.Select(s => Skill.SkillDictionary[s.Name]).ToList();
+            // TODO: amount
+            player.Inventory.Consumables = playerData.Consumables
+                .Select(c => Consumable.ConsumablesDictionary[c.Name]).ToList();
+            player.Inventory.Items = playerData.Items.Select(i => Item.ItemDictionary[i]).ToList();
+            player.Inventory.Gold = playerData.Gold;
+
+            player.SetIsLoaded();
+        }
+
+        private Skill GetSkillFromString(string skillName)
+        {
+            if (Skill.SkillDictionary.TryGetValue(skillName, out Skill skill))
+                return skill;
+            return Consumable.ConsumablesDictionary[skillName].UsageEffect;
+        }
+
+        private Player SpawnPlayer(Tile tile)
         {
             GameObject go = Instantiate(Player, tile.transform.position, Quaternion.identity);
             Player player = go.GetComponent<Player>();
             player.OnTile = tile;
             FindObjectOfType<PlayerController>().Player = player;
+
+            return player;
         }
 
         private void Shuffle(IList<Tile> list)
@@ -329,5 +490,7 @@ namespace Assets.Scripts.MapManagement
                 this.pntoy = pntoy;
             }
         }
+
+        #endregion
     }
 }

@@ -50,6 +50,14 @@ namespace Assets.Scripts.ItemManagement
             Add(Consumable.ConsumablesDictionary[nameof(FlamePotion)]);
             Add(Consumable.ConsumablesDictionary[nameof(SpeedPotion)]);
 
+            SubscribeToEvents();
+        }
+
+        /// <summary>
+        /// Subscribes to game events for items to work
+        /// </summary>
+        public void SubscribeToEvents()
+        {
             EventManager.Instance.Subscribe(this);
         }
         

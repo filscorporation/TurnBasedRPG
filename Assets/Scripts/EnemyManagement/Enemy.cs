@@ -14,6 +14,7 @@ namespace Assets.Scripts.EnemyManagement
     /// </summary>
     public class Enemy : Character
     {
+        public string Name;
 
         public int LineOfSight = 3;
 

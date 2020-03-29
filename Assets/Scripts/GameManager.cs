@@ -1,11 +1,15 @@
-﻿using Assets.Scripts.ItemManagement;
+﻿using Assets.Scripts.GameDataManagement;
+using Assets.Scripts.ItemManagement;
 using Assets.Scripts.MapManagement;
+using Assets.Scripts.PlayerManagement;
 using Assets.Scripts.SkillManagement;
+using Assets.Scripts.UIManagement;
 using Assets.Scripts.UIManagement.Tabs;
 using System;
 using System.Linq;
 using System.Reflection;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Assets.Scripts
 {
@@ -18,13 +22,34 @@ namespace Assets.Scripts
 
         public void Awake()
         {
-            RoomGenerator.GenerateRoom(new RoomParams(100, 100));
-            LoadSkills();
-            LoadItems();
-            LoadConsumables();
+            LoadSkillsDictionary();
+            LoadItemsDictionary();
+            LoadConsumablesDictionary();
+
+            if (GameParams.NewGame)
+            {
+                RoomGenerator.GenerateRoom(new RoomParams(100, 100));
+            }
+            else
+            {
+                GameDataManager.Instance.Load(GameParams.GameFileToLoadName);
+            }
         }
 
-        private void LoadSkills()
+        public void Update()
+        {
+            // TODO: for testing
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                // Saving only outside of battle and movement
+                Player player = FindObjectOfType<Player>();
+                if (player.PlayerState == PlayerState.FreeControl && player.State == CharactersManagement.CharacterState.Idle)
+                    GameDataManager.Instance.Save(MainMenuManager.DefaultGameFileName);
+                SceneManager.LoadScene(MainMenuManager.MainMenuSceneName);
+            }
+        }
+
+        private void LoadSkillsDictionary()
         {
             foreach (Type type in Assembly.GetAssembly(typeof(Skill)).GetTypes()
                 .Where(myType => myType.IsClass && !myType.IsAbstract && myType.IsSubclassOf(typeof(Skill))))
@@ -34,7 +59,7 @@ namespace Assets.Scripts
             }
         }
 
-        private void LoadItems()
+        private void LoadItemsDictionary()
         {
             foreach (Type type in Assembly.GetAssembly(typeof(Item)).GetTypes()
                 .Where(myType => myType.IsClass && !myType.IsAbstract && myType.IsSubclassOf(typeof(Item))))
@@ -44,7 +69,7 @@ namespace Assets.Scripts
             }
         }
 
-        private void LoadConsumables()
+        private void LoadConsumablesDictionary()
         {
             foreach (Type type in Assembly.GetAssembly(typeof(Consumable)).GetTypes()
                 .Where(myType => myType.IsClass && !myType.IsAbstract && myType.IsSubclassOf(typeof(Consumable))))

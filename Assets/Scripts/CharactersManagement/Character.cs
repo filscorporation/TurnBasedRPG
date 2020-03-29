@@ -69,6 +69,9 @@ namespace Assets.Scripts.CharactersManagement
                 }
             }
         }
+
+        protected bool IsLoaded = false;
+
         private Animator animator;
         private const string animatorMovingBool = "Moving";
         private const string animatorAttackTrigger = "Attack";
@@ -104,10 +107,22 @@ namespace Assets.Scripts.CharactersManagement
         {
             base.Start();
 
-            LoadSkills();
+            if (!IsLoaded)
+            {
+                LoadSkills();
+                SetIsLoaded();
+            }
             InitializeHealthbar();
             CharacterController = GetComponent<CharacterActionsController>();
             animator = GetComponent<Animator>();
+        }
+
+        /// <summary>
+        /// Sets is loaded to true (when characted loaded and doesnt need initialization)
+        /// </summary>
+        public void SetIsLoaded()
+        {
+            IsLoaded = true;
         }
 
         private void LoadSkills()
