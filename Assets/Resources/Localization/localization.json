@@ -9,6 +9,16 @@
 		"Load",
 		"Загрузить"
 	],
+	"continue_ingamemenu" :
+	[
+		"Continue",
+		"Продолжить"
+	],
+	"save_and_exit_ingamemenu" :
+	[
+		"Save and exit",
+		"Сохранить и выйти"
+	],
 	"health" :
 	[
 		"Health",

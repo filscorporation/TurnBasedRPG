@@ -18,6 +18,17 @@ namespace Assets.Scripts
     /// </summary>
     public class GameManager : MonoBehaviour
     {
+        private static GameManager instance;
+        public static GameManager Instance
+        {
+            get
+            {
+                if (instance == null)
+                    instance = FindObjectOfType<GameManager>();
+                return instance;
+            }
+        }
+
         public RoomGenerator RoomGenerator;
 
         public void Awake()
@@ -36,17 +47,20 @@ namespace Assets.Scripts
             }
         }
 
-        public void Update()
+        /// <summary>
+        /// Tries to save the game and exit to main menu
+        /// </summary>
+        public void SaveAndExit()
         {
-            // TODO: for testing
-            if (Input.GetKeyDown(KeyCode.Escape))
+            // Saving only outside of battle and movement
+            Player player = FindObjectOfType<Player>();
+            if (player.PlayerState == PlayerState.FreeControl && player.State == CharactersManagement.CharacterState.Idle)
             {
-                // Saving only outside of battle and movement
-                Player player = FindObjectOfType<Player>();
-                if (player.PlayerState == PlayerState.FreeControl && player.State == CharactersManagement.CharacterState.Idle)
-                    GameDataManager.Instance.Save(MainMenuManager.DefaultGameFileName);
+                GameDataManager.Instance.Save(MainMenuManager.DefaultGameFileName);
                 SceneManager.LoadScene(MainMenuManager.MainMenuSceneName);
             }
+
+            Debug.Log("Can't save in battle and movement");
         }
 
         private void LoadSkillsDictionary()
