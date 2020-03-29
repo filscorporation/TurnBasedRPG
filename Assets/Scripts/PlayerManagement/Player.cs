@@ -61,11 +61,12 @@ namespace Assets.Scripts.PlayerManagement
 
         public new void Start()
         {
+            // TODO: will be changed with skill dictionary implementation
+            // and for now skills always contains skill book
+            SkillBook = new List<Skill>(Skills);
+
             if (!IsLoaded)
-            {
-                // TODO: will be changed with skill dictionary implementation
-                SkillBook = new List<Skill>(Skills);
-            
+            {            
                 Inventory = new Inventory();
                 Inventory.Initialize();
             }
