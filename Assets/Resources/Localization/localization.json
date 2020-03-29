@@ -1,4 +1,14 @@
 {
+	"new_game_mainmenu" :
+	[
+		"New game",
+		"Новая игра"
+	],
+	"load_mainmenu" :
+	[
+		"Load",
+		"Загрузить"
+	],
 	"health" :
 	[
 		"Health",

@@ -4,6 +4,7 @@ using System.Linq;
 using Assets.Scripts.CharactersManagement;
 using Assets.Scripts.ItemManagement;
 using Assets.Scripts.SkillManagement;
+using Assets.Scripts.UIManagement;
 using Assets.Scripts.UIManagement.Tabs;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -109,8 +110,8 @@ namespace Assets.Scripts.PlayerManagement
             base.Die(killer);
             // Your dead(
             Debug.Log("Player dead");
-            // For testing - reload scene
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            // For testing - load main menu
+            SceneManager.LoadScene(MainMenuManager.MainMenuSceneName);
         }
     }
 }
