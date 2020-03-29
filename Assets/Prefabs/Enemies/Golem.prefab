@@ -390,7 +390,7 @@ MonoBehaviour:
   Healthbar: {fileID: 0}
   SkillsNames:
   - GolemsSmash
-  LineOfSight: 5
+  LineOfSight: 4
   GroupMinSize: 1
   GroupMaxSize: 1
   Level: 3
@@ -420,6 +420,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 990968b7eb2ff44468c09b1d0db1b537, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Static: 0
 --- !u!95 &480733490097294964
 Animator:
   serializedVersion: 3

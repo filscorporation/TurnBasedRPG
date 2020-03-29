@@ -30,6 +30,7 @@ namespace Assets.Scripts.MapManagement
         public GameObject Door;
 
         private const string MapSortingLayer = "Map";
+        private const string EnemiesParentObjectName = "Enemies";
 
         /// <summary>
         /// Generates room from parameters
@@ -59,12 +60,13 @@ namespace Assets.Scripts.MapManagement
             MapManager.Instance.SetField(field);
 
             // Spawns enemy groups and chests
-            var minimums = GetLocalMinimums(field, roomParams.Width, roomParams.Height, pntox, pntoy, pnstep);
+            var minimums = GetLocalMaximums(field, roomParams.Width, roomParams.Height, pntox, pntoy, pnstep);
+            GameObject enemyParent = new GameObject(EnemiesParentObjectName);
             foreach (Tile tile in minimums)
             {
                 if (tile.Free)
                 {
-                    AddEnemyGroup(tile, roomParams);
+                    AddEnemyGroup(tile, roomParams, enemyParent.transform);
                 }
             }
 
@@ -164,7 +166,7 @@ namespace Assets.Scripts.MapManagement
         }
 
         /// <summary>
-        /// Gets points of local minimums of perlin noise as an options to spawn enemies
+        /// Gets points of local maximums of perlin noise as an options to spawn enemies
         /// </summary>
         /// <param name="field"></param>
         /// <param name="w"></param>
@@ -173,7 +175,7 @@ namespace Assets.Scripts.MapManagement
         /// <param name="pnoy"></param>
         /// <param name="pnstep"></param>
         /// <returns></returns>
-        private IEnumerable<Tile> GetLocalMinimums(Tile[,] field, int w, int h, float pnox, float pnoy, float pnstep)
+        private IEnumerable<Tile> GetLocalMaximums(Tile[,] field, int w, int h, float pnox, float pnoy, float pnstep)
         {
             for (int i = 0; i < w; i++)
             {
@@ -183,23 +185,23 @@ namespace Assets.Scripts.MapManagement
                     float y = pnoy + j * pnstep;
                     float v = Mathf.PerlinNoise(x, y);
                     // Get noise value for all tiles around
-                    // If there is edge of the map, use 1 as maximum
+                    // If there is edge of the map, use 1 to NOT spawn
                     float l = i - 1 < 0  ? 1 : Mathf.PerlinNoise(x - pnstep, y);
                     float r = i + 1 == w ? 1 : Mathf.PerlinNoise(x + pnstep, y);
-                    float u = j - 1 < 0 ? 1 : Mathf.PerlinNoise(x, y - pnstep);
+                    float u = j - 1 < 0  ? 1 : Mathf.PerlinNoise(x, y - pnstep);
                     float d = j + 1 == h ? 1 : Mathf.PerlinNoise(x, y + pnstep);
 
-                    if (v < l && v < r && v < u && v < d)
+                    if (v > l && v > r && v > u && v > d)
                     {
-                        // Value at this point of the noise map is lower than around
-                        // so its local minimum
+                        // Value at this point of the noise map is greater than around
+                        // so its local maximum
                         yield return field[i, j];
                     }
                 }
             }
         }
 
-        private void AddEnemyGroup(Tile tile, RoomParams roomParams)
+        private void AddEnemyGroup(Tile tile, RoomParams roomParams, Transform parent)
         {
             int enemyIndex = RandomGenerator.Instance.RandomInt(Enemies.Count);
             Enemy enemy = Enemies[enemyIndex].GetComponent<Enemy>();
@@ -207,7 +209,7 @@ namespace Assets.Scripts.MapManagement
             
             if (enemyCount == 1)
             {
-                SpawnEnemy(tile, Enemies[enemyIndex]);
+                SpawnEnemy(tile, Enemies[enemyIndex], parent);
                 return;
             }
 
@@ -224,7 +226,7 @@ namespace Assets.Scripts.MapManagement
                         isChest = false;
                         continue;
                     }
-                    SpawnEnemy(n, Enemies[enemyIndex]);
+                    SpawnEnemy(n, Enemies[enemyIndex], parent);
                     enemyCount--;
                     if (enemyCount == 0)
                         break;
@@ -232,9 +234,9 @@ namespace Assets.Scripts.MapManagement
             }
         }
 
-        private void SpawnEnemy(Tile tile, GameObject enemy)
+        private void SpawnEnemy(Tile tile, GameObject enemy, Transform parent)
         {
-            GameObject go = Instantiate(enemy, tile.transform.position, Quaternion.identity);
+            GameObject go = Instantiate(enemy, tile.transform.position, Quaternion.identity, parent);
             go.GetComponent<Enemy>().OnTile = tile;
         }
 
