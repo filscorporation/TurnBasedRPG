@@ -38,15 +38,25 @@ namespace Assets.Scripts.PlayerManagement
             }
         }
 
-        public int Level = 1;
+        public int level;
+        public int Level
+        {
+            get => level;
+            set
+            {
+                level = value;
+                SetExperienceForNextLevel();
+            }
+        }
         public int SkillPoints = 0;
         public int experience = 0;
         public int Experience
         {
             get => experience;
             set => GainExperience(value);
-        }    
-        public int ExperienceForNextLevel = 100;
+        }
+        public int ExperienceForNextLevel { get; private set; }
+        public int ExperienceForFirstLevel = 100;
         private float experienceGrowthFactor = 1.5F;
 
         /// <summary>
@@ -61,18 +71,19 @@ namespace Assets.Scripts.PlayerManagement
 
         public new void Start()
         {
-            // TODO: will be changed with skill dictionary implementation
-            // and for now skills always contains skill book
-            SkillBook = new List<Skill>(Skills);
-
             if (!IsLoaded)
             {            
                 Inventory = new Inventory();
                 Inventory.Initialize();
+                Level = 1;
             }
             Inventory.SubscribeToEvents();
 
             base.Start();
+
+            // TODO: will be changed with skill dictionary implementation
+            // and for now skills always contains skill book
+            SkillBook = new List<Skill>(Skills);
         }
 
         public IEnumerable<Skill> SkillsAndConsumables()
@@ -93,7 +104,7 @@ namespace Assets.Scripts.PlayerManagement
                 int overflow = experience + exp - ExperienceForNextLevel;
                 experience = 0;
                 LevelUp();
-                ExperienceForNextLevel = Mathf.RoundToInt(ExperienceForNextLevel*experienceGrowthFactor/10)*10;
+                SetExperienceForNextLevel();
                 GainExperience(overflow);
             }
             else
@@ -101,6 +112,15 @@ namespace Assets.Scripts.PlayerManagement
                 Debug.Log($"Player gains {exp} experience");
                 experience += exp;
             }
+        }
+
+        /// <summary>
+        /// Calculates how much experience needed for specific level
+        /// </summary>
+        private void SetExperienceForNextLevel()
+        {
+            ExperienceForNextLevel = Mathf.RoundToInt(
+                ExperienceForFirstLevel * Mathf.Pow(experienceGrowthFactor, Level - 1) / 10) * 10;
         }
 
         protected void LevelUp()
