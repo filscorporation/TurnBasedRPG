@@ -31,7 +31,7 @@ namespace Assets.Scripts.UIManagement
         /// </summary>
         public void NewGame()
         {
-            GameParams.NewGame = true;
+            GameParams.GameMode = GameMode.New;
             SceneManager.LoadScene(GameSceneName);
         }
 
@@ -40,7 +40,7 @@ namespace Assets.Scripts.UIManagement
         /// </summary>
         public void LoadGame()
         {
-            GameParams.NewGame = false;
+            GameParams.GameMode = GameMode.Loaded;
             GameParams.GameFileToLoadName = DefaultGameFileName;
             SceneManager.LoadScene(GameSceneName);
         }

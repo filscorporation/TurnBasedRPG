@@ -19,8 +19,12 @@ namespace Assets.Scripts.GameDataManagement
 
         public PlayerData Player;
 
-        public RoomData Room;
+        public int CurrentRoomIndex;
+
+        public RoomData[] Rooms;
     }
+
+    #region Player
 
     [Serializable]
     public class PlayerData
@@ -104,9 +108,15 @@ namespace Assets.Scripts.GameDataManagement
         }
     }
 
+    #endregion
+
+    #region Map
+
     [Serializable]
     public class RoomData
     {
+        public int Index;
+
         public FieldData Field;
 
         public EnemyData[] Enemies;
@@ -173,10 +183,16 @@ namespace Assets.Scripts.GameDataManagement
 
         public short OnTileY;
 
+        public int RoomToIndex;
+
+        public int Direction;
+
         public EntranceData(Entrance entrance)
         {
             OnTileX = (short)entrance.OnTile.X;
             OnTileY = (short)entrance.OnTile.Y;
+            RoomToIndex = entrance.RoomToIndex;
+            Direction = (int)entrance.Direction;
         }
     }
 
@@ -199,4 +215,6 @@ namespace Assets.Scripts.GameDataManagement
             Items = chest.Items.ToArray();
         }
     }
+
+    #endregion
 }

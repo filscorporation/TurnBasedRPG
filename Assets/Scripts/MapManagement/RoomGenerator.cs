@@ -10,11 +10,11 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-/// <summary>
-/// Generates room: tiles, decorations, enemies, player, objects from parameters or loaded data
-/// </summary>
 namespace Assets.Scripts.MapManagement
 {
+    /// <summary>
+    /// Generates room: tiles, decorations, enemies, player, objects from parameters or loaded data
+    /// </summary>
     public class RoomGenerator : MonoBehaviour
     {
         public GameObject Player;
@@ -34,6 +34,8 @@ namespace Assets.Scripts.MapManagement
 
         private const string MapSortingLayer = "Map";
         private const string EnemiesParentObjectName = "Enemies";
+
+        public object RoomsManager { get; private set; }
 
         /// <summary>
         /// Generates room from parameters
@@ -74,30 +76,29 @@ namespace Assets.Scripts.MapManagement
             }
 
             // Places doors (entrance) in different room sides
-            foreach (Direction door in roomParams.Doors)
+            foreach (KeyValuePair<Direction, int> pair in roomParams.Doors)
             {
-                SpawnDoor(field, door);
+                SpawnDoor(field, pair.Key, pair.Value);
             }
-
-            // Spawns player
-            SpawnPlayer();
         }
 
         /// <summary>
         /// Generates room from loaded data
         /// </summary>
         /// <param name="roomParams"></param>
-        public void GenerateRoom(GameData data)
+        /// <param name="spawnPlayer"></param>
+        public void GenerateRoom(GameData data, bool spawnPlayer = true)
         {
+            RoomData room = data.Rooms[data.CurrentRoomIndex];
             // Generates field
-            int w = data.Room.Field.Width;
-            int h = data.Room.Field.Height;
+            int w = room.Field.Width;
+            int h = room.Field.Height;
             Tile[,] field = new Tile[w, h];
             for (int i = 0; i < w; i++)
             {
                 for (int j = 0; j < h; j++)
                 {
-                    field[i, j] = LoadedTile(i, j, w, h, data.Room.Field.Tiles[i, j]);
+                    field[i, j] = LoadedTile(i, j, w, h, room.Field.Tiles[i, j]);
                 }
             }
             // Put field into map manager
@@ -105,16 +106,16 @@ namespace Assets.Scripts.MapManagement
 
             // Spawns enemies
             GameObject enemyParent = new GameObject(EnemiesParentObjectName);
-            foreach (EnemyData enemyData in data.Room.Enemies)
+            foreach (EnemyData enemyData in room.Enemies)
             {
                 // TODO: use enemy dictionary
                 GameObject enemyGO = Enemies.First(e => e.GetComponent<Enemy>().Name == enemyData.Name);
                 Enemy enemy = SpawnEnemy(field[enemyData.OnTileX, enemyData.OnTileY], enemyGO, enemyParent.transform);
-                // We are not setting enemy as loaded because it gets it skill from names from prefab
+                // We are not setting enemy as loaded because it gets its skill from names from prefab
             }
 
             // Spawns chests
-            foreach (ChestData chestData in data.Room.Chests)
+            foreach (ChestData chestData in room.Chests)
             {
                 Chest chest = SpawnChest(field[chestData.OnTileX, chestData.OnTileY]);
                 chest.IsLooted = chestData.IsLooted;
@@ -122,13 +123,54 @@ namespace Assets.Scripts.MapManagement
             }
 
             // Spawns doors
-            foreach (EntranceData entranceData in data.Room.Entrances)
+            foreach (EntranceData entranceData in room.Entrances)
             {
-                SpawnDoor(field[entranceData.OnTileX, entranceData.OnTileY]);
+                SpawnDoor(field[entranceData.OnTileX, entranceData.OnTileY], entranceData.RoomToIndex,
+                    (Direction)entranceData.Direction);
             }
 
-            // Spawns player
-            SpawnPlayer(field, data.Player);
+            if (spawnPlayer)
+            {
+                // Spawns player
+                SpawnPlayer(field, data.Player);
+            }
+        }
+
+        /// <summary>
+        /// Spawns player at a random entrance
+        /// </summary>
+        public void SpawnPlayer()
+        {
+            foreach (Tile tile in FindObjectsOfType<Entrance>().Select(d => d.OnTile))
+            {
+                Tile freeTile = MapManager.Instance.GetNeighbours(tile).FirstOrDefault(t => t.Free);
+                if (freeTile != null)
+                {
+                    SpawnPlayer(freeTile);
+                    return;
+                }
+            }
+            // No free tiles near entrance
+            SpawnPlayer(FindObjectOfType<Entrance>().OnTile);
+        }
+
+        /// <summary>
+        /// Spawns player at a certain entrance
+        /// </summary>
+        /// <param name="entranceDirection"></param>
+        /// <param name="playerData"></param>
+        public void SpawnPlayer(Direction entranceDirection, PlayerData playerData)
+        {
+            Player player = SpawnPlayer(MapManager.Instance.Field, playerData);
+
+            Entrance entrance = FindObjectsOfType<Entrance>().First(e => e.Direction == entranceDirection);
+
+            Tile freeTile = MapManager.Instance.GetNeighbours(entrance.OnTile).FirstOrDefault(t => t.Free);
+            if (freeTile == null)
+                freeTile = entrance.OnTile;
+
+            player.OnTile = freeTile;
+            player.gameObject.transform.position = freeTile.transform.position;
         }
 
         #region Private
@@ -367,7 +409,7 @@ namespace Assets.Scripts.MapManagement
             return go.GetComponent<Chest>();
         }
 
-        private void SpawnDoor(Tile[,] field, Direction direction)
+        private void SpawnDoor(Tile[,] field, Direction direction, int roomIndex)
         {
             Tile tile;
             switch(direction)
@@ -387,31 +429,19 @@ namespace Assets.Scripts.MapManagement
                 default:
                     throw new ArgumentOutOfRangeException();
             }
-            SpawnDoor(tile);
+            SpawnDoor(tile, roomIndex, direction);
         }
 
-        private void SpawnDoor(Tile tile)
+        private void SpawnDoor(Tile tile, int roomIndex, Direction direction)
         {
             GameObject go = Instantiate(Door, tile.transform.position, Quaternion.identity);
-            go.GetComponent<Entrance>().OnTile = tile;
+            Entrance entrance = go.GetComponent<Entrance>();
+            entrance.OnTile = tile;
+            entrance.RoomToIndex = roomIndex;
+            entrance.Direction = direction;
         }
 
-        private void SpawnPlayer()
-        {
-            foreach(Tile tile in FindObjectsOfType<Entrance>().Select(d => d.OnTile))
-            {
-                Tile freeTile = MapManager.Instance.GetNeighbours(tile).FirstOrDefault(t => t.Free);
-                if (freeTile != null)
-                {
-                    SpawnPlayer(freeTile);
-                    return;
-                }
-            }
-            // No free tiles near entrance
-            SpawnPlayer(FindObjectOfType<Entrance>().OnTile);
-        }
-
-        private void SpawnPlayer(Tile[,] field, PlayerData playerData)
+        private Player SpawnPlayer(Tile[,] field, PlayerData playerData)
         {
             Tile tile = field[playerData.OnTileX, playerData.OnTileY];
             Player player = SpawnPlayer(tile);
@@ -435,6 +465,8 @@ namespace Assets.Scripts.MapManagement
             player.Inventory.Gold = playerData.Gold;
 
             player.SetIsLoaded();
+
+            return player;
         }
 
         private Skill GetSkillFromString(string skillName)

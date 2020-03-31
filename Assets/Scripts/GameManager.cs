@@ -2,6 +2,7 @@
 using Assets.Scripts.ItemManagement;
 using Assets.Scripts.MapManagement;
 using Assets.Scripts.PlayerManagement;
+using Assets.Scripts.RoomsManagement;
 using Assets.Scripts.SkillManagement;
 using Assets.Scripts.UIManagement;
 using Assets.Scripts.UIManagement.Tabs;
@@ -37,13 +38,30 @@ namespace Assets.Scripts
             LoadItemsDictionary();
             LoadConsumablesDictionary();
 
-            if (GameParams.NewGame)
+            switch (GameParams.GameMode)
             {
-                RoomGenerator.GenerateRoom(new RoomParams(100, 100));
-            }
-            else
-            {
-                GameDataManager.Instance.Load(GameParams.GameFileToLoadName);
+                case GameMode.New:
+                    RoomManager.Instance.CurrentRoomIndex = 0;
+                    RoomManager.Instance.SetRoomsCount(1);
+                    RoomGenerator.GenerateRoom(new RoomParams(100, 100));
+                    RoomGenerator.SpawnPlayer();
+                    break;
+                case GameMode.Loaded:
+                    GameDataManager.Instance.Load(GameParams.GameFileToLoadName);
+                    break;
+                case GameMode.NextNewRoom:
+                    GameDataManager.Instance.LoadPlayer(GameParams.SpawnDirection,
+                                                        GameParams.CurrentRoomIndex,
+                                                        GameParams.LeavedRoomIndex,
+                                                        MainMenuManager.DefaultGameFileName);
+                    break;
+                case GameMode.NextExistingRoom:
+                    GameDataManager.Instance.Load(GameParams.SpawnDirection,
+                                                  GameParams.CurrentRoomIndex,
+                                                  GameParams.GameFileToLoadName);
+                    break;
+                default:
+                    throw new NotSupportedException(GameParams.GameMode.ToString());
             }
         }
 

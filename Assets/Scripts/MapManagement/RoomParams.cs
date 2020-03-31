@@ -21,15 +21,29 @@ namespace Assets.Scripts.MapManagement
 
         public float ChestProbability;
 
-        public List<Direction> Doors;
+        public Dictionary<Direction, int> Doors;
 
-        public RoomParams(int height, int width)
+        public RoomParams(int height, int width, Dictionary<Direction, int> doors = null)
         {
             Height = height;
             Width = width;
             TreesDensity = RandomGenerator.Instance.RandomFloat(0.15F, 0.45F);
             ChestProbability = 0.33F;
-            Doors = new List<Direction> { Direction.Left, Direction.Right, Direction.Top, Direction.Bottom };
+
+            if (doors == null)
+            {
+                Doors = new Dictionary<Direction, int>
+                {
+                    { Direction.Left, -1 },
+                    { Direction.Right, -1 },
+                    { Direction.Top, -1 },
+                    { Direction.Bottom, -1},
+                };
+            }
+            else
+            {
+                Doors = doors;
+            }
         }
     }
 }
