@@ -46,7 +46,7 @@ namespace Assets.Scripts.RoomsManagement
         }
 
         /// <summary>
-        /// 
+        /// Use entrance and load next room (new or existing)
         /// </summary>
         /// <param name="roomIndex">Entrance we are using</param>
         public void MoveToNextRoom(Entrance entrance)

@@ -19,8 +19,6 @@ namespace Assets.Scripts.GameDataManagement
     /// </summary>
     public class GameDataManager : MonoBehaviour
     {
-        public RoomGenerator RoomGenerator;
-
         private static GameDataManager instance;
         public static GameDataManager Instance
         {
@@ -49,9 +47,10 @@ namespace Assets.Scripts.GameDataManagement
 
             if (oldGameData != null)
             {
-                if (!oldGameData.GameID.Equals(newGameData.GameID, StringComparison.OrdinalIgnoreCase))
+                if (string.IsNullOrWhiteSpace(oldGameData.GameID)
+                    && !oldGameData.GameID.Equals(newGameData.GameID, StringComparison.OrdinalIgnoreCase))
                 {
-                    // Existring save is from another game, rewrite it
+                    // Existing save is from another game, rewrite it
                 }
                 else
                 {
@@ -78,16 +77,22 @@ namespace Assets.Scripts.GameDataManagement
             Stopwatch sw = new Stopwatch();
             sw.Start();
 
+            // Get data
             GameData gameData = LoadGameData(fileName);
-
             if (gameData == null)
                 throw new Exception("Save file does not exist");
 
+            // Set main game params
             GameManager.Instance.GameID = gameData.GameID;
             RandomGenerator.Instance.Seed = gameData.Seed;
             RoomManager.Instance.CurrentRoomIndex = gameData.CurrentRoomIndex;
             RoomManager.Instance.SetRoomsCount(gameData.Rooms.Length);
-            RoomGenerator.GenerateRoom(gameData);
+
+            // Generate room
+            RoomLoader.Instance.GenerateRoom(gameData);
+
+            // Spawn player
+            PlayerSpawner.Instance.SpawnPlayer(gameData.Player);
 
             sw.Stop();
             UnityEngine.Debug.Log($"Game loaded in {sw.Elapsed.TotalMilliseconds} ms");
@@ -99,24 +104,28 @@ namespace Assets.Scripts.GameDataManagement
         /// <param name="entranceDirection"></param>
         /// <param name="currentRoomIndex"></param>
         /// <param name="fileName"></param>
-        public void Load(Direction entranceDirection, int currentRoomIndex, string fileName)
+        public void LoadExisting(Direction entranceDirection, int currentRoomIndex, string fileName)
         {
             Stopwatch sw = new Stopwatch();
             sw.Start();
 
+            // Get data
             GameData gameData = LoadGameData(fileName);
-
             if (gameData == null)
                 throw new Exception("Save file does not exist");
-
             gameData.CurrentRoomIndex = currentRoomIndex;
 
+            // Set main game params
             GameManager.Instance.GameID = gameData.GameID;
             RandomGenerator.Instance.Seed = gameData.Seed;
             RoomManager.Instance.CurrentRoomIndex = gameData.CurrentRoomIndex;
             RoomManager.Instance.SetRoomsCount(gameData.Rooms.Length);
-            RoomGenerator.GenerateRoom(gameData, false);
-            RoomGenerator.SpawnPlayer(entranceDirection, gameData.Player);
+
+            // Generate room
+            RoomLoader.Instance.GenerateRoom(gameData);
+
+            // Spawn player
+            PlayerSpawner.Instance.SpawnPlayer(entranceDirection, gameData.Player);
 
             sw.Stop();
             UnityEngine.Debug.Log($"Game loaded in {sw.Elapsed.TotalMilliseconds} ms");
@@ -129,18 +138,23 @@ namespace Assets.Scripts.GameDataManagement
         /// <param name="currentRoomIndex"></param>
         /// <param name="leavedRoomIndex"></param>
         /// <param name="fileName"></param>
-        public void LoadPlayer(Direction entranceDirection, int currentRoomIndex, int leavedRoomIndex, string fileName)
+        public void LoadNew(Direction entranceDirection, int currentRoomIndex, int leavedRoomIndex, string fileName)
         {
             Stopwatch sw = new Stopwatch();
             sw.Start();
 
+            // Get data
             GameData gameData = LoadGameData(fileName);
-
             if (gameData == null)
                 throw new Exception("Save file does not exist");
 
+            // Set main game params
             GameManager.Instance.GameID = gameData.GameID;
             RandomGenerator.Instance.Seed = gameData.Seed;
+            RoomManager.Instance.CurrentRoomIndex = currentRoomIndex;
+            RoomManager.Instance.SetRoomsCount(gameData.Rooms.Length + 1);
+
+            // Generate room
             Dictionary<Direction, int> doors = new Dictionary<Direction, int>
                 {
                     { Direction.Left, -1 },
@@ -149,10 +163,10 @@ namespace Assets.Scripts.GameDataManagement
                     { Direction.Bottom, -1},
                 };
             doors[entranceDirection] = leavedRoomIndex;
-            RoomManager.Instance.CurrentRoomIndex = currentRoomIndex;
-            RoomManager.Instance.SetRoomsCount(gameData.Rooms.Length + 1);
-            RoomGenerator.GenerateRoom(new RoomParams(100, 100, doors));
-            RoomGenerator.SpawnPlayer(entranceDirection, gameData.Player);
+            RoomGenerator.Instance.GenerateRoom(new RoomParams(100, 100, doors));
+
+            // Spawn player
+            PlayerSpawner.Instance.SpawnPlayer(entranceDirection, gameData.Player);
 
             sw.Stop();
             UnityEngine.Debug.Log($"Game loaded in {sw.Elapsed.TotalMilliseconds} ms");

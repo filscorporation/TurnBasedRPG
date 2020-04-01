@@ -279,7 +279,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &48502226
 MonoBehaviour:
@@ -650,7 +650,7 @@ RectTransform:
   - {fileID: 1076685360}
   - {fileID: 1040188776}
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -930,7 +930,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &353398809
 MonoBehaviour:
@@ -1331,6 +1331,77 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CameraFollow: {fileID: 0}
+--- !u!1 &523056866
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 523056867}
+  - component: {fileID: 523056868}
+  m_Layer: 0
+  m_Name: RoomGenerator
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &523056867
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 523056866}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &523056868
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 523056866}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 294a72787b69c094e959cae679da1bf3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DefaultTile: {fileID: 7484634264201699802, guid: 00a754806ef71de40ab4fd7b66e21902,
+    type: 3}
+  GrassDetailsTiles:
+  - {fileID: 21300000, guid: 0d4ae8867ded0254e9fe5ec7e5de78d0, type: 3}
+  - {fileID: 21300000, guid: 4e137493e5ca64647bc8df15cf808964, type: 3}
+  - {fileID: 21300000, guid: abc4331440b054644b8f79d4e303ddd2, type: 3}
+  - {fileID: 21300000, guid: f94e15ca302b7a14388220c5d92ed53b, type: 3}
+  - {fileID: 21300000, guid: b2f850d8cf39368458a143b65c4ea645, type: 3}
+  - {fileID: 21300000, guid: 3deab95a83e3f69438e32176230cb659, type: 3}
+  - {fileID: 21300000, guid: 7c8025de09db4614e855f86164f3d5e0, type: 3}
+  - {fileID: 21300000, guid: 73ac7fd5b47a693429a638687ee6b367, type: 3}
+  - {fileID: 21300000, guid: cdbb054d7cdad0e4aaffa749848259c0, type: 3}
+  DirtTiles:
+  - {fileID: 21300000, guid: dfa0452552f05da49a247d35ba16c4ad, type: 3}
+  - {fileID: 21300000, guid: 3fa9d2c6785a7d94ca49b83704b2f8d5, type: 3}
+  - {fileID: 21300000, guid: 43629d0ca1e57c542a92bea39b603b28, type: 3}
+  Grid: {fileID: 21300000, guid: 19a77465f42ce6e42b0b142e01327c39, type: 3}
+  Trees:
+  - {fileID: 8151539590290496092, guid: 31bbd9d2c37d4564e9acf313cbd395a8, type: 3}
+  OnGroundDetails:
+  - {fileID: 5036975982517722098, guid: 3cccacc03e9a345459e492150894e07a, type: 3}
+  Enemies:
+  - {fileID: 3135466231763972718, guid: 78fcf77d31fe4ff48bd85bbd33a37037, type: 3}
+  - {fileID: 2149261757111756231, guid: 0521cfa6dcee6bf46a2a0a1cee8ccbef, type: 3}
+  - {fileID: 3135466231763972718, guid: 37856e5182ea89548b1303b99df77047, type: 3}
+  - {fileID: 3135466231763972718, guid: 85db9ccbfccda374c953d5ffbccdd0b0, type: 3}
+  Chest: {fileID: 2867036411346537412, guid: 48fdf3642c7997247be1104772543eac, type: 3}
+  Door: {fileID: 8994508979890204042, guid: 58761dba007f7a84fb715ab40b948844, type: 3}
 --- !u!1 &532937801
 GameObject:
   m_ObjectHideFlags: 0
@@ -1433,7 +1504,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &577993331
 MonoBehaviour:
@@ -2128,7 +2199,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &870509880
 GameObject:
@@ -2244,7 +2315,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &966605254
 GameObject:
@@ -2287,7 +2358,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &989026013
 GameObject:
@@ -2735,7 +2806,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1105955138}
   - component: {fileID: 1105955139}
-  - component: {fileID: 1105955140}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -2769,48 +2839,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 276a14bf0674b444f9856780652a02f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  RoomGenerator: {fileID: 1105955140}
---- !u!114 &1105955140
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1105955137}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 294a72787b69c094e959cae679da1bf3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Player: {fileID: 3337483473678912173, guid: 24e9a90715e8be34e82d4e791006c612, type: 3}
-  DefaultTile: {fileID: 7484634264201699802, guid: 00a754806ef71de40ab4fd7b66e21902,
-    type: 3}
-  GrassDetailsTiles:
-  - {fileID: 21300000, guid: 4e137493e5ca64647bc8df15cf808964, type: 3}
-  - {fileID: 21300000, guid: abc4331440b054644b8f79d4e303ddd2, type: 3}
-  - {fileID: 21300000, guid: f94e15ca302b7a14388220c5d92ed53b, type: 3}
-  - {fileID: 21300000, guid: b2f850d8cf39368458a143b65c4ea645, type: 3}
-  - {fileID: 21300000, guid: 3deab95a83e3f69438e32176230cb659, type: 3}
-  - {fileID: 21300000, guid: 7c8025de09db4614e855f86164f3d5e0, type: 3}
-  - {fileID: 21300000, guid: 73ac7fd5b47a693429a638687ee6b367, type: 3}
-  - {fileID: 21300000, guid: cdbb054d7cdad0e4aaffa749848259c0, type: 3}
-  DirtTiles:
-  - {fileID: 21300000, guid: dfa0452552f05da49a247d35ba16c4ad, type: 3}
-  - {fileID: 21300000, guid: 3fa9d2c6785a7d94ca49b83704b2f8d5, type: 3}
-  - {fileID: 21300000, guid: 43629d0ca1e57c542a92bea39b603b28, type: 3}
-  Grid: {fileID: 21300000, guid: 19a77465f42ce6e42b0b142e01327c39, type: 3}
-  Trees:
-  - {fileID: 8151539590290496092, guid: 31bbd9d2c37d4564e9acf313cbd395a8, type: 3}
-  OnGroundDetails:
-  - {fileID: 5036975982517722098, guid: 3cccacc03e9a345459e492150894e07a, type: 3}
-  - {fileID: 8151539590290496092, guid: 31bbd9d2c37d4564e9acf313cbd395a8, type: 3}
-  Enemies:
-  - {fileID: 3135466231763972718, guid: 78fcf77d31fe4ff48bd85bbd33a37037, type: 3}
-  - {fileID: 2149261757111756231, guid: 0521cfa6dcee6bf46a2a0a1cee8ccbef, type: 3}
-  - {fileID: 3135466231763972718, guid: 37856e5182ea89548b1303b99df77047, type: 3}
-  - {fileID: 3135466231763972718, guid: 85db9ccbfccda374c953d5ffbccdd0b0, type: 3}
-  Chest: {fileID: 2867036411346537412, guid: 48fdf3642c7997247be1104772543eac, type: 3}
-  Door: {fileID: 8994508979890204042, guid: 58761dba007f7a84fb715ab40b948844, type: 3}
+  GameID: 
 --- !u!1 &1207323539
 GameObject:
   m_ObjectHideFlags: 0
@@ -2842,7 +2871,7 @@ Transform:
   - {fileID: 1921499545}
   - {fileID: 608544658}
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1217791843
 GameObject:
@@ -2873,7 +2902,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7af15ff7f2ecefe4d9eea023a123748d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  RoomGenerator: {fileID: 1105955140}
 --- !u!4 &1217791845
 Transform:
   m_ObjectHideFlags: 0
@@ -2886,7 +2914,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1240768080
 GameObject:
@@ -3172,6 +3200,77 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!1 &1381107239
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1381107240}
+  - component: {fileID: 1381107241}
+  m_Layer: 0
+  m_Name: RoomLoader
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1381107240
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1381107239}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1381107241
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1381107239}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 48b42d348572f9f4988245bfa946b389, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DefaultTile: {fileID: 7484634264201699802, guid: 00a754806ef71de40ab4fd7b66e21902,
+    type: 3}
+  GrassDetailsTiles:
+  - {fileID: 21300000, guid: 0d4ae8867ded0254e9fe5ec7e5de78d0, type: 3}
+  - {fileID: 21300000, guid: 4e137493e5ca64647bc8df15cf808964, type: 3}
+  - {fileID: 21300000, guid: abc4331440b054644b8f79d4e303ddd2, type: 3}
+  - {fileID: 21300000, guid: f94e15ca302b7a14388220c5d92ed53b, type: 3}
+  - {fileID: 21300000, guid: b2f850d8cf39368458a143b65c4ea645, type: 3}
+  - {fileID: 21300000, guid: 3deab95a83e3f69438e32176230cb659, type: 3}
+  - {fileID: 21300000, guid: 7c8025de09db4614e855f86164f3d5e0, type: 3}
+  - {fileID: 21300000, guid: 73ac7fd5b47a693429a638687ee6b367, type: 3}
+  - {fileID: 21300000, guid: cdbb054d7cdad0e4aaffa749848259c0, type: 3}
+  DirtTiles:
+  - {fileID: 21300000, guid: dfa0452552f05da49a247d35ba16c4ad, type: 3}
+  - {fileID: 21300000, guid: 3fa9d2c6785a7d94ca49b83704b2f8d5, type: 3}
+  - {fileID: 21300000, guid: 43629d0ca1e57c542a92bea39b603b28, type: 3}
+  Grid: {fileID: 21300000, guid: 19a77465f42ce6e42b0b142e01327c39, type: 3}
+  Trees:
+  - {fileID: 8151539590290496092, guid: 31bbd9d2c37d4564e9acf313cbd395a8, type: 3}
+  OnGroundDetails:
+  - {fileID: 5036975982517722098, guid: 3cccacc03e9a345459e492150894e07a, type: 3}
+  Enemies:
+  - {fileID: 3135466231763972718, guid: 78fcf77d31fe4ff48bd85bbd33a37037, type: 3}
+  - {fileID: 2149261757111756231, guid: 0521cfa6dcee6bf46a2a0a1cee8ccbef, type: 3}
+  - {fileID: 3135466231763972718, guid: 37856e5182ea89548b1303b99df77047, type: 3}
+  - {fileID: 3135466231763972718, guid: 85db9ccbfccda374c953d5ffbccdd0b0, type: 3}
+  Chest: {fileID: 2867036411346537412, guid: 48fdf3642c7997247be1104772543eac, type: 3}
+  Door: {fileID: 8994508979890204042, guid: 58761dba007f7a84fb715ab40b948844, type: 3}
 --- !u!1 &1414711986
 GameObject:
   m_ObjectHideFlags: 0
@@ -3202,7 +3301,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69cbb46a3dd4ce645b21b641437ce207, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BattleManager: {fileID: 353398807}
   Enemies: []
   WarningEffectPrefab: {fileID: 7564705759228552030, guid: 9ba4a7c31277bc34dbdc9b0612a4ac90,
     type: 3}
@@ -3218,7 +3316,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1414711989
 MonoBehaviour:
@@ -3674,7 +3772,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 12
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1619972823
 GameObject:
@@ -3706,6 +3804,51 @@ Transform:
   m_Father: {fileID: 1207323540}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1701755057
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1701755058}
+  - component: {fileID: 1701755059}
+  m_Layer: 0
+  m_Name: PlayerSpawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1701755058
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1701755057}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 10
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1701755059
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1701755057}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5748a3f774993040806e428faf38f08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PlayerPrefab: {fileID: 3337483473678912173, guid: 24e9a90715e8be34e82d4e791006c612,
+    type: 3}
 --- !u!1 &1723703084
 GameObject:
   m_ObjectHideFlags: 0

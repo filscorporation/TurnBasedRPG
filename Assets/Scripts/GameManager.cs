@@ -5,7 +5,6 @@ using Assets.Scripts.PlayerManagement;
 using Assets.Scripts.RoomsManagement;
 using Assets.Scripts.SkillManagement;
 using Assets.Scripts.UIManagement;
-using Assets.Scripts.UIManagement.Tabs;
 using System;
 using System.Linq;
 using System.Reflection;
@@ -48,19 +47,19 @@ namespace Assets.Scripts
                     RoomManager.Instance.CurrentRoomIndex = 0;
                     RoomManager.Instance.SetRoomsCount(1);
                     RoomGenerator.Instance.GenerateRoom(new RoomParams(100, 100));
-                    RoomGenerator.Instance.SpawnPlayer();
+                    PlayerSpawner.Instance.SpawnPlayer();
                     break;
                 case GameMode.Loaded:
                     GameDataManager.Instance.Load(GameParams.GameFileToLoadName);
                     break;
                 case GameMode.NextNewRoom:
-                    GameDataManager.Instance.LoadPlayer(GameParams.SpawnDirection,
+                    GameDataManager.Instance.LoadNew(GameParams.SpawnDirection,
                                                         GameParams.CurrentRoomIndex,
                                                         GameParams.LeavedRoomIndex,
                                                         MainMenuManager.DefaultGameFileName);
                     break;
                 case GameMode.NextExistingRoom:
-                    GameDataManager.Instance.Load(GameParams.SpawnDirection,
+                    GameDataManager.Instance.LoadExisting(GameParams.SpawnDirection,
                                                   GameParams.CurrentRoomIndex,
                                                   GameParams.GameFileToLoadName);
                     break;
