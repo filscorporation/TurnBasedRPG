@@ -16,6 +16,17 @@ namespace Assets.Scripts.BattleManagement
     /// </summary>
     public class BattleManager : MonoBehaviour, IUISubscriber
     {
+        private static BattleManager instance;
+        public static BattleManager Instance
+        {
+            get
+            {
+                if (instance == null)
+                    instance = FindObjectOfType<BattleManager>();
+                return instance;
+            }
+        }
+
         public MapManager MapManager;
         public RewardManager RewardManager;
         public PlayerController PlayerController;
@@ -25,7 +36,7 @@ namespace Assets.Scripts.BattleManagement
         private const string endTurnButtonName = "EndTurnButton";
         private const string battleIconName = "BattleIcon";
 
-        private Battle currentBattle;
+        public Battle CurrentBattle;
 
         public void Start()
         {
@@ -76,14 +87,14 @@ namespace Assets.Scripts.BattleManagement
             if (token.ShouldBeCancelled)
                 return false;
 
-            currentBattle = battle;
+            CurrentBattle = battle;
 
             // Draw players action points
             UIManager.Instance.SetVariable(nameof(player.ActionPoints), player.ActionPointsMax);
             // Draw icon of active battle
             UIManager.Instance.SetVariable(battleIconName, 1);
 
-            EnemyController.PutEnemiesToBattle(currentBattle, enemies, EnemyTurnEnd);
+            EnemyController.PutEnemiesToBattle(CurrentBattle, enemies, EnemyTurnEnd);
 
             PlayersTurnStart();
 
@@ -97,15 +108,15 @@ namespace Assets.Scripts.BattleManagement
         private bool PlayersTurnStart()
         {
             // Set camera focus to player
-            CameraManager.Follow(currentBattle.Player.transform);
+            CameraManager.Follow(CurrentBattle.Player.transform);
             // Start players turn events
             CancellationToken token = new CancellationToken();
-            EventManager.Instance.OnPlayersTurnBegin(currentBattle, token);
+            EventManager.Instance.OnPlayersTurnBegin(CurrentBattle, token);
             if (token.ShouldBeCancelled)
                 throw new NotImplementedException("Can not cancel players turn start");
 
             Debug.Log("Players turn");
-            currentBattle.State = BattleState.PlayersTurn;
+            CurrentBattle.State = BattleState.PlayersTurn;
             UIManager.Instance.SetVariable(endTurnButtonName, 1);
             return PlayerController.PlayersTurn(PlayersTurnEnd);
         }
@@ -125,7 +136,7 @@ namespace Assets.Scripts.BattleManagement
             // Put players controller from battle mode
             PlayerController.PlayerEndBattle();
             // Refresh current battle
-            currentBattle = null;
+            CurrentBattle = null;
             // Hide players action points
             UIManager.Instance.SetVariable(nameof(battle.Player.ActionPoints), -1);
             // Hide active battle icon
@@ -145,13 +156,13 @@ namespace Assets.Scripts.BattleManagement
         {
             // End players turn events
             CancellationToken token = new CancellationToken();
-            EventManager.Instance.OnPlayersTurnEnd(currentBattle, token);
+            EventManager.Instance.OnPlayersTurnEnd(CurrentBattle, token);
             if (token.ShouldBeCancelled)
                 throw new NotImplementedException("Can not cancel players turn ending");
 
             Debug.Log("Enemy turn");
             UIManager.Instance.SetVariable(endTurnButtonName, 2);
-            currentBattle.State = BattleState.EnemyTurn;
+            CurrentBattle.State = BattleState.EnemyTurn;
             EnemyController.EnemyTurn();
         }
 
@@ -165,7 +176,7 @@ namespace Assets.Scripts.BattleManagement
             if (allEnemyDied)
             {
                 // All enemies died
-                if (PlayerWonBattle(currentBattle))
+                if (PlayerWonBattle(CurrentBattle))
                     return;
             }
 
@@ -179,7 +190,7 @@ namespace Assets.Scripts.BattleManagement
 
         private void EndTurn()
         {
-            if (currentBattle == null || currentBattle.State == BattleState.EnemyTurn)
+            if (CurrentBattle == null || CurrentBattle.State == BattleState.EnemyTurn)
                 return;
             Debug.Log("Ending turn");
             PlayerController.PlayersTurnEnd();

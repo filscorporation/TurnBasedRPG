@@ -14,7 +14,6 @@ namespace Assets.Scripts.EnemyManagement
     /// </summary>
     public class EnemyController : MonoBehaviour
     {
-        public BattleManager BattleManager;
         protected CameraManager CameraManager;
 
         public List<Enemy> Enemies;
@@ -36,8 +35,6 @@ namespace Assets.Scripts.EnemyManagement
 
         private void Validate()
         {
-            if (BattleManager == null)
-                throw new Exception("BattleManager field should not be null");
             if (CameraManager == null)
                 throw new Exception("CameraManager field should not be null");
         }
@@ -131,7 +128,7 @@ namespace Assets.Scripts.EnemyManagement
             {
                 if (enemy.InSight(player))
                 {
-                    return BattleManager.StartBattleFromEnemyAttack(enemy);
+                    return BattleManager.Instance.StartBattleFromEnemyAttack(enemy);
                 }
             }
 

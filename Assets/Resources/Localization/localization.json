@@ -74,6 +74,11 @@
 		"Heavy Sword Attack. 3 Action points. Deals 8 damage to an enemy in 1 range.",
 		"Тяжелый удар мечем. 3 Очка действий. Наносит 8 урона врагу на расстоянии 1."
 	],
+	"epiphany_skill_description" :
+	[
+		"Epiphany. 0 Action points. Kills all enemies.",
+		"Прозрение. 0 Очков действий. Уничтожает всех врагов."
+	],
 	"gold_item_description" :
 	[
 		"Gold. Can be used in the market to buy skills and items.",
