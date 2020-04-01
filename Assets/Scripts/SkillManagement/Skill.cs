@@ -62,6 +62,16 @@ namespace Assets.Scripts.SkillManagement
         public abstract Skill Clone();
 
         /// <summary>
+        /// Highlights all reachable with this skill tiles
+        /// </summary>
+        public abstract void HighlightTargetTiles(Tile userOnTile);
+
+        /// <summary>
+        /// Clears highlights on target tiles
+        /// </summary>
+        public abstract void ClearHighlighted();
+
+        /// <summary>
         /// Checks if character in range of the skill
         /// </summary>
         /// <param name="user"></param>

@@ -1518,7 +1518,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29dfeaa46ec5663419c3a0361c443ce5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  selectedTilePrefab: {fileID: 8843756355790761976, guid: 14f17ce4a50fbd44d9bec8f219889fe0,
+  SelectedTilePrefab: {fileID: 8843756355790761976, guid: 14f17ce4a50fbd44d9bec8f219889fe0,
+    type: 3}
+  TargetTilePrefab: {fileID: 7484634264201699802, guid: 124084479501e5845aaa26418f7f3c98,
     type: 3}
   TilesParent: {fileID: 1619972824}
   MapObjectsParent: {fileID: 0}

@@ -6,11 +6,11 @@ using UnityEngine;
 namespace Assets.Scripts.MapManagement
 {
     /// <summary>
-    /// Stores and controles all tiles of the map
+    /// Stores and controls all tiles of the map
     /// </summary>
     public class MapManager : MonoBehaviour
     {
-        public static MapManager instance;
+        private static MapManager instance;
         public static MapManager Instance
         {
             get
@@ -25,8 +25,11 @@ namespace Assets.Scripts.MapManagement
 
         public Tile[,] Field;
 
-        public GameObject selectedTilePrefab;
+        public GameObject SelectedTilePrefab;
         private List<GameObject> selectedTiles = new List<GameObject>();
+
+        public GameObject TargetTilePrefab;
+        private List<GameObject> targetTiles = new List<GameObject>();
 
         public Transform TilesParent;
         public Transform MapObjectsParent;
@@ -107,6 +110,57 @@ namespace Assets.Scripts.MapManagement
         }
 
         /// <summary>
+        /// Highlight tiles around with target icon
+        /// </summary>
+        /// <param name="center"></param>
+        /// <param name="radius"></param>
+        public void SelectTargets(Tile center, int radius)
+        {
+            if (targetTiles != null && targetTiles.Any())
+                ClearTargets();
+            if (targetTiles == null)
+                targetTiles = new List<GameObject>();
+
+            foreach (Tile tile in GetNeighbours(center, radius))
+            {
+                GameObject tGO = Instantiate(TargetTilePrefab, tile.transform.position, Quaternion.identity);
+                tGO.transform.SetParent(tile.transform);
+                targetTiles.Add(tGO);
+            }
+        }
+
+        /// <summary>
+        /// Highlight tiles with target icon
+        /// </summary>
+        /// <param name="tiles"></param>
+        public void SelectTargets(IEnumerable<Tile> tiles)
+        {
+            if (targetTiles != null && targetTiles.Any())
+                ClearTargets();
+            if (targetTiles == null)
+                targetTiles = new List<GameObject>();
+
+            foreach (Tile tile in tiles)
+            {
+                GameObject tGO = Instantiate(TargetTilePrefab, tile.transform.position, Quaternion.identity);
+                tGO.transform.SetParent(tile.transform);
+                targetTiles.Add(tGO);
+            }
+        }
+
+        /// <summary>
+        /// Clear drawn target tiles
+        /// </summary>
+        public void ClearTargets()
+        {
+            foreach (GameObject targetTile in targetTiles)
+            {
+                Destroy(targetTile);
+            }
+            targetTiles.Clear();
+        }
+
+        /// <summary>
         /// Clear drawn path element
         /// </summary>
         public void ClearPath(int index)
@@ -125,7 +179,7 @@ namespace Assets.Scripts.MapManagement
 
             foreach (Tile tile in path)
             {
-                GameObject sGO = Instantiate(selectedTilePrefab, tile.transform.position, Quaternion.identity);
+                GameObject sGO = Instantiate(SelectedTilePrefab, tile.transform.position, Quaternion.identity);
                 sGO.transform.SetParent(tile.transform);
                 selectedTiles.Add(sGO);
             }
@@ -135,6 +189,7 @@ namespace Assets.Scripts.MapManagement
         /// Returns all existing neighbours for the tile
         /// </summary>
         /// <param name="tile"></param>
+        /// <param name="radius"></param>
         /// <returns></returns>
         public IEnumerable<Tile> GetNeighbours(Tile tile, int radius = 1)
         {

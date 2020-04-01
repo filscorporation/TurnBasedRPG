@@ -20,7 +20,7 @@ namespace Assets.Scripts.SkillManagement.Skills.Potions
         public override float CastingTime => 1F;
         public override float CastingEffectTime => 0.5F;
 
-        protected override int range => 0;
+        protected override int Range => 0;
 
         public override Skill Clone()
         {

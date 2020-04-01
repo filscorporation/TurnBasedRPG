@@ -14,7 +14,7 @@ namespace Assets.Scripts.SkillManagement.Skills
         protected override string iconPath => null;
         public override string Description => null;
 
-        protected override int range => 2;
+        protected override int Range => 2;
         private float damage = 7;
         
         public override float CastingTime => 2F;

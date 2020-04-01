@@ -10,7 +10,7 @@ using Assets.Scripts.UIManagement;
 namespace Assets.Scripts.SkillManagement
 {
     /// <summary>
-    /// Controlls players skills usage
+    /// Controls players skills usage
     /// </summary>
     public class SkillController
     {
@@ -65,6 +65,8 @@ namespace Assets.Scripts.SkillManagement
             PlayerController.ClearPlannedPath();
 
             activeSkill = skill;
+            skill.HighlightTargetTiles(Player.OnTile);
+
             return true;
         }
 
@@ -156,6 +158,7 @@ namespace Assets.Scripts.SkillManagement
         /// </summary>
         public void Clear()
         {
+            activeSkill?.ClearHighlighted();
             activeSkill = null;
         }
     }

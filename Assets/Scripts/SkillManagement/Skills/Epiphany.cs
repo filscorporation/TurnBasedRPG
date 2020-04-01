@@ -29,6 +29,18 @@ namespace Assets.Scripts.SkillManagement.Skills
             return new Epiphany();
         }
 
+        public override void HighlightTargetTiles(Tile userOnTile)
+        {
+            MapManager.Instance.SelectTargets(BattleManager.Instance.CurrentBattle.Enemies
+                .Where(e => e.State != CharacterState.Dead)
+                .Select(e => e.OnTile));
+        }
+
+        public override void ClearHighlighted()
+        {
+            MapManager.Instance.ClearTargets();
+        }
+
         public override bool InRange(Character user, Character target)
         {
             return true;

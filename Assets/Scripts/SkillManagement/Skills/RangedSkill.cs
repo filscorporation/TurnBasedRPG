@@ -9,14 +9,27 @@ namespace Assets.Scripts.SkillManagement.Skills
     /// </summary>
     public abstract class RangedSkill : Skill
     {
-        protected abstract int range { get; }
+        protected abstract int Range { get; }
+
+        public override void HighlightTargetTiles(Tile userOnTile)
+        {
+            if (TargetType == SkillTargetType.Player)
+                MapManager.Instance.SelectTargets(new []{ userOnTile });
+            else
+                MapManager.Instance.SelectTargets(userOnTile, Range);
+        }
+
+        public override void ClearHighlighted()
+        {
+            MapManager.Instance.ClearTargets();
+        }
 
         public override bool InRange(Character user, Character target)
         {
             return Mathf.Max(
                        Mathf.Abs(user.OnTile.X - target.OnTile.X),
                        Mathf.Abs(user.OnTile.Y - target.OnTile.Y))
-                   <= range;
+                   <= Range;
         }
 
         public override bool InRange(Character user, Tile tile)
@@ -24,7 +37,7 @@ namespace Assets.Scripts.SkillManagement.Skills
             return Mathf.Max(
                        Mathf.Abs(user.OnTile.X - tile.X),
                        Mathf.Abs(user.OnTile.Y - tile.Y))
-                   <= range;
+                   <= Range;
         }
     }
 }

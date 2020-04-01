@@ -16,7 +16,7 @@ namespace Assets.Scripts.SkillManagement.Skills
         public override float CastingTime => 1F;
         public override float CastingEffectTime => 0.45F;
 
-        protected override int range => 1;
+        protected override int Range => 1;
         private float damage = 5;
 
         public override Skill Clone()
