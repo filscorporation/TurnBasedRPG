@@ -14,6 +14,8 @@ namespace Assets.Scripts.CharactersManagement
         Moving,
         Attacking,
         Consuming,
+        Casting,
+        Throwing,
         ReceivingDamage,
         Dead,
     }
@@ -56,6 +58,12 @@ namespace Assets.Scripts.CharactersManagement
                         case CharacterState.Consuming:
                             animator.SetTrigger(animatorConsumeTrigger);
                             break;
+                        case CharacterState.Casting:
+                            animator.SetTrigger(animatorCastTrigger);
+                            break;
+                        case CharacterState.Throwing:
+                            animator.SetTrigger(animatorThrowTrigger);
+                            break;
                         case CharacterState.ReceivingDamage:
                             animator.SetTrigger(animatorReceiveDamageTrigger);
                             break;
@@ -75,6 +83,8 @@ namespace Assets.Scripts.CharactersManagement
         private Animator animator;
         private const string animatorMovingBool = "Moving";
         private const string animatorAttackTrigger = "Attack";
+        private const string animatorCastTrigger = "Cast";
+        private const string animatorThrowTrigger = "Throw";
         private const string animatorConsumeTrigger = "Consume";
         private const string animatorReceiveDamageTrigger = "ReceiveDamage";
         private const string animatorDeadBool = "Dead";

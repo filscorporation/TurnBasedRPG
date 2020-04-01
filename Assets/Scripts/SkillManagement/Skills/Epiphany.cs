@@ -14,9 +14,11 @@ namespace Assets.Scripts.SkillManagement.Skills
 
         public override SkillTargetType TargetType => SkillTargetType.Player;
 
+        public override CharacterState CharacterTargetState => CharacterState.Casting;
+
         public override float CastingTime => 1F;
 
-        public override float CastingEffectTime => 0.5F;
+        public override float CastingEffectTime => 0.6F;
 
         public override string Description => "epiphany_skill_description";
 

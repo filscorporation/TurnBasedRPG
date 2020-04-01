@@ -14,8 +14,10 @@ namespace Assets.Scripts.SkillManagement.Skills.Potions
         protected override string iconPath => "Icons/FlamePotionIcon";
         public override string Description => null;
 
+        public override CharacterState CharacterTargetState => CharacterState.Throwing;
+
         public override float CastingTime => 1F;
-        public override float CastingEffectTime => 0.5F;
+        public override float CastingEffectTime => 0.8F;
 
         protected override int range => 1;
         private float damage = 5;

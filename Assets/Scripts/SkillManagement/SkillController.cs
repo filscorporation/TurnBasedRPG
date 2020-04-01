@@ -122,7 +122,7 @@ namespace Assets.Scripts.SkillManagement
 
             currentTarget = target;
             isUsing = true;
-            Player.State = CharacterState.Attacking;
+            Player.State = activeSkill.CharacterTargetState;
             Player.ActionPoints -= activeSkill.Cost;
             UIManager.Instance.SetVariable(nameof(Player.ActionPoints), Player.ActionPoints);
             Player.CharacterController.UseSkill(activeSkill, target, FinishUsingSkill, UseSkillEffect);
