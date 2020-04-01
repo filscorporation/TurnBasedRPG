@@ -128,7 +128,7 @@ namespace Assets.Scripts.CharactersManagement
         }
 
         /// <summary>
-        /// Sets is loaded to true (when characted loaded and doesnt need initialization)
+        /// Sets is loaded to true (when character loaded and doesn't need initialization)
         /// </summary>
         public void SetIsLoaded()
         {

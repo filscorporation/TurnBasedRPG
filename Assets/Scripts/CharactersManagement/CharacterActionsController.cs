@@ -8,7 +8,7 @@ using UnityEngine;
 namespace Assets.Scripts.CharactersManagement
 {
     /// <summary>
-    /// Controlls character animations, movement, states
+    /// Controls character animations, movement, states
     /// </summary>
     public class CharacterActionsController : MonoBehaviour
     {
@@ -29,19 +29,12 @@ namespace Assets.Scripts.CharactersManagement
         private Action onSkillCastEndAction;
         private Action onSkillCastEffectAction;
 
-        private Animator animator;
-        private const string skillAnimatorParam = "UsingSkill";
         private bool freeze = false;
 
         /// <summary>
         /// Which side character sprite is looking, -1 left, 1 right
         /// </summary>
         public int CharacterRotation = 1;
-
-        public void Start()
-        {
-            animator = GetComponent<Animator>();
-        }
 
         public void Update()
         {
@@ -101,8 +94,12 @@ namespace Assets.Scripts.CharactersManagement
 
         private void RotateCharacter(float a, float b)
         {
+            if (Mathf.Abs(a - b) < Mathf.Epsilon)
+                // No need to rotate to same tile
+                return;
+
             // Rotates character sprite when he switches direction
-            if (a - b >= 0 && CharacterRotation == 1)
+            if (a - b > 0 && CharacterRotation == 1)
             {
                 CharacterRotation = -1;
                 Vector3 s = Character.transform.localScale;
