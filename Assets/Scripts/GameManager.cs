@@ -30,7 +30,10 @@ namespace Assets.Scripts
             }
         }
 
-        public RoomGenerator RoomGenerator;
+        /// <summary>
+        /// Game UUID to differ it from other saves
+        /// </summary>
+        public string GameID;
 
         public void Awake()
         {
@@ -41,10 +44,11 @@ namespace Assets.Scripts
             switch (GameParams.GameMode)
             {
                 case GameMode.New:
+                    GameID = Guid.NewGuid().ToString();
                     RoomManager.Instance.CurrentRoomIndex = 0;
                     RoomManager.Instance.SetRoomsCount(1);
-                    RoomGenerator.GenerateRoom(new RoomParams(100, 100));
-                    RoomGenerator.SpawnPlayer();
+                    RoomGenerator.Instance.GenerateRoom(new RoomParams(100, 100));
+                    RoomGenerator.Instance.SpawnPlayer();
                     break;
                 case GameMode.Loaded:
                     GameDataManager.Instance.Load(GameParams.GameFileToLoadName);

@@ -17,6 +17,17 @@ namespace Assets.Scripts.MapManagement
     /// </summary>
     public class RoomGenerator : MonoBehaviour
     {
+        private static RoomGenerator instance;
+        public static RoomGenerator Instance
+        {
+            get
+            {
+                if (instance == null)
+                    instance = FindObjectOfType<RoomGenerator>();
+                return instance;
+            }
+        }
+
         public GameObject Player;
 
         public GameObject DefaultTile;

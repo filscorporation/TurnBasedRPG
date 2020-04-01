@@ -15,6 +15,8 @@ namespace Assets.Scripts.GameDataManagement
     [Serializable]
     public class GameData
     {
+        public string GameID;
+
         public int Seed;
 
         public PlayerData Player;

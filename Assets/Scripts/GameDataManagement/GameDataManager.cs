@@ -49,8 +49,15 @@ namespace Assets.Scripts.GameDataManagement
 
             if (oldGameData != null)
             {
-                // Game was previously saved - merge room data
-                MergeGameData(oldGameData, newGameData);
+                if (!oldGameData.GameID.Equals(newGameData.GameID, StringComparison.OrdinalIgnoreCase))
+                {
+                    // Existring save is from another game, rewrite it
+                }
+                else
+                {
+                    // Game was previously saved - merge room data
+                    MergeGameData(oldGameData, newGameData);
+                }
             }
 
             using (FileStream fileStream = new FileStream(path, FileMode.Create))
@@ -76,6 +83,7 @@ namespace Assets.Scripts.GameDataManagement
             if (gameData == null)
                 throw new Exception("Save file does not exist");
 
+            GameManager.Instance.GameID = gameData.GameID;
             RandomGenerator.Instance.Seed = gameData.Seed;
             RoomManager.Instance.CurrentRoomIndex = gameData.CurrentRoomIndex;
             RoomManager.Instance.SetRoomsCount(gameData.Rooms.Length);
@@ -103,6 +111,7 @@ namespace Assets.Scripts.GameDataManagement
 
             gameData.CurrentRoomIndex = currentRoomIndex;
 
+            GameManager.Instance.GameID = gameData.GameID;
             RandomGenerator.Instance.Seed = gameData.Seed;
             RoomManager.Instance.CurrentRoomIndex = gameData.CurrentRoomIndex;
             RoomManager.Instance.SetRoomsCount(gameData.Rooms.Length);
@@ -130,6 +139,7 @@ namespace Assets.Scripts.GameDataManagement
             if (gameData == null)
                 throw new Exception("Save file does not exist");
 
+            GameManager.Instance.GameID = gameData.GameID;
             RandomGenerator.Instance.Seed = gameData.Seed;
             Dictionary<Direction, int> doors = new Dictionary<Direction, int>
                 {
@@ -178,6 +188,9 @@ namespace Assets.Scripts.GameDataManagement
         {
             GameData data = new GameData();
             data.CurrentRoomIndex = RoomManager.Instance.CurrentRoomIndex;
+
+            // Game ID
+            data.GameID = GameManager.Instance.GameID;
 
             // Seed
             data.Seed = RandomGenerator.Instance.Seed;
