@@ -99,6 +99,9 @@ namespace Assets.Scripts.CharactersManagement
         public Healthbar Healthbar;
         private const string healthbarSortingGroupName = "HealthbarGroup";
 
+        public int Block = 0;
+        public BlockUI BlockUI;
+
         public List<Skill> Skills = new List<Skill>();
         // Used to initialize skills from inspector
         public List<string> SkillsNames = new List<string>();
@@ -123,6 +126,7 @@ namespace Assets.Scripts.CharactersManagement
                 SetIsLoaded();
             }
             InitializeHealthbar();
+            InitializeBlockUI();
             CharacterController = GetComponent<CharacterActionsController>();
             animator = GetComponent<Animator>();
         }
@@ -160,6 +164,22 @@ namespace Assets.Scripts.CharactersManagement
             Healthbar.Hide();
         }
 
+        private void InitializeBlockUI()
+        {
+            Transform healthbarGroup = FindObjectOfType<Canvas>().transform.Find(healthbarSortingGroupName);
+            GameObject buiGO = Instantiate(
+                Resources.Load(CharacterActionsController.BlockUIPrefabPath),
+                Vector3.zero,
+                Quaternion.identity,
+                healthbarGroup) as GameObject;
+            if (buiGO == null)
+                throw new Exception("Error initializing block UI");
+            BlockUI = buiGO.GetComponent<BlockUI>();
+            BlockUI.Initialize(Block);
+            BlockUI.Character = this;
+            BlockUI.Hide();
+        }
+
         /// <summary>
         /// Makes character take damage
         /// </summary>
@@ -175,8 +195,27 @@ namespace Assets.Scripts.CharactersManagement
 
             // Logic
             State = CharacterState.ReceivingDamage;
-            Health = Mathf.Max(0, Health - damage.Value);
-            Healthbar.Set(Health, HealthMax);
+            float damageValue = damage.Value;
+            if (Block > 0)
+            {
+                if (damageValue > Block)
+                {
+                    damageValue -= Block;
+                    ClearBlock();
+                }
+                else
+                {
+                    Block -= Mathf.CeilToInt(damageValue);
+                    BlockUI.Set(Block);
+                    damageValue = 0;
+                }
+            }
+
+            if (Mathf.Abs(damageValue) > Mathf.Epsilon)
+            {
+                Health = Mathf.Max(0, Health - damageValue);
+                Healthbar.Set(Health, HealthMax);
+            }
 
             // Post take damage events
             OnCharacterTakeDamage?.Invoke(this, new DamageEventData(damage));
@@ -199,6 +238,25 @@ namespace Assets.Scripts.CharactersManagement
                 if (token.ShouldBeCancelled)
                     return;
             }
+        }
+
+        /// <summary>
+        /// Add block value to character
+        /// </summary>
+        /// <param name="block"></param>
+        public void GainBlock(int block)
+        {
+            Block += block;
+            BlockUI.Set(Block);
+        }
+
+        /// <summary>
+        /// Set block value to zero
+        /// </summary>
+        public void ClearBlock()
+        {
+            Block = 0;
+            BlockUI.Set(Block);
         }
 
         protected virtual void Die(Character killer)

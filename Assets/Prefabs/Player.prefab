@@ -176,6 +176,7 @@ MonoBehaviour:
   SkillsNames:
   - SwordAttack
   - HeavySwordAttack
+  - Block
   - Epiphany
   level: 0
   SkillPoints: 0

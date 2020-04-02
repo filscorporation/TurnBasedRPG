@@ -13,7 +13,7 @@ namespace Assets.Scripts.SkillManagement.Skills
 
         public override void HighlightTargetTiles(Tile userOnTile)
         {
-            if (TargetType == SkillTargetType.Player)
+            if (TargetType == SkillTargetType.User)
                 MapManager.Instance.SelectTargets(new []{ userOnTile });
             else
                 MapManager.Instance.SelectTargets(userOnTile, Range);

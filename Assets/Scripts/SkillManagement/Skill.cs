@@ -9,12 +9,12 @@ using UnityEngine;
 namespace Assets.Scripts.SkillManagement
 {
     /// <summary>
-    /// Тип цели для умения
+    /// Target type
     /// </summary>
     public enum SkillTargetType
     {
         Enemy,
-        Player,
+        User,
         Tile,
     }
 

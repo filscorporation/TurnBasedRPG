@@ -5,7 +5,7 @@ using UnityEngine.UI;
 namespace Assets.Scripts.CharactersManagement
 {
     /// <summary>
-    /// Heathbar controller
+    /// Healthbar controller
     /// </summary>
     public class Healthbar : MonoBehaviour
     {
@@ -15,7 +15,7 @@ namespace Assets.Scripts.CharactersManagement
         private Slider slider;
         private Image fill;
         private const string fillImageName = "Fill";
-        private const float healthbarHeigth = 0.2F;
+        private const float healthbarHeight = 0.2F;
 
         /// <summary>
         /// Should be called before set methods
@@ -31,7 +31,7 @@ namespace Assets.Scripts.CharactersManagement
         public void LateUpdate()
         {
             transform.position = Camera.main.WorldToScreenPoint(Character.transform.position);
-            transform.position += new Vector3(0, Screen.height * healthbarHeigth);
+            transform.position += new Vector3(0, Screen.height * healthbarHeight);
         }
 
         public void Hide()

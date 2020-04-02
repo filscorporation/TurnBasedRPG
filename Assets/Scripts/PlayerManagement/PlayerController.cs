@@ -68,6 +68,9 @@ namespace Assets.Scripts.PlayerManagement
             // Refresh action points
             Player.ActionPoints = Player.ActionPointsMax;
             UIManager.Instance.SetVariable(nameof(Player.ActionPoints), Player.ActionPoints);
+            
+            // Set block to zero
+            Player.ClearBlock();
 
             return true;
         }
@@ -97,6 +100,8 @@ namespace Assets.Scripts.PlayerManagement
             Player.PlayerState = PlayerState.FreeControl;
             // Deactivate all skills on the skillbar
             InventoryUIController.HideSkills();
+            // Set block to zero
+            Player.ClearBlock();
         }
 
         /// <summary>

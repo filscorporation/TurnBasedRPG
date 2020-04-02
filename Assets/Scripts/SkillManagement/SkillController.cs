@@ -88,7 +88,7 @@ namespace Assets.Scripts.SkillManagement
 
             switch (activeSkill.TargetType)
             {
-                case SkillTargetType.Player:
+                case SkillTargetType.User:
                     if (!(tile.Occupier is Player self))
                         return;
                     // Used skill on yourself

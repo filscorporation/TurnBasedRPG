@@ -10,7 +10,7 @@ using UnityEngine;
 namespace Assets.Scripts.EnemyManagement
 {
     /// <summary>
-    /// Controls enemy behavour
+    /// Controls enemy behaviour
     /// </summary>
     public class EnemyController : MonoBehaviour
     {
@@ -62,6 +62,12 @@ namespace Assets.Scripts.EnemyManagement
 
             // Sort all enemies by priority and put them into queue to act
             enemiesInTurn = new Queue<Enemy>(currentBattle.Enemies.OrderBy(e => e.Priority(currentBattle)));
+
+            // Set block to zero
+            foreach (Enemy enemy in enemiesInTurn)
+            {
+                enemy.ClearBlock();
+            }
 
             ProcessEnemyFromQueue();
         }

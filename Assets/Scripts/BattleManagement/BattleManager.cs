@@ -12,7 +12,7 @@ using UnityEngine;
 namespace Assets.Scripts.BattleManagement
 {
     /// <summary>
-    /// Controlls battle: turns, characters, ui
+    /// Controls battle: turns, characters, ui
     /// </summary>
     public class BattleManager : MonoBehaviour, IUISubscriber
     {

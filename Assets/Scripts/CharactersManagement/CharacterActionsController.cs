@@ -23,6 +23,7 @@ namespace Assets.Scripts.CharactersManagement
         private bool skillEffectPlayed;
 
         public const string HealthbarPrefabPath = "Prefabs/HealthbarPrefab";
+        public const string BlockUIPrefabPath = "Prefabs/BlockUIPrefab";
 
         private Action<int> onNewPathTileReachedAction;
         private Action onPathEndReachedAction;

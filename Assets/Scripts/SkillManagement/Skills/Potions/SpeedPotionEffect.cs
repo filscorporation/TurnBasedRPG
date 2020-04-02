@@ -10,7 +10,7 @@ namespace Assets.Scripts.SkillManagement.Skills.Potions
     {
         public override string Name => nameof(SpeedPotionEffect);
         public override int Cost => 0;
-        public override SkillTargetType TargetType => SkillTargetType.Player;
+        public override SkillTargetType TargetType => SkillTargetType.User;
 
         public override CharacterState CharacterTargetState => CharacterState.Consuming;
 

@@ -79,6 +79,11 @@
 		"Epiphany. 0 Action points. Kills all enemies.",
 		"Прозрение. 0 Очков действий. Уничтожает всех врагов."
 	],
+	"block_skill_description" :
+	[
+		"Block. 1 Action point. Gain 5 block.",
+		"Заблокировать. 1 Очко действий. Дает 5 блока."
+	],
 	"gold_item_description" :
 	[
 		"Gold. Can be used in the market to buy skills and items.",
