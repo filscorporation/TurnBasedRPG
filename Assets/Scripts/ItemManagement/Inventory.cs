@@ -49,6 +49,7 @@ namespace Assets.Scripts.ItemManagement
             // TODO: temporary solution. For testing.
             Add(Consumable.ConsumablesDictionary[nameof(FlamePotion)]);
             Add(Consumable.ConsumablesDictionary[nameof(SpeedPotion)]);
+            Add(Consumable.ConsumablesDictionary[nameof(ArmourPotion)]);
 
             SubscribeToEvents();
         }

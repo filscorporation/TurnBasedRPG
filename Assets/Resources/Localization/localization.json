@@ -103,5 +103,10 @@
 	[
 		"Speed Potion. Gives you 2 additional action points for the rest of your turn.",
 		"Зелье скорости. Дает вам 2 дополнительных очка действий до конца хода."
+	],
+	"armour_potion_description" :
+	[
+		"Armour Potion. Gain 5 block.",
+		"Зелье брони. Дает 5 блока."
 	]
 }
