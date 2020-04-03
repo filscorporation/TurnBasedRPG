@@ -97,6 +97,7 @@ namespace Assets.Scripts.CharactersManagement
         public float HealthMax = 10F;
         public float Health = 10F;
         public Healthbar Healthbar;
+        public float HealthbarHeight = 0.2F;
         private const string healthbarSortingGroupName = "HealthbarGroup";
 
         public int Block = 0;

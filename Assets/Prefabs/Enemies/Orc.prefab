@@ -382,6 +382,9 @@ MonoBehaviour:
   HealthMax: 10
   Health: 10
   Healthbar: {fileID: 0}
+  HealthbarHeight: 0.155
+  Block: 0
+  BlockUI: {fileID: 0}
   SkillsNames:
   - OrcSwordAttack
   Name: Orc

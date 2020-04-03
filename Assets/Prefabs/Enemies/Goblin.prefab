@@ -137,6 +137,9 @@ MonoBehaviour:
   HealthMax: 5
   Health: 5
   Healthbar: {fileID: 0}
+  HealthbarHeight: 0.12
+  Block: 0
+  BlockUI: {fileID: 0}
   SkillsNames:
   - OrcSwordAttack
   Name: Goblin

@@ -388,6 +388,9 @@ MonoBehaviour:
   HealthMax: 30
   Health: 30
   Healthbar: {fileID: 0}
+  HealthbarHeight: 0.24
+  Block: 0
+  BlockUI: {fileID: 0}
   SkillsNames:
   - GolemsSmash
   Name: Golem
