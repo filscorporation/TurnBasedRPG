@@ -173,11 +173,14 @@ MonoBehaviour:
   HealthMax: 10
   Health: 10
   Healthbar: {fileID: 0}
+  Block: 0
+  BlockUI: {fileID: 0}
   SkillsNames:
   - SwordAttack
   - HeavySwordAttack
   - Block
   - Epiphany
+  - Whirlwind
   level: 0
   SkillPoints: 0
   experience: 0
