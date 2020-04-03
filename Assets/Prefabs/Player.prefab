@@ -181,6 +181,7 @@ MonoBehaviour:
   - Block
   - Epiphany
   - Whirlwind
+  - ShieldStrike
   level: 0
   SkillPoints: 0
   experience: 0

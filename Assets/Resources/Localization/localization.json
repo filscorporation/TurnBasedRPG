@@ -89,6 +89,11 @@
 		"Whirlwind. 3 Action points. Deal 4 damage to all enemies in 1 range.",
 		"Вихрь. 3 Очка действий. Наносит 4 урона всем врагам на расстоянии 1."
 	],
+	"shield_strike_skill_description" :
+	[
+		"Shield Strike. 1 Action point. Deal damage equal to your block to an enemy in 1 range.",
+		"Удар щитом. 1 Очко действий. Наносит урон равный вашему блоку врагу на расстоянии 1."
+	],
 	"gold_item_description" :
 	[
 		"Gold. Can be used in the market to buy skills and items.",
