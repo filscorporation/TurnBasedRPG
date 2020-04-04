@@ -106,8 +106,13 @@
 	],
 	"goblins_skull_item_description" :
 	[
-		"Goblins Skull. After killing an enemy, gain 2 action points.",
+		"Goblin's Skull. After killing an enemy, gain 2 action points.",
 		"Череп гоблина. После убийства врага получаете 2 очка действий."
+	],
+	"hilt_item_description" :
+	[
+		"Hilt of the King's Sword. Give your whirlwind +1 range.",
+		"Эфес меча королей. Умение вихрь получает +1 к радиусу."
 	],
 	"flame_potion_description" :
 	[
