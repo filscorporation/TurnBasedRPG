@@ -67,15 +67,17 @@ namespace Assets.Scripts.EventManagement
         /// Called when any character takes lethal damage, before he calls dead function
         /// </summary>
         /// <param name="character"></param>
+        /// <param name="killer"></param>
         /// <param name="token"></param>
-        void OnBeforeCharacterDead(Character character, CancellationToken token);
+        void OnBeforeCharacterDead(Character character, Character killer, CancellationToken token);
 
         /// <summary>
         /// Called when any character takes lethal damage, after he dies
         /// </summary>
         /// <param name="character"></param>
+        /// <param name="killer"></param>
         /// <param name="token"></param>
-        void OnAfterCharacterDead(Character character, CancellationToken token);
+        void OnAfterCharacterDead(Character character, Character killer, CancellationToken token);
 
         /// <summary>
         /// Called when player activates skill and it is about to show possible targets

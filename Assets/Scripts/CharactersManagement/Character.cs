@@ -227,7 +227,7 @@ namespace Assets.Scripts.CharactersManagement
             if (Health < Mathf.Epsilon)
             {
                 // Pre dead events
-                EventManager.Instance.OnBeforeCharacterDead(this, token);
+                EventManager.Instance.OnBeforeCharacterDead(this, damage.Source, token);
                 if (token.ShouldBeCancelled)
                     return;
 
@@ -235,7 +235,7 @@ namespace Assets.Scripts.CharactersManagement
                 Die(damage.Source);
 
                 // Post dead events
-                EventManager.Instance.OnAfterCharacterDead(this, token);
+                EventManager.Instance.OnAfterCharacterDead(this, damage.Source, token);
                 if (token.ShouldBeCancelled)
                     return;
             }

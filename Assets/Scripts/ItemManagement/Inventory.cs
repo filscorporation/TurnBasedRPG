@@ -43,15 +43,13 @@ namespace Assets.Scripts.ItemManagement
         {
             Items = new List<Item>();
             // TODO: temporary solution. For testing.
-            Add(Item.ItemDictionary[nameof(LoggingItem)]);
+            Add(Item.ItemDictionary[nameof(GoblinsSkull)]);
 
             Consumables = new List<Consumable>();
             // TODO: temporary solution. For testing.
             Add(Consumable.ConsumablesDictionary[nameof(FlamePotion)]);
             Add(Consumable.ConsumablesDictionary[nameof(SpeedPotion)]);
             Add(Consumable.ConsumablesDictionary[nameof(ArmourPotion)]);
-
-            SubscribeToEvents();
         }
 
         /// <summary>
@@ -209,12 +207,13 @@ namespace Assets.Scripts.ItemManagement
         /// Called when any character takes lethal damage, before he calls dead function
         /// </summary>
         /// <param name="character"></param>
+        /// <param name="killer"></param>
         /// <param name="token"></param>
-        public void OnBeforeCharacterDead(Character character, CancellationToken token)
+        public void OnBeforeCharacterDead(Character character, Character killer, CancellationToken token)
         {
             foreach (Item item in Items)
             {
-                item.OnBeforeCharacterDead(character, token);
+                item.OnBeforeCharacterDead(character, killer, token);
             }
         }
 
@@ -222,12 +221,13 @@ namespace Assets.Scripts.ItemManagement
         /// Called when any character takes lethal damage, after he dies
         /// </summary>
         /// <param name="character"></param>
+        /// <param name="killer"></param>
         /// <param name="token"></param>
-        public void OnAfterCharacterDead(Character character, CancellationToken token)
+        public void OnAfterCharacterDead(Character character, Character killer, CancellationToken token)
         {
             foreach (Item item in Items)
             {
-                item.OnAfterCharacterDead(character, token);
+                item.OnAfterCharacterDead(character, killer, token);
             }
         }
 

@@ -101,8 +101,13 @@
 	],
 	"logging_item_description" :
 	[
-		"Logging Item. Loggs all incoming events",
-		"Логирующий придмет. Логирует все входящие события"
+		"Logging Item. Loggs all incoming events.",
+		"Логирующий придмет. Логирует все входящие события."
+	],
+	"goblins_skull_item_description" :
+	[
+		"Goblins Skull. After killing an enemy, gain 2 action points.",
+		"Череп гоблина. После убийства врага получаете 2 очка действий."
 	],
 	"flame_potion_description" :
 	[

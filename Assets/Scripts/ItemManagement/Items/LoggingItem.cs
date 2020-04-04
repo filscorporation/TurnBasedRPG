@@ -14,7 +14,7 @@ namespace Assets.Scripts.ItemManagement.Items
     public class LoggingItem : Item
     {
         public override string Name => nameof(LoggingItem);
-        public override Sprite Icon => null;
+        protected override string iconPath => null;
         public override string Description => "logging_item_description";
         public override int Level => 2;
 
@@ -53,14 +53,14 @@ namespace Assets.Scripts.ItemManagement.Items
             Debug.Log($"In event {nameof(OnAfterCharacterTakesDamage)}, character {character}, damage {damage}");
         }
 
-        public override void OnBeforeCharacterDead(Character character, CancellationToken token)
+        public override void OnBeforeCharacterDead(Character character, Character killer, CancellationToken token)
         {
-            Debug.Log($"In event {nameof(OnBeforeCharacterDead)}, character {character}");
+            Debug.Log($"In event {nameof(OnBeforeCharacterDead)}, character {character}, killer {killer}");
         }
 
-        public override void OnAfterCharacterDead(Character character, CancellationToken token)
+        public override void OnAfterCharacterDead(Character character, Character killer, CancellationToken token)
         {
-            Debug.Log($"In event {nameof(OnAfterCharacterDead)}, character {character}");
+            Debug.Log($"In event {nameof(OnAfterCharacterDead)}, character {character}, killer {killer}");
         }
 
         public override void OnSkillActivation(Player player, Skill skill, CancellationToken token)

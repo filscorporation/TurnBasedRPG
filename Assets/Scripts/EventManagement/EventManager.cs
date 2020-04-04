@@ -120,12 +120,13 @@ namespace Assets.Scripts.EventManagement
         /// Called when any character takes lethal damage, before he calls dead function
         /// </summary>
         /// <param name="character"></param>
+        /// <param name="killer"></param>
         /// <param name="token"></param>
-        public void OnBeforeCharacterDead(Character character, CancellationToken token)
+        public void OnBeforeCharacterDead(Character character, Character killer, CancellationToken token)
         {
             foreach (IEventSubscriber sub in subs)
             {
-                sub.OnBeforeCharacterDead(character, token);
+                sub.OnBeforeCharacterDead(character, killer, token);
             }
         }
 
@@ -133,12 +134,13 @@ namespace Assets.Scripts.EventManagement
         /// Called when any character takes lethal damage, after he dies
         /// </summary>
         /// <param name="character"></param>
+        /// <param name="killer"></param>
         /// <param name="token"></param>
-        public void OnAfterCharacterDead(Character character, CancellationToken token)
+        public void OnAfterCharacterDead(Character character, Character killer, CancellationToken token)
         {
             foreach (IEventSubscriber sub in subs)
             {
-                sub.OnAfterCharacterDead(character, token);
+                sub.OnAfterCharacterDead(character, killer, token);
             }
         }
 
