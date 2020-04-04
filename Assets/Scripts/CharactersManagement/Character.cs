@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using Assets.Scripts.EventManagement;
-using Assets.Scripts.ItemManagement;
 using Assets.Scripts.MapManagement;
 using Assets.Scripts.SkillManagement;
 using UnityEngine;
@@ -93,6 +92,7 @@ namespace Assets.Scripts.CharactersManagement
 
         public int ActionPoints = 3;
         public int ActionPointsMax = 3;
+        public int TilesPassedInCurrentTurn = 0;
 
         public float HealthMax = 10F;
         public float Health = 10F;

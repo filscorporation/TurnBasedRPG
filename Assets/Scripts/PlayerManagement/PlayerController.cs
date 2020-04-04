@@ -97,6 +97,7 @@ namespace Assets.Scripts.PlayerManagement
             if (CharacterController.IsMoving())
                 return;
 
+            Player.TilesPassedInCurrentTurn = 0;
             SkillController.Clear();
             InventoryUIController.HideSkills();
             UIManager.Instance.SetVariable(nameof(Player.ActionPoints), -1);
@@ -215,6 +216,7 @@ namespace Assets.Scripts.PlayerManagement
                 // If not fist tile of the path - take action point
                 if (tileIndex != 0)
                 {
+                    Player.TilesPassedInCurrentTurn++;
                     Player.ActionPoints--;
                     UIManager.Instance.SetVariable(nameof(Player.ActionPoints), Player.ActionPoints);
                     if (EnemyController.TryAddEnemyToBattle(Player))

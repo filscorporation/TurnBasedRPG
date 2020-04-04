@@ -43,7 +43,7 @@ namespace Assets.Scripts.ItemManagement
         {
             Items = new List<Item>();
             // TODO: temporary solution. For testing.
-            Add(Item.ItemDictionary[nameof(MightyBelt)]);
+            Add(Item.ItemDictionary[nameof(Spurs)]);
 
             Consumables = new List<Consumable>();
             // TODO: temporary solution. For testing.

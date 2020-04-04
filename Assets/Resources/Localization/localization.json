@@ -119,6 +119,11 @@
 		"Mighty Belt. At the start of your turn gain 3 block.",
 		"Мощный пояс. В начале вашего хода вы получаете 3 блока."
 	],
+	"spurs_item_description" :
+	[
+		"Steel Spurs. For each tile you have passed this turn increase your damage by 1.",
+		"Стальные шпоры. Увеличивает наносимый урон на 1 за каждую преодаленную клетку в этот ход."
+	],
 	"flame_potion_description" :
 	[
 		"Flame Potion. Deals 5 damage to an enemy in 1 range.",
