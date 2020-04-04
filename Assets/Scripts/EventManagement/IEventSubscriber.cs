@@ -7,7 +7,7 @@ using Assets.Scripts.SkillManagement;
 namespace Assets.Scripts.EventManagement
 {
     /// <summary>
-    /// Intrerface for types, that can process events from EventManager
+    /// Interface for types, that can process events from EventManager
     /// </summary>
     public interface IEventSubscriber
     {
@@ -38,7 +38,14 @@ namespace Assets.Scripts.EventManagement
         /// </summary>
         /// <param name="battle"></param>
         /// <param name="token"></param>
-        void OnPlayersTurnBegin(Battle battle, CancellationToken token);
+        void OnBeforePlayersTurnBegin(Battle battle, CancellationToken token);
+
+        /// <summary>
+        /// Called when players turn begins
+        /// </summary>
+        /// <param name="battle"></param>
+        /// <param name="token"></param>
+        void OnAfterPlayersTurnBegin(Battle battle, CancellationToken token);
 
         /// <summary>
         /// Called when players turn ends

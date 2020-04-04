@@ -4,16 +4,25 @@ using Assets.Scripts.CharactersManagement;
 using Assets.Scripts.PlayerManagement;
 using Assets.Scripts.RewardManagement;
 using Assets.Scripts.SkillManagement;
+using UnityEngine;
 
 namespace Assets.Scripts.EventManagement
 {
     /// <summary>
     /// Center for processing ingame events
     /// </summary>
-    public class EventManager
+    public class EventManager : MonoBehaviour
     {
         private static EventManager instance;
-        public static EventManager Instance => instance ?? (instance = new EventManager());
+        public static EventManager Instance
+        {
+            get
+            {
+                if (instance == null)
+                    instance = FindObjectOfType<EventManager>();
+                return instance;
+            }
+        }
 
         private readonly List<IEventSubscriber> subs = new List<IEventSubscriber>();
 
@@ -67,11 +76,24 @@ namespace Assets.Scripts.EventManagement
         /// </summary>
         /// <param name="battle"></param>
         /// <param name="token"></param>
-        public void OnPlayersTurnBegin(Battle battle, CancellationToken token)
+        public void OnBeforePlayersTurnBegin(Battle battle, CancellationToken token)
         {
             foreach (IEventSubscriber sub in subs)
             {
-                sub.OnPlayersTurnBegin(battle, token);
+                sub.OnBeforePlayersTurnBegin(battle, token);
+            }
+        }
+
+        /// <summary>
+        /// Called when players turn begins
+        /// </summary>
+        /// <param name="battle"></param>
+        /// <param name="token"></param>
+        public void OnAfterPlayersTurnBegin(Battle battle, CancellationToken token)
+        {
+            foreach (IEventSubscriber sub in subs)
+            {
+                sub.OnAfterPlayersTurnBegin(battle, token);
             }
         }
 

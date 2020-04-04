@@ -109,11 +109,6 @@ namespace Assets.Scripts.BattleManagement
         {
             // Set camera focus to player
             CameraManager.Follow(CurrentBattle.Player.transform);
-            // Start players turn events
-            CancellationToken token = new CancellationToken();
-            EventManager.Instance.OnPlayersTurnBegin(CurrentBattle, token);
-            if (token.ShouldBeCancelled)
-                throw new NotImplementedException("Can not cancel players turn start");
 
             Debug.Log("Players turn");
             CurrentBattle.State = BattleState.PlayersTurn;

@@ -43,7 +43,7 @@ namespace Assets.Scripts.ItemManagement
         {
             Items = new List<Item>();
             // TODO: temporary solution. For testing.
-            Add(Item.ItemDictionary[nameof(Hilt)]);
+            Add(Item.ItemDictionary[nameof(MightyBelt)]);
 
             Consumables = new List<Consumable>();
             // TODO: temporary solution. For testing.
@@ -154,11 +154,24 @@ namespace Assets.Scripts.ItemManagement
         /// </summary>
         /// <param name="battle"></param>
         /// <param name="token"></param>
-        public void OnPlayersTurnBegin(Battle battle, CancellationToken token)
+        public void OnBeforePlayersTurnBegin(Battle battle, CancellationToken token)
         {
             foreach (Item item in Items)
             {
-                item.OnPlayersTurnBegin(battle, token);
+                item.OnBeforePlayersTurnBegin(battle, token);
+            }
+        }
+
+        /// <summary>
+        /// Called when players turn begins
+        /// </summary>
+        /// <param name="battle"></param>
+        /// <param name="token"></param>
+        public void OnAfterPlayersTurnBegin(Battle battle, CancellationToken token)
+        {
+            foreach (Item item in Items)
+            {
+                item.OnAfterPlayersTurnBegin(battle, token);
             }
         }
 

@@ -57,7 +57,14 @@ namespace Assets.Scripts.ItemManagement
         /// </summary>
         /// <param name="battle"></param>
         /// <param name="token"></param>
-        public virtual void OnPlayersTurnBegin(Battle battle, CancellationToken token) { }
+        public virtual void OnBeforePlayersTurnBegin(Battle battle, CancellationToken token) { }
+
+        /// <summary>
+        /// Called when players turn begins
+        /// </summary>
+        /// <param name="battle"></param>
+        /// <param name="token"></param>
+        public virtual void OnAfterPlayersTurnBegin(Battle battle, CancellationToken token) { }
 
         /// <summary>
         /// Called when player is getting reward for winning a battle

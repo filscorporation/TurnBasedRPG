@@ -28,9 +28,14 @@ namespace Assets.Scripts.ItemManagement.Items
             Debug.Log($"In event {nameof(OnBattleEnd)}, battle {battle}");
         }
 
-        public override void OnPlayersTurnBegin(Battle battle, CancellationToken token)
+        public override void OnBeforePlayersTurnBegin(Battle battle, CancellationToken token)
         {
-            Debug.Log($"In event {nameof(OnPlayersTurnBegin)}, battle {battle}");
+            Debug.Log($"In event {nameof(OnBeforePlayersTurnBegin)}, battle {battle}");
+        }
+
+        public override void OnAfterPlayersTurnBegin(Battle battle, CancellationToken token)
+        {
+            Debug.Log($"In event {nameof(OnAfterPlayersTurnBegin)}, battle {battle}");
         }
 
         public override void OnGetReward(Battle battle, Reward reward, CancellationToken token)

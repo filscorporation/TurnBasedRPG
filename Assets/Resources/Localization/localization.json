@@ -114,6 +114,11 @@
 		"Hilt of the King's Sword. Give your whirlwind +1 range.",
 		"Эфес меча королей. Умение вихрь получает +1 к радиусу."
 	],
+	"mighty_belt_item_description" :
+	[
+		"Mighty Belt. At the start of your turn gain 3 block.",
+		"Мощный пояс. В начале вашего хода вы получаете 3 блока."
+	],
 	"flame_potion_description" :
 	[
 		"Flame Potion. Deals 5 damage to an enemy in 1 range.",

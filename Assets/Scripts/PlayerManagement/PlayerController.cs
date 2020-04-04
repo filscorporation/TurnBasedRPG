@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using Assets.Scripts.BattleManagement;
 using Assets.Scripts.CharactersManagement;
 using Assets.Scripts.EnemyManagement;
+using Assets.Scripts.EventManagement;
 using Assets.Scripts.InputManagement;
 using Assets.Scripts.InteractableObjects;
 using Assets.Scripts.MapManagement;
@@ -60,6 +62,12 @@ namespace Assets.Scripts.PlayerManagement
         /// <returns>Returns false if player leaves the battle</returns>
         public bool PlayersTurn(Action onPlayersTurnDone)
         {
+            // Start before players turn events
+            CancellationToken token = new CancellationToken();
+            EventManager.Instance.OnBeforePlayersTurnBegin(BattleManager.Instance.CurrentBattle, token);
+            if (token.ShouldBeCancelled)
+                throw new NotImplementedException("Can not cancel players turn start");
+
             Player.PlayerState = PlayerState.InBattle;
             callWhenPlayersTurnDone = onPlayersTurnDone;
 
@@ -71,6 +79,12 @@ namespace Assets.Scripts.PlayerManagement
             
             // Set block to zero
             Player.ClearBlock();
+
+            // Start after players turn events
+            token = new CancellationToken();
+            EventManager.Instance.OnAfterPlayersTurnBegin(BattleManager.Instance.CurrentBattle, token);
+            if (token.ShouldBeCancelled)
+                throw new NotImplementedException("Can not cancel players turn start");
 
             return true;
         }
