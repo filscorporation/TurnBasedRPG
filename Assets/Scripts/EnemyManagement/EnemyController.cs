@@ -61,12 +61,22 @@ namespace Assets.Scripts.EnemyManagement
             Debug.Log("Starting enemy turn");
 
             // Sort all enemies by priority and put them into queue to act
-            enemiesInTurn = new Queue<Enemy>(currentBattle.Enemies.OrderBy(e => e.Priority(currentBattle)));
+            enemiesInTurn = new Queue<Enemy>(currentBattle.Enemies
+                .Where(e => e.State != CharacterState.Dead)
+                .OrderBy(e => e.Priority(currentBattle)));
 
-            // Set block to zero
             foreach (Enemy enemy in enemiesInTurn)
             {
+                // Set block to zero
                 enemy.ClearBlock();
+                // Apply effects
+                enemy.CallTurnStartEffects();
+            }
+
+            if (BattleManager.Instance.CurrentBattle == null)
+            {
+                // Every enemy died at the start of the turn
+                return;
             }
 
             ProcessEnemyFromQueue();
@@ -78,9 +88,9 @@ namespace Assets.Scripts.EnemyManagement
             {
                 if (!enemiesInTurn.Any())
                 {
-                    if (currentBattle.Enemies.All(e => e == null))
+                    if (currentBattle.Enemies.All(e => e == null || e.State == CharacterState.Dead))
                     {
-                        // All enemies deid
+                        // All enemies died
                         FinishEnemyTurn(true);
                         return;
                     }
@@ -90,7 +100,7 @@ namespace Assets.Scripts.EnemyManagement
                 }
 
                 Enemy enemy = enemiesInTurn.Dequeue();
-                if (enemy == null)
+                if (enemy == null || enemy.State == CharacterState.Dead)
                 {
                     // Enemy probably died
                     continue;
@@ -122,6 +132,20 @@ namespace Assets.Scripts.EnemyManagement
             }
             // Ready to pass the turn to player
             callWhenEnemyTurnDone(allDied);
+        }
+
+        /// <summary>
+        /// Makes battle end finishing actions
+        /// </summary>
+        public void EnemyEndBattle(Battle battle)
+        {
+            foreach (Enemy enemy in battle.Enemies.Where(e => e != null && e.State != CharacterState.Dead))
+            {
+                // Set block to zero
+                enemy.ClearBlock();
+                // Remove effects
+                enemy.ClearEffects();
+            }
         }
 
         /// <summary>

@@ -114,7 +114,7 @@ namespace Assets.Scripts.EnemyManagement
 
             // Cant cast any skill, try to move
 
-            // Builging path straight to the player, maybe should act smarter
+            // Building path straight to the player, maybe should act smarter
             Debug.Log($"Moving to target");
             List<Tile> path = MapManager.Instance.GetPath(OnTile, CurrentBattle.Player.OnTile);
             if (path == null || !path.Any())

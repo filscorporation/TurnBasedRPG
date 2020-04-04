@@ -94,6 +94,11 @@
 		"Shield Strike. 1 Action point. Deal damage equal to your block to an enemy in 1 range.",
 		"Удар щитом. 1 Очко действий. Наносит урон равный вашему блоку врагу на расстоянии 1."
 	],
+	"cut_skill_description" :
+	[
+		"Cut. 2 Action points. Apply 3 damage bleed for 4 turns to an enemy in 1 range.",
+		"Порез. 2 Очка действий. Накладывает эффект кровотечения на 3 урона в течение 4 ходов на врага на расстоянии 1."
+	],
 	"gold_item_description" :
 	[
 		"Gold. Can be used in the market to buy skills and items.",

@@ -50,7 +50,13 @@ namespace Assets.Scripts.CharactersManagement
         {
             if (path == null || !path.Any())
                 return;
-            
+
+            if (Character == null || Character.State == CharacterState.Dead)
+            {
+                path.Clear();
+                return;
+            }
+
             if (Vector2.Distance(
                     Character.transform.position,
                     path[currentTargetTileIndex].transform.position) < Mathf.Epsilon)

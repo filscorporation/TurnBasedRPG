@@ -14,7 +14,6 @@ namespace Assets.Scripts.CharactersManagement
 
         private int currentBlockValue;
         private const float blockUIXOffset = 140F;
-        private const float blockUIHeight = 0.2F;
 
         public void Initialize(int block)
         {
@@ -24,7 +23,7 @@ namespace Assets.Scripts.CharactersManagement
         public void LateUpdate()
         {
             transform.position = Camera.main.WorldToScreenPoint(Character.transform.position);
-            transform.position += new Vector3(blockUIXOffset, Screen.height * blockUIHeight);
+            transform.position += new Vector3(blockUIXOffset, Screen.height * Character.HealthbarHeight);
         }
 
         public void Hide()

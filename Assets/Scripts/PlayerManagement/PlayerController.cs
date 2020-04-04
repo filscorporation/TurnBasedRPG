@@ -80,6 +80,9 @@ namespace Assets.Scripts.PlayerManagement
             // Set block to zero
             Player.ClearBlock();
 
+            // Applies affects
+            Player.CallTurnStartEffects();
+
             // Start after players turn events
             token = new CancellationToken();
             EventManager.Instance.OnAfterPlayersTurnBegin(BattleManager.Instance.CurrentBattle, token);
@@ -117,6 +120,8 @@ namespace Assets.Scripts.PlayerManagement
             InventoryUIController.HideSkills();
             // Set block to zero
             Player.ClearBlock();
+            // Remove effects
+            Player.ClearEffects();
         }
 
         /// <summary>

@@ -103,6 +103,8 @@ namespace Assets.Scripts.CharactersManagement
         public int Block = 0;
         public BlockUI BlockUI;
 
+        public List<Effect> Effects = new List<Effect>();
+
         public List<Skill> Skills = new List<Skill>();
         // Used to initialize skills from inspector
         public List<string> SkillsNames = new List<string>();
@@ -185,7 +187,8 @@ namespace Assets.Scripts.CharactersManagement
         /// Makes character take damage
         /// </summary>
         /// <param name="damage"></param>
-        public void TakeDamage(Damage damage)
+        /// <param name="animate">If set to false, receive damage animation will not be player</param>
+        public void TakeDamage(Damage damage, bool animate = true)
         {
             Debug.Log($"Character {this} took {damage.Value} damage from {damage.Source}");
             // Pre take damage events
@@ -195,7 +198,8 @@ namespace Assets.Scripts.CharactersManagement
                 return;
 
             // Logic
-            State = CharacterState.ReceivingDamage;
+            if (animate)
+                State = CharacterState.ReceivingDamage;
             float damageValue = damage.Value;
             if (Block > 0)
             {
@@ -260,8 +264,51 @@ namespace Assets.Scripts.CharactersManagement
             BlockUI.Set(Block);
         }
 
+        /// <summary>
+        /// Adds effect to the character
+        /// </summary>
+        /// <param name="effect"></param>
+        /// <param name="caster"></param>
+        public void AddEffect(Effect effect, Character caster)
+        {
+            // TODO: merge
+            Effects.Add(effect);
+            effect.EffectOnApply(this, caster);
+        }
+
+        /// <summary>
+        /// Removes effect fro
+        /// </summary>
+        /// <param name="effect"></param>
+        public void RemoveEffect(Effect effect)
+        {
+            Effects.Remove(effect);
+        }
+
+        /// <summary>
+        /// Makes character to get effects on turn start
+        /// </summary>
+        public void CallTurnStartEffects()
+        {
+            foreach (Effect effect in Effects.ToArray())
+            {
+                if (State == CharacterState.Dead)
+                    return;
+                effect.EffectOnCharacterTurnStart(this);
+            }
+        }
+
+        /// <summary>
+        /// Removes all applied effects from a character
+        /// </summary>
+        public void ClearEffects()
+        {
+            Effects.Clear();
+        }
+
         protected virtual void Die(Character killer)
         {
+            CharacterController.Cancel();
             State = CharacterState.Dead;
             OnTile.Free = true;
             OnTile.Occupier = null;

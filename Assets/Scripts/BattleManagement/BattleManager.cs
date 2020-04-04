@@ -130,6 +130,8 @@ namespace Assets.Scripts.BattleManagement
 
             // Put players controller from battle mode
             PlayerController.PlayerEndBattle();
+            // Put enemy controller from battle mode
+            EnemyController.EnemyEndBattle(CurrentBattle);
             // Refresh current battle
             CurrentBattle = null;
             // Hide players action points

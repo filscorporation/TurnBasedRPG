@@ -170,6 +170,7 @@ MonoBehaviour:
   MovingSpeed: 5
   ActionPoints: 3
   ActionPointsMax: 3
+  TilesPassedInCurrentTurn: 0
   HealthMax: 10
   Health: 10
   Healthbar: {fileID: 0}
@@ -183,6 +184,7 @@ MonoBehaviour:
   - Epiphany
   - Whirlwind
   - ShieldStrike
+  - Cut
   level: 0
   SkillPoints: 0
   experience: 0
