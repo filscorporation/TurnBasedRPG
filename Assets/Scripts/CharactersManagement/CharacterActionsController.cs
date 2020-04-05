@@ -201,7 +201,7 @@ namespace Assets.Scripts.CharactersManagement
             Character.State = CharacterState.Idle;
             currentTargetTileIndex = 0;
             pathOffset = 0;
-            path.Clear();
+            path?.Clear();
         }
 
         /// <summary>
